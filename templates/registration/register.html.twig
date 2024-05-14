@@ -7,17 +7,21 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Register</h1>
+    <section id="page_registration" class="flex-center">
+        <h2>Inscription gratuite</h2>
+        <p class="text-intro">Créez votre compte et louez un véhicule éléctrique en toute simplicité: rapide, flexible et facile. Gérer votre reservation sans contrainte et gagnez du temps pour vos prochaines réservations. Cumulez des points à chaques locations et recevez des offres promotionnelles</p>
 
-    {{ form_errors(registrationForm) }}
+        {{ form_errors(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        {{ form_start(registrationForm, {'attr': {'id': 'forms'}}) }}
+            {{ form_row(registrationForm.email, {'attr': {'class': 'field'}}) }}
+            {{ form_row(registrationForm.plainPassword, {
+                label: 'Password'
+            }) }}
+            {# {{ form_row(registrationForm.agreeTerms) }} #}
+            <p><input type="checkbox" name="rgpd" id="rgpd" required><label for="rgpd">J'ai lu et j'accèpte <a href="" class="rgpd-link">la Politique de Protection des Données Personnelles</a></label></p>
+            <p class="submit-content"><input type="submit" value="Valider" class="button"></p>
+        {{ form_end(registrationForm) }}
+    </section>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
 {% endblock %}

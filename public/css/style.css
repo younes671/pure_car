@@ -1,0 +1,1144 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+/* ---------------------------------------------------------reset */
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    font-family: 'Montserrat';
+  }
+
+#content{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+ol, ul {
+    list-style: none;
+  }
+
+  a img {
+    border: none;
+  }
+
+  a{
+      text-decoration: none;
+  }
+
+/* -----------------------------------------------------------GENERAL */
+body{
+    display: flex;
+    justify-content: center;
+}
+
+#content{
+    width: 1080px;
+}
+
+section{
+    margin-bottom: 100px;
+}
+
+#main-menu ul li a{
+    color :#4e4e4e;
+}
+
+.flex-between{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-around{
+    display: flex;
+    justify-content: space-around;
+}
+
+.flex-wrap{
+    flex-wrap: wrap;
+}
+
+.button{
+    width: 200px;
+    color: #fff;
+    background: #2baae2;
+    border-radius: 10px;
+}
+
+.button:hover{
+    background: #2288b4;
+}
+
+#logo-mobile{
+    display: none;
+}
+
+
+/* h2, h3,h4, a, .button, p, figcaption, #part-2{
+    font-family: 'Exo-Reg';
+} */
+
+/* -------------------------------------------------------------------------Header */
+
+#content-logo{
+    padding: 20px 0;
+}
+
+#content-connect {
+    display: none;
+}
+
+.button,  #main-menu ul li a{
+    height: 45px;
+    font-size: 20px;
+}
+
+#main-menu ul{
+    width: 830px;
+    height: 45px;
+}
+
+#main-menu ul li{
+    width: 150px;
+}
+
+#main-menu ul li:nth-child(4){
+    width: 230px !important;
+}
+#main-menu ul li a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+#main-menu ul li a:hover{
+    color: #fff;
+    background: #2baae2;
+}
+
+.lang{
+    display: flex;
+    justify-content: space-around;
+}
+.lang a{
+    display: block;;
+    width: 100%;
+}
+
+/* ------------------------------------Menu mobile */
+
+#menu{
+    height: 45px;
+}
+
+#menu .burger{
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 30px;
+    line-height: 50px;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    width: 50px;
+    position: absolute;
+    top: 5px;
+    left: 20px;
+    display: none;
+}
+
+#menu .burger::before{
+    content:url('../img/icon-svg/menu-button.svg');
+    color : #fff;
+}
+
+#menu .burger:checked:before{
+    content:url('../img/icon-svg/close-button.svg');
+}
+
+#menu .burger:checked + nav{
+    height: 225px;
+    width: 230px;
+}
+
+#icon-connect:before{
+    content : url('../img/icon-svg/round-account.svg');
+}
+
+#content-connect a{
+    margin-right: 20px;
+    margin-top: 5px;
+    z-index: 1;
+}
+/* --------------------------------------------------------FOOTER */
+footer{
+    background: #f5f5f5;
+    height: 260px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.footer-inner{
+    width: 880px;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+footer h4{
+    font-family: 'Exo-Bold';
+    font-size: 20px;
+    color: #2baae2;
+}
+
+footer p, footer a, .adresse{
+    font-size: 19px;
+    color : #4e4e4e;
+    text-align: center;
+}
+
+footer p, .link-footer:nth-child(2), .link-footer:nth-child(3), .adresse{
+    line-height: 30px;
+}
+
+footer a, .mail{
+    text-decoration: underline;
+}
+
+footer a:hover, .mail:hover{
+    color: #2baae2;
+}
+
+.mail{
+    color : #4e4e4e;
+}
+
+.block-footer-inner{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+#copyright{
+    height: 50px;
+    width: 100%;
+    background: #4e4e4e;
+}
+
+#copyright p{
+    color : #fff;
+    font-size: 17px;
+}
+
+#rs img {
+    padding: 20px 10px;
+}
+
+.fa-brands{
+    font-size: 25px;
+    margin: 15px;
+}
+
+/* ---------------------------------------------------------------ACCUEIL */
+
+/* Slider */
+
+.slider2, .slider3{
+    display: none;
+}
+
+#slider{
+    display: flex;
+    overflow: hidden;
+    height: 400px;
+}
+
+#slider img{
+    position: relative;
+
+    animation-name: AutoSlide;
+    animation-duration: 15s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes AutoSlide{
+    0%{
+        right: 0%;
+    }
+
+    15%{
+        right: 0%;
+    }
+
+    35%{
+        right: 100%;
+    }
+
+    50%{
+        right: 100%;
+    }
+
+    70%{
+        right: 200%;
+    }
+
+    85%{
+        right: 200%;
+    }
+
+    100%{
+        right: 0%;
+    }
+}
+/* Description */
+
+#part-1{
+    color: #2baae2;
+    font-family: 'simply-rounded';
+    font-size: 55px;
+    line-height: 40px;
+}
+
+#part-2{
+    color : #4e4e4e;
+    font-size: 40px;
+    line-height: 40px;
+}
+
+#description div{
+    width: 980px;
+    flex-direction: column;
+}
+
+#description h1{
+    margin-bottom: 30px;
+}
+
+#description p{
+    color : #4e4e4e;
+    font-size: 17px;
+    text-align: justify;
+}
+
+/* Section etape réservation */
+#step{
+    flex-direction: column;
+}
+
+
+#step h2, #contact h2,  #page_connexion h2, #page_registration h2, #content-cars h2, #gallery h2, #mention h2, #plan h2{
+    font-size: 40px;
+    line-height: 40px;
+    color : #2baae2;
+    margin-bottom: 50px;
+}
+
+figure{
+    flex-direction: column;
+    width: 245px;
+    height: 120px;
+}
+figcaption{
+    font-size: 20px;
+    color: #4e4e4e;
+}
+
+.number{
+    font-size: 30px ;
+    color : #2baae2;
+}
+
+/*------------------------------------------------------------------CONTACT.HTML*/
+#contact, #page_connexion, #page_registration, #gallery, #mention, #plan{
+    margin-top: 100px;
+    flex-direction: column;
+}
+
+/* #contact h2{
+    margin-bottom : 70px
+} */
+
+#contact p, #page_registration p, #gallery p{
+    text-align: center;
+    font-size: 20px;
+    color: #4e4e4e;
+}
+
+#span{
+    color : #2baae2;
+}
+
+#forms{
+    margin-top: 100px;
+    width: 540px;
+    padding: 50px 0 20px 0;
+    background: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px #000;
+}
+
+#vehicule_form_img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 340px;
+    border:solid 1px #c0c0c0;
+    border-radius : 10px;
+    height: 40px;
+    text-align: center;
+    margin: 20px 0 20px 0;
+}
+
+.voit{
+    height: 500px;
+    width: 600px;
+}
+
+.table-striped{
+    color: black;
+}
+
+.table-responsive{
+    display: flex;
+    justify-content: center;
+}
+
+.table{
+    border-color: black;
+}
+
+.colonne{
+    border-color: #000;
+}
+
+.forms{
+    margin: 15px 0;
+    width: 540px;
+    padding: 20px 0 20px 0;
+    background: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px #000;
+    /* overflow: hidden; */
+}
+
+form p{
+    padding: 0 50px 30px 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#rgpd{
+    margin: 10px;
+}
+
+.submit-content{
+    justify-content: center !important;
+}
+
+form label{
+    font-size: 15px;
+    color: #2baae2;
+}
+
+.field{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 340px;
+    border:solid 1px #c0c0c0;
+    border-radius : 10px;
+    height: 40px;
+    text-align: center;
+    margin: 20px 0 20px 0;
+}
+
+
+#message {
+    height: 200px;
+    width: 320px;
+    padding: 10px;
+    border: solid 1px #c0c0c0;
+    border-radius: 10px;
+}
+
+.field:hover, .field:focus,#message:hover, #message:focus{
+    border:solid #2baae2 1px;
+}
+
+.button{
+    border: none;
+}
+
+.ag-name{
+    color: #2baae2;
+    font-family: 'simply-rounded';
+    font-size: 35px;
+}
+#content-adresse{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.adresse{
+    margin-bottom: 20px;
+}
+#map, iframe{
+    width: 100%;
+    height: 300px;
+}
+
+label[for=rgpd], .rgpd-link{
+    color : #4e4e4e !important;
+}
+
+.rgpd-link{
+    text-decoration: underline !important;
+}
+/* -----------------------------------------------------------BOOKING.HTML */
+
+/* MODULE DE RECHERCHE */
+#search-content{
+    height: 300px;
+    background: url('../img/slider-desktop/bg-seach.jpg') no-repeat;
+    margin-bottom: 50px;
+}
+
+#search-content select{
+    height: 40px;
+    width: 230px;
+    margin-right: 20px;
+    text-align-last: center;
+    font-size: 15px;
+} 
+
+#search-content select option{
+    text-align: left;
+    font-size: 15px;
+}
+
+.text-intro{
+    text-align: justify !important;
+    padding: 0 15px;
+}
+
+#search-content .button{
+    height: 40px;
+    /* margin-bottom: 82px; */
+}
+
+#search-content form{
+    flex-direction: column;
+}
+
+.select-content{
+    padding: 82px 0;
+}
+
+/* LISTE VEHICULE */
+.car{
+    height: 438px;
+    width: 330px;
+    display: flex;
+    flex-direction: column;
+    border: solid #4e4e4e 1px;
+    margin-top: 50px;
+}
+.car div, .details div, .info div{
+    height: 50px;
+    border-top: solid 2px #2baae2;
+    display: flex;
+    width: 100%;
+}
+
+.car div span, .details div span, .info div p{
+    width: 50%;
+    color : #4e4e4e;  
+    font-family: 'Exo-Reg';
+}
+
+.gray{
+    background: #cfcfcf;
+}
+
+.mark, .price {
+    color: #2baae2 !important;
+    font-size: 30px;
+    font-family: 'Exo-Reg';
+}
+
+
+.car:hover, #gallery a:hover img{
+    box-shadow: 0px 0px 20px #000;
+}
+
+/* ------------------------------------------------------CAR.HTML */
+#content-cars h2, .info h2 {
+    margin-bottom: 0;
+}
+
+
+
+.title-info{
+    flex-direction: column;
+    height: auto !important;
+    padding: 10px 0 15px 0;
+}
+
+.title-info p{
+width: auto !important;
+}
+
+.info .condition{
+    height: auto !important;
+    padding: 15px 0 15px 0;
+}
+
+.info .text{
+    text-align: justify;
+    padding-right: 15px;
+}
+a.booking-btn.flex-center.button{
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+}
+
+#content-details{
+    margin-top: 100px;
+    height: auto;
+}
+.details{
+    flex-direction: column;    
+    border: solid #4e4e4e 1px;
+    width: 620px;
+    
+}
+
+.info{
+    width: 620px;
+}
+
+/* ---------------------------------------------------------CONNEXION.HTML */
+
+#page_connexion form{
+    width: 450px;
+    margin-top: 50px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px #000;
+    padding : 50px 50px 0 50px;
+    margin-bottom: 20px;
+}
+
+#page_connexion form p{
+    padding: 0;
+    padding-bottom: 50px;
+}
+
+.registration-link{
+    text-decoration: underline;
+    color:#4e4e4e;
+    font-size : 20px;
+}
+.registration-link:hover{
+    color: #2baae2;
+}
+
+.required{
+    margin: 20px 0 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* -------------------------------------------------------Page inscription */
+
+#page_registration form{
+    /* margin-top: 0; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 550px;
+}
+
+#civility{
+    text-align-last: center;
+}
+/* -----------------------------------------------------------GALLERY.HTML */
+    #gallery div h2, #mention h3{
+        font-size: 30px;
+        color: #4e4e4e;
+        margin: 30px 0;
+        text-align: center;
+    }
+
+    #gallery h2{
+        text-align: center;
+    }
+
+/*----------------------------------------------------------- MENTION.HTML */
+
+#mention h4{
+    font-size: 20px;
+    margin: 30px 0;
+}
+
+#mention a{
+    color : #2baae2
+}
+
+#mention a:hover{
+    color : #2288b4;
+}
+
+#mention li{
+    font-family: 'Exo-Reg';
+}
+/* ---------------------------------------------------------PLAN DU SITE */
+
+#plan a{
+    font-size : 25px;
+    text-decoration: underline;
+    line-height: 40px;
+    color : #4e4e4e;
+}
+
+.list-plan{
+    padding-left: 25px;
+}
+
+.list-plan:before{
+    content: ".";
+    font-size: 40px;
+    color : #4e4e4e
+}
+
+#plan a:hover{
+    color:#2288b4;
+    font-size: 30px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+} 
+.form-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15px;
+    flex-direction: column;
+}
+
+.gestion{
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.fa-check{
+    color: green;
+}
+
+/* ------------------------------------------------------------Responsive */
+@media screen and (max-width : 1080px){
+    #content{
+        width: 100%;
+    }
+
+    #slider{
+        width: 100%;
+    }
+
+    .slider1{
+        width: 100%;
+    }
+
+    #mention{
+        padding: 0 20px;
+    }
+}
+
+@media screen and (max-width : 599px){
+    /* slider */
+    .slider1, .slider2{
+        display: none;
+    }
+
+    .slider3{
+        display: flex;
+        width: 100%;
+    }
+
+    /* description */
+
+    #part-2{
+        font-size: 24px;
+    }
+
+    #description h1{
+        margin-bottom: 20px;
+    }
+/* gagnez du temps */
+
+    #step h2{
+        font-size: 20px;
+    }
+
+/*footer*/
+    #footer{
+        margin-top: 0;
+    }
+
+    #copyright{
+        height: auto;
+    }
+
+    #rs{
+        display: flex;
+        flex-direction: column;
+    }
+
+    #rs img{
+        width: 50px;
+    }
+
+    /*Contact*/
+    #forms{
+        display: flex;
+        justify-content: center;
+        width: 100% !important;
+        margin-top: 50px;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    form p{
+        flex-direction: column;
+        align-items: center;
+        padding : 0 30px 30px 30px;
+    }
+
+    form label{
+        font-size: 20px;
+        line-height: 30px;
+    }
+
+    .field, #message{
+        width: 100%;
+    }
+
+    body .select{
+        margin-top: 0;
+    }
+
+    body .select select{
+        margin-top: 0px;
+        margin-right: 0 ;
+    }
+
+    /* CAR.HTML */
+    #content-details img{
+        width: 100%;
+        padding-right: 0;
+    }
+
+    .title-info{
+        text-align: center;
+    }
+
+    .info .text{
+        margin-top: 20px;
+    }
+
+    .info .condition, .price-content{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .booking-btn{
+        border-radius: 10px !important;
+        width: 200px !important;
+        height: 45px !important;
+        margin-top: 30px;
+    }
+    
+    .info .condition p{
+        width: 90%;
+    }
+
+    .price-content{
+        height: auto !important;
+    }
+    .price{
+        height: 50px !important;
+    }
+
+    /* connexion.html */
+    #page_connexion form{
+        width: 100%;
+        padding: 50px 0 0 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+    #page_connexion form p{
+        padding : 0 30px 30px 30px;
+    }
+
+    #page_connexion p{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #page_registration h2{
+        margin-bottom: 0;
+        font-size: 35px
+    }
+
+    /* gallerie.html */
+
+    #gallery div a img{
+        width: 100%;
+    }
+}
+
+
+@media screen and (max-width : 829px){
+    #content{
+        width: 100%;
+    }
+    /* Menu */
+
+    #menu{
+        height: 50px;
+    }
+
+    #logo-mobile{
+        display: flex;
+    }
+
+    #logo{
+        display: none;
+    }
+
+    #connect{
+        display: none;
+    }
+
+    #content-connect{
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        position: absolute;
+        top: 0;
+    }
+
+    #content-logo{
+        justify-content: center;
+        margin-top : 50px;
+    }
+
+    #menu .burger{
+        display: block;
+        height: 50px;
+    }
+
+    #menu{
+        background: #2baae2;
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        width: 100%;
+    }
+
+    #menu nav{
+        width: 100% !important;
+        overflow: hidden;
+        height: 0;
+        position: relative;
+        top: 44px;
+        z-index: 1;
+        background: #2baae2;
+        -webkit-transition: height .2s;
+        transition: height .2s;
+    }
+
+    #main-menu ul{
+        flex-direction: column;
+    }
+
+    #main-menu ul li a{
+        color: #fff
+    }
+
+    #main-menu ul li a:focus, #main-menu ul li a:hover{
+        color: #2baae2;
+        background: #fff;
+    }
+
+
+    #main-menu ul li {
+        width: 100%;
+    }
+
+   body #main-menu ul li:nth-child(4){
+        width: 100% !important;
+    }
+
+    /* Slider */
+
+    section{
+        margin-bottom: 50px;
+    }
+
+    #slider{
+        height: auto;
+    }
+
+    .slider1{
+        display: none;
+    }
+
+    #part-1{
+        display: none;
+    }
+/* CAR.HTML */
+    #content-details img{
+        height: auto;
+    }
+
+    .details, .info{
+        width: 100%;
+        border: 0;
+    }
+
+    .title-info{
+        border-top :0 !important;
+    }
+
+    #content-details, #page_connexion, #page_registration, #gallery, #contact, #mention, #plan{
+        margin-top: 20px;
+    }
+
+    #page_connexion h2{
+        margin-bottom: 0;
+    }
+
+    /*BOOKING.HTML*/
+    #search-content select{
+        margin-right: 0;
+    }
+
+}
+
+ @media all and (min-width: 600px) and (max-width : 829px){
+    .slider2{
+        display: flex;
+        width: 100%;
+    }
+} 
+
+@media screen and (max-width : 1000px){
+    /* INDEX.HTML */
+    #description div{
+        width: 100%;
+    }
+
+    #description div:nth-child(2) p{
+        padding: 0px 20px;
+    }
+
+    figure{
+        margin-bottom : 50px;
+    }
+
+    #step{
+        margin-bottom: 0;
+    }
+/* FOOTER */
+    #footer{
+        margin-top : 50px;
+    }
+
+    .footer-inner{
+        justify-content: center;
+    }
+
+    .block-footer-inner{
+        width: 220px;
+        margin-bottom: 50px;
+    }
+
+ 
+
+/* BOOKING.HTML module de recherche */
+    .select{
+        margin-top: 20px;
+    }
+
+    .select-content{
+        padding : 0px
+    }
+
+    #search-content form{
+        justify-content: space-around;
+        height: 100%;
+    }
+
+    #content-cars div{
+        justify-content: space-around;
+    }
+
+    /* car.html */
+    #content-cars h2{
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width : 880px)
+{
+   .footer-inner{
+       width: 100%;
+   } 
+   footer{
+       height: auto;
+   }
+}
+
+@media screen and (max-width : 333px)
+{
+    .car{
+        width: 100%;
+    }
+}
+
+
+

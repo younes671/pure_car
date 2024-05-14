@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Édition 
+    {% if type == 'marque' %}de la marque
+    {% elseif type == 'modele' %}du modèle
+    {% elseif type == 'categorie' %}de la catégorie
+    {% endif %}
+    {% endblock %}
+
+{% block body %}
+    <h1>Édition 
+        {% if type == 'marque' %}de la marque
+        {% elseif type == 'modele' %}du modèle
+        {% elseif type == 'categorie' %}de la catégorie
+        {% endif %}</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

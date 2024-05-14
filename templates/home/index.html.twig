@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'accueil{% endblock %}
+
+{% block body %}
+<section id="slider">
+    <!-- Slider desktop -->
+    <img src="img/slider-desktop/audi-slider-desktop.jpg" alt="audi e-tron" class="slider1">
+    <img src="img/slider-desktop/louez-a-partir-de-30e-slider-desktop.jpg" alt="Location à partir 30 euros" class="slider1">
+    <img src="img/slider-desktop/tesla-slider-desktop.jpg" alt="Tesla model 3 disponible en location" class="slider1">
+    <!-- Slider Tablette -->
+    <img src="img/slider-tab/audi-slider-tablette.jpg" alt="audi e-tron" class="slider2">
+    <img src="img/slider-tab/louez-a-partir-de-30e-slider-tablette.jpg" alt="Location à partir 30 euros" class="slider2">
+    <img src="img/slider-tab/tesla-slider-tablette.jpg" alt="Tesla model 3 disponible en location" class="slider2">
+    <!-- Slider mobile -->
+    <img src="img/slider-mobile/audi-slider-mobile.jpg" alt="audi e-tron" class="slider3">
+    <img src="img/slider-mobile/louez-a-partir-de-30e-slider-mobile.jpg" alt="Location à partir 30 euros" class="slider3">
+    <img src="img/slider-mobile/tesla-slider-mobile.jpg" alt="Tesla model 3 disponible en location" class="slider3">
+</section>
+<section id="description" class="flex-center">
+    <div class="flex-center">
+        <h1><span id="part-1">Pure Car</span> <span id="part-2">Location de voiture électrique</span></h1>
+        
+        <div>
+            <p>Notre agence est spécialisée dans la location de voiture électrique. Convaincue que le réchauffement climatique est le souci de tous, nous avons décidés de nous tourner vers des véhicules propres et respectueux de l'envirocement afin de contrinuer, à notre échelle à la réduction de la pollution automobile.
+            </p>
+        </div>
+    </div>
+</section>
+<section class="flex-wrap flex-center" id="step">
+    <h2>Gagnez du temps, louez en ligne</h2>
+    <div class="flex-wrap flex-center">
+        <div class="flex-wrap flex-center">
+            <figure class="flex-between">
+                <img src="img/icon-svg/icon-profil.svg">
+                <figcaption><span class="number">1.</span> Je me connecte</figcaption>
+            </figure>
+            <figure class="flex-between">
+                <img src="img/icon-svg/icon-list.svg">
+                <figcaption><span class="number">2.</span>Je choisis</figcaption>
+            </figure>
+        </div>
+        <div class="flex-wrap flex-center">
+            <figure class="flex-between">
+                <img src="img/icon-svg/icon-validate.svg">
+                <figcaption><span class="number">3.</span> Je réserve</figcaption>
+            </figure>
+            <figure class="flex-between">
+                <img src="img/icon-svg/icon-hand.svg">
+                <figcaption><span class="number">4.</span>Je me rend à l'agence</figcaption>
+            </figure>
+        </div>
+    </div>
+</section>
+{% endblock %}

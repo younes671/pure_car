@@ -1,0 +1,192 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page reservation{% endblock %}
+
+{% block body %}
+<section id="search-content" >
+    <form action="" method="post" class="flex-center">
+        <div class="flex-wrap flex-center select-content">
+            <div class="flex-wrap flex-center select">
+                <select name="category" id="category" class="flex-center">
+                    <option value="Categorie">--Catégorie--</option>
+                    <option value="berline">Berline</option>
+                    <option value="citadine">Citadine</option>
+                    <option value="ludospace">Ludospace</option>
+                    <option value="monospace">Monospace</option>
+                    <option value="suv">SUV</option>
+                    <option value="utilitaires">Utilitaires</option>
+                </select>
+                <select name="mark" id="mark">
+                    <option value="marque">--Marque--</option>
+                    <option value="audi">Audi</option> 
+                    <option value="bmw">BMW</option>
+                    <option value="citroen">Citroën</option>
+                    <option value="ds">DS</option>
+                    <option value="hyundai">Hyundai</option>
+                    <option value="jaguar">Jaguar</option>
+                    <option value="kia">Kia</option>
+                    <option value="mercedes">Mercedes</option>
+                    <option value="mini">Mini-Cooper</option>
+                    <option value="mitsubishi">Mitsubishi</option>
+                    <option value="nissan">Nissan</option>
+                    <option value="peugeot">Peugeot</option>
+                    <option value="renault">Renault</option>
+                    <option value="smart">Smart</option>
+                    <option value="tesla">Tesla</option>
+                    <option value="toyota">Toyota</option>
+                    <option value="vw">Volkswagen</option>
+                </select>
+            </div>
+            <div class="flex-wrap flex-center select">
+                <select name="place" id="place">
+                    <option value="place">--Nombre de place--</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="5">5</option>
+                    <option value="7">7</option>
+                </select>
+                <select name="autonomy" id="autonomy">
+                    <option value="autonomie">--Autonomie--</option>
+                    <option value="100">100 Km à 199Km</option>
+                    <option value="200">200 Km à 299Km</option>
+                    <option value="300">300 Km à 399 Km</option>
+                    <option value="400">400 Km à 499 Km</option>
+                    <option value="500">500 Km et plus</option>
+                </select>
+            </div>
+        </div>
+        <input type="submit" value="Rechercher" class="button flex-center">
+    </form>
+</section>
+<section id="content-cars">
+    <h2>Nos véhicules</h2>
+    <div class="flex-wrap flex-between">
+        <a href="{{ path('detailCar_reservation') }}" class="car">
+            <img src="../img/car/nissan-leaf.jpg" alt="voiture">
+            <div class="mark flex-center">
+                <p>Nissan Leaf</p>
+            </div>
+            <div class="gray">
+                <span class=" flex-center">Catégorie</span>
+                <span class=" flex-center">Berline</span>
+            </div>
+            <div>
+                <span class=" flex-center">Nombre de place</span>
+                <span class=" flex-center">5</span>
+            </div>
+            <div class="gray">
+                <span class=" flex-center">Autonomie</span>
+                <span class=" flex-center">385 Km</span>
+            </div>
+            <div class="flex-center">
+                <span class="price flex-center">45€ / J</span>
+            </div>
+        </a>
+        <a href="{{ path('detailCar_reservation') }}" class="car">
+            <img src="../img/car/audi-e-tron.jpg" alt="voiture">
+            <div class="mark flex-center">
+                <p>Audi e-Tron</p>
+            </div>
+            <div class="gray">
+                <span class=" flex-center">Catégorie</span>
+                <span class=" flex-center">SUV</span>
+            </div>
+            <div>
+                <span class=" flex-center">Nombre de place</span>
+                <span class=" flex-center">5</span>
+            </div>
+            <div class="gray">
+                <span class=" flex-center">Autonomie</span>
+                <span class=" flex-center">417 Km</span>
+            </div>
+            <div class="flex-center">
+                <span class="price flex-center">90€ / J</span>
+            </div>
+        </a>
+        <a href="{{ path('detailCar_reservation') }}" class="car">
+            <img src="../img/car/partner-utilitaire.jpg" alt="voiture">
+            <div class="mark flex-center">
+                <p>Peugeot Partner</p>
+            </div>
+            <div class="gray">
+                <span class=" flex-center">Catégorie</span>
+                <span class=" flex-center">Utilitaire</span>
+            </div>
+            <div>
+                <span class=" flex-center">Nombre de place</span>
+                <span class=" flex-center">3</span>
+            </div>
+            <div class="gray">
+                <span class=" flex-center">Autonomie</span>
+                <span class=" flex-center">170 Km</span>
+            </div>
+            <div class="flex-center">
+                <span class="price flex-center">30€ / J</span>
+            </div>
+        </a>
+        <a href="{{ path('detailCar_reservation') }}" class="car">
+            <img src="../img/car/bmw-i3.jpg" alt="voiture">
+            <div class="mark flex-center">
+                <p>BMW i3</p>
+            </div>
+            <div class="gray">
+                <span class=" flex-center">Catégorie</span>
+                <span class=" flex-center">Citadine</span>
+            </div>
+            <div>
+                <span class=" flex-center">Nombre de place</span>
+                <span class=" flex-center">5</span>
+            </div>
+            <div class="gray">
+                <span class=" flex-center">Autonomie</span>
+                <span class=" flex-center">195 Km</span>
+            </div>
+            <div class="flex-center">
+                <span class="price flex-center">40€ / J</span>
+            </div>
+        </a>
+        <a href="{{ path('detailCar_reservation') }}" class="car">
+            <img src="../img/car/ds3-crossback.jpg" alt="voiture">
+            <div class="mark flex-center">
+                <p>DS 3 Crossback</p>
+            </div>
+            <div class="gray">
+                <span class=" flex-center">Catégorie</span>
+                <span class=" flex-center">SUV</span>
+            </div>
+            <div>
+                <span class=" flex-center">Nombre de place</span>
+                <span class=" flex-center">5</span>
+            </div>
+            <div class="gray">
+                <span class=" flex-center">Autonomie</span>
+                <span class=" flex-center">320 Km</span>
+            </div>
+            <div class="flex-center">
+                <span class="price flex-center">75€ / J</span>
+            </div>
+        </a>
+        <a href="{{ path('detailCar_reservation') }}" class="car">
+            <img src="../img/car/Berlingo-ludospace.jpg" alt="voiture">
+            <div class="mark flex-center">
+                <p>Citroën e-Berlingo</p>
+            </div>
+            <div class="gray">
+                <span class=" flex-center">Catégorie</span>
+                <span class=" flex-center">Ludospace</span>
+            </div>
+            <div>
+                <span class=" flex-center">Nombre de place</span>
+                <span class=" flex-center">5</span>
+            </div>
+            <div class="gray">
+                <span class=" flex-center">Autonomie</span>
+                <span class=" flex-center">170 Km</span>
+            </div>
+            <div class="flex-center">
+                <span class="price flex-center">30€ / J</span>
+            </div>
+        </a>
+    </div> 
+</section>
+{% endblock %}

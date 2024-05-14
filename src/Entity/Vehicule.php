@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\VehiculeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: VehiculeRepository::class)]
@@ -37,7 +38,7 @@ class Vehicule
     private ?int $nbBagage = null;
 
     #[ORM\Column]
-    private ?int $prixLocation = null;
+    private ?int $prix = null;
 
     #[ORM\ManyToOne(inversedBy: 'VehiculesCategorie')]
     private ?Categorie $categorie = null;
@@ -50,6 +51,9 @@ class Vehicule
      */
     #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'vehicule')]
     private Collection $VehiculeReservations;
+
+    #[ORM\Column(type: Types::BLOB)]
+    private $img = null;
 
     public function __construct()
     {
@@ -145,14 +149,14 @@ class Vehicule
         return $this;
     }
 
-    public function getPrixLocation(): ?int
+    public function getPrix(): ?int
     {
-        return $this->prixLocation;
+        return $this->prix;
     }
 
-    public function setPrixLocation(int $prixLocation): static
+    public function setPrix(int $prix): static
     {
-        $this->prixLocation = $prixLocation;
+        $this->prix = $prix;
 
         return $this;
     }
@@ -207,6 +211,18 @@ class Vehicule
                 $vehiculeReservation->setVehicule(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImg()
+    {
+        return $this->img;
+    }
+
+    public function setImg($img): static
+    {
+        $this->img = $img;
 
         return $this;
     }

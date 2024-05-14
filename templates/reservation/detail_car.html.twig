@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ReservationController!{% endblock %}
+
+{% block body %}
+<section id="content-details" class="flex-center">
+    <div class="details flex-center">
+        <img src="../img/car/nissan-leaf-detail.jpg" alt="voiture">
+        <div class="mark flex-center">
+            <p>Nissan Leaf</p>
+        </div>
+        <div class="gray">
+            <span class=" flex-center">Catégorie</span>
+            <span class=" flex-center">Berline</span>
+        </div>
+        <div>
+            <span class=" flex-center">Nombre de place</span>
+            <span class=" flex-center">5</span>
+        </div>
+        <div class="gray">
+            <span class=" flex-center">Autonomie</span>
+            <span class=" flex-center">385 Km</span>
+        </div>
+        <div class="price-content">
+            <span class="price flex-center">45€ / J</span>
+            <span><a href="connexion.html" class="booking-btn flex-center button">Je réserve</a></span>
+        </div>
+    </div>
+</section>
+<section class="flex-center">
+    <div class="info">
+        <div class="flex-center title-info">
+            <h2>Information importante</h2>
+            <p>Tout ce qu'il faut savoir avant d'effectuer votre réservation.</p>
+        </div>
+        <div class="gray">
+            <p class="flex-center">Âge minimum</p>
+            <p class="flex-center">21 ans</p>
+        </div>
+        <div class="condition">
+            <p class="flex-center">1 carte de débit ou crédit</p>
+            <p class="flex-center text">Le paiement pour la location de ce véhicule peut être effectué avec une carte de débit ou crédit à votre nom. Cette même carte doit être au nom du conducteur principal et devra être présentée au moment de la prise en charge.</p>
+        </div>
+        <div class="gray condition">
+            <p class="flex-center">Documents à apporter</p>
+            <p class="flex-center text">Au moment de la prise en charge, vous devrez présenter un permis de conduire en cours de validité, une carte d'identité ainsi qu'une ou deux cartes de crédit.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

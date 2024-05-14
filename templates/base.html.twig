@@ -2,16 +2,75 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>Pure Car : Location de voiture électrique</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <link rel="icon"  href="img/favicon_io/favicon.png" type="image/png"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         {% block stylesheets %}
-        {% endblock %}
-
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div id="content">
+            <header>
+                <div class="flex-between" id="content-logo">
+                    <a href=""> 
+                        <img src="img/logo/logo-original.png" id="logo" alt="logo-original">
+                        <img src="img/logo/logo-mobile.png" id="logo-mobile" alt="logo-mobile" >
+                    </a>
+                    <a href="{{ path('app_login') }}" class="button flex-center" id="connect">Connexion</a>
+                </div>
+                <div id="menu">
+                        <input type="checkbox" class="burger">
+                        <nav id="main-menu" class="flex-center">
+                            <ul class="flex-center">
+                                <li><a href="{{ path('app_home') }}">Accueil</a></li>
+                                <li><a href="{{ path('app_register') }}">Inscription</a></li>
+                                <li><a href="{{ path('app_galerie') }}">Galerie</a></li>
+                                <li><a href="{{ path('app_reservation') }}">Reservation</a></li>
+                                <li><a href="{{ path('app_entreprise') }}">Contact</a></li>
+                                <li><a href="{{ path('app_gestionMultiple') }}">Gestion véhicule</a></li>
+                                <li><a href="">Mon profil</a></li>
+                            </ul>
+                        </nav>
+                    </div> 
+                    <div id="content-connect"><a href="{{ path('app_login') }}"><span id="icon-connect"></span></a></div>
+            </header>
+            {% block body %}{% endblock %}
+            <footer>
+                <div class="footer-inner flex-wrap">
+                        <div class="block-footer-inner">
+                            <h4>Adresse</h4>
+                            <p>10 place de la gare<br>67000 Strasbourg<br>03.88.77.00.00<br><a href="mailto:contact@purecar.fr" class="mail">contact@purecar.fr</a></p>
+                        </div>
+                        <div class="block-footer-inner">
+                            <a href="" class="link-footer">Contact</a>
+                            <a href="" class="link-footer">Mentions légales</a>
+                            <a href="" class="link-footer">Plan du site</a>
+                            <div id="rs">
+                                <a href="https://fr-fr.facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                                <a href="https://twitter.com/" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+                                <a href="https://instagram.com/" target="_blank"><i class="fa-brands fa-instagram"></i></i></a>
+                            </div>
+                        </div>  
+                        <div class="block-footer-inner">
+                            <h4>Horaires</h4>
+                            <p>Lundi au Vendredi<br>08h00 - 22h00<br>Samedi<br>08h00 - 12h00<br>13h00 - 19h00</p>
+                        </div>
+                                         
+                        {# <div class="block-footer-inner">
+                            <a href=""><img src="img/logo/logo-footer.png" alt="logo"></a>
+                        </div> #}
+                </div>
+    
+                 <div id="copyright" class="flex-center">
+                    <p>&copy;&nbsp;2019<span id="divider">|</span> Ce site est fictif, il a été réalisé dans le cadre de la formation professionnel DWMM au sein de ELAN FORMATON</p>
+                </div> 
+            </footer>
+       </div>
+       {% block javascripts %}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+        {% endblock %}
     </body>
 </html>

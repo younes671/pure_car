@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page de contact{% endblock %}
+
+{% block body %}
+{% for vehicule in vehicules %}
+<img class="voit" src="{{ vehicule.img }}" alt="image voiture">
+{% endfor %}
+
+{% endblock %}
