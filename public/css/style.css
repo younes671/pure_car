@@ -58,6 +58,7 @@ section{
     display: flex;
     justify-content: center;
     align-items: center;
+    white-space: wrap; /* Empêche le texte de passer à la ligne */
 }
 
 .flex-around{
@@ -66,8 +67,23 @@ section{
 }
 
 .flex-wrap{
+    display: flex;
     flex-wrap: wrap;
 }
+
+.gallery-item {
+    margin-bottom: 20px; /* Espace entre chaque galerie */
+    text-align: center; /* Centrer le contenu horizontalement */
+}
+
+.gallery-item h2 {
+    margin-bottom: 10px; /* Espace entre le titre et l'image */
+}
+
+/* #suv{
+    display: flex;
+    flex-direction: column;
+} */
 
 .button{
     width: 200px;
@@ -110,11 +126,12 @@ section{
 }
 
 #main-menu ul li{
-    width: 150px;
+    width: 100%;
+    min-width: 150px;
 }
 
 #main-menu ul li:nth-child(4){
-    width: 230px !important;
+    width: 150px !important;
 }
 #main-menu ul li a{
     display: flex;
@@ -140,6 +157,7 @@ section{
 /* ------------------------------------Menu mobile */
 
 #menu{
+   width: 100%;
     height: 45px;
 }
 
@@ -256,6 +274,8 @@ footer a:hover, .mail:hover{
     margin: 15px;
 }
 
+
+
 /* ---------------------------------------------------------------ACCUEIL */
 
 /* Slider */
@@ -349,6 +369,8 @@ footer a:hover, .mail:hover{
     line-height: 40px;
     color : #2baae2;
     margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
 }
 
 figure{
@@ -408,8 +430,49 @@ figcaption{
 }
 
 .voit{
-    height: 500px;
-    width: 600px;
+    height: 245px;
+    width: 450px;
+    object-fit: cover;
+    border: 1px solid rgba(0, 0, 0, 0.499);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 7px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.voit-resa{
+    height: 180px;
+    width: auto;
+    object-fit: cover;
+    border: 1px solid rgba(0, 0, 0, 0.499);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.p-resa{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.voit:hover{
+    box-shadow: 0px 0px 20px #000;
+    transform: scale(1.05);
+}
+
+.voit-form{
+    margin-top: 20px;
+    height: 100%;
+    width:100%;
+    object-fit: contain;
+    border: 1px solid rgba(0, 0, 0, 0.581);
+}
+
+.voit-detail{
+    /* margin-top: 20px; */
+    height: 100%;
+    width:100%;
+    object-fit: cover;
+    border: 1px solid rgba(0, 0, 0, 0.581);
 }
 
 .table-striped{
@@ -423,6 +486,8 @@ figcaption{
 
 .table{
     border-color: black;
+    text-align: center;
+    white-space: nowrap;
 }
 
 .colonne{
@@ -430,8 +495,8 @@ figcaption{
 }
 
 .forms{
-    margin: 15px 0;
-    width: 540px;
+    margin: 15px;
+    width: 550px;
     padding: 20px 0 20px 0;
     background: #f0f0f0;
     border-radius: 10px;
@@ -555,13 +620,17 @@ label[for=rgpd], .rgpd-link{
 
 /* LISTE VEHICULE */
 .car{
-    height: 438px;
+    height: aut;
     width: 330px;
     display: flex;
     flex-direction: column;
     border: solid #4e4e4e 1px;
     margin-top: 50px;
+    border-radius: 7px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
+
+
 .car div, .details div, .info div{
     height: 50px;
     border-top: solid 2px #2baae2;
@@ -577,9 +646,20 @@ label[for=rgpd], .rgpd-link{
 
 .gray{
     background: #cfcfcf;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
 }
 
-.mark, .price {
+.mark {
+    color: #2baae2 !important;
+    font-size: 30px;
+    font-family: 'Exo-Reg';
+    background-color: white;
+}
+
+.price{
     color: #2baae2 !important;
     font-size: 30px;
     font-family: 'Exo-Reg';
@@ -588,6 +668,7 @@ label[for=rgpd], .rgpd-link{
 
 .car:hover, #gallery a:hover img{
     box-shadow: 0px 0px 20px #000;
+    transform: scale(1.05);
 }
 
 /* ------------------------------------------------------CAR.HTML */
@@ -613,8 +694,9 @@ width: auto !important;
 }
 
 .info .text{
-    text-align: justify;
-    padding-right: 15px;
+    text-align: center;
+    width: 100%;
+    /* padding-right: 15px; */
 }
 a.booking-btn.flex-center.button{
     width: 100%;
@@ -689,6 +771,7 @@ a.booking-btn.flex-center.button{
         margin: 30px 0;
         text-align: center;
     }
+
 
     #gallery h2{
         text-align: center;
@@ -766,6 +849,39 @@ a.booking-btn.flex-center.button{
     color: green;
 }
 
+.mark {
+  padding-top: 20px;
+}
+
+th{
+    font-weight: bolder;
+}
+
+/*-------------------------------------------------------------GestionMultiple */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Répartit les colonnes de manière égale */
+    gap: 20px; /* Espacement entre les éléments de la grille */
+}
+
+.grid-item {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.table-responsive {
+    overflow-x: auto; /* Ajouter une barre de défilement horizontale si nécessaire */
+}
+
+.gestion {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Style supplémentaire selon vos besoins */
+
 /* ------------------------------------------------------------Responsive */
 @media screen and (max-width : 1080px){
     #content{
@@ -783,6 +899,7 @@ a.booking-btn.flex-center.button{
     #mention{
         padding: 0 20px;
     }
+
 }
 
 @media screen and (max-width : 599px){
@@ -822,7 +939,8 @@ a.booking-btn.flex-center.button{
 
     #rs{
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: nowrap;
     }
 
     #rs img{
@@ -963,6 +1081,7 @@ a.booking-btn.flex-center.button{
     #content-logo{
         justify-content: center;
         margin-top : 50px;
+        height: 205px !important;
     }
 
     #menu .burger{

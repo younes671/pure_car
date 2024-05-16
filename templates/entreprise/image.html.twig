@@ -1,10 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Page de contact{% endblock %}
+{% block title %}Image véhicule{% endblock %}
+{% block description %}Photo du véhicule{% endblock %}
 
 {% block body %}
-{% for vehicule in vehicules %}
-<img class="voit" src="{{ vehicule.img }}" alt="image voiture">
-{% endfor %}
+<section class="flex-center" id="page_registration">
+<h2> {{ vehicule.modele.marque.nom ~ ' ' ~ vehicule.modele.nom}} </h2>
+
+<img class="voit-form" src="{{ vehicule.img }}" alt="image voiture">
+</section>
 
 {% endblock %}

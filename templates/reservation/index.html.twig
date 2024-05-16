@@ -61,132 +61,38 @@
 <section id="content-cars">
     <h2>Nos véhicules</h2>
     <div class="flex-wrap flex-between">
-        <a href="{{ path('detailCar_reservation') }}" class="car">
-            <img src="../img/car/nissan-leaf.jpg" alt="voiture">
+        {% for vehicule in vehicules %}
+        <div class="car">
+            <img class="voit-resa" src=" {{ vehicule.img }} " alt="voiture">
             <div class="mark flex-center">
-                <p>Nissan Leaf</p>
-            </div>
-            <div class="gray">
-                <span class=" flex-center">Catégorie</span>
-                <span class=" flex-center">Berline</span>
+                <p >{{ vehicule.modele.marque.nom ~ ' ' ~ vehicule.modele.nom }}</p>
             </div>
             <div>
-                <span class=" flex-center">Nombre de place</span>
-                <span class=" flex-center">5</span>
+                <span class="price flex-center gray">{{ vehicule.prix ~ ' €/J' }}</span>
+                <span><a href="{{ path('detailCar_reservation', { 'vehiculeId' : vehicule.id }) }}" class="booking-btn flex-center button">Voir détail</a></span>
             </div>
-            <div class="gray">
-                <span class=" flex-center">Autonomie</span>
-                <span class=" flex-center">385 Km</span>
-            </div>
-            <div class="flex-center">
-                <span class="price flex-center">45€ / J</span>
-            </div>
-        </a>
-        <a href="{{ path('detailCar_reservation') }}" class="car">
-            <img src="../img/car/audi-e-tron.jpg" alt="voiture">
-            <div class="mark flex-center">
-                <p>Audi e-Tron</p>
-            </div>
-            <div class="gray">
-                <span class=" flex-center">Catégorie</span>
-                <span class=" flex-center">SUV</span>
-            </div>
-            <div>
-                <span class=" flex-center">Nombre de place</span>
-                <span class=" flex-center">5</span>
-            </div>
-            <div class="gray">
-                <span class=" flex-center">Autonomie</span>
-                <span class=" flex-center">417 Km</span>
-            </div>
-            <div class="flex-center">
-                <span class="price flex-center">90€ / J</span>
-            </div>
-        </a>
-        <a href="{{ path('detailCar_reservation') }}" class="car">
-            <img src="../img/car/partner-utilitaire.jpg" alt="voiture">
-            <div class="mark flex-center">
-                <p>Peugeot Partner</p>
-            </div>
-            <div class="gray">
-                <span class=" flex-center">Catégorie</span>
-                <span class=" flex-center">Utilitaire</span>
-            </div>
-            <div>
-                <span class=" flex-center">Nombre de place</span>
-                <span class=" flex-center">3</span>
-            </div>
-            <div class="gray">
-                <span class=" flex-center">Autonomie</span>
-                <span class=" flex-center">170 Km</span>
-            </div>
-            <div class="flex-center">
-                <span class="price flex-center">30€ / J</span>
-            </div>
-        </a>
-        <a href="{{ path('detailCar_reservation') }}" class="car">
-            <img src="../img/car/bmw-i3.jpg" alt="voiture">
-            <div class="mark flex-center">
-                <p>BMW i3</p>
-            </div>
-            <div class="gray">
-                <span class=" flex-center">Catégorie</span>
-                <span class=" flex-center">Citadine</span>
-            </div>
-            <div>
-                <span class=" flex-center">Nombre de place</span>
-                <span class=" flex-center">5</span>
-            </div>
-            <div class="gray">
-                <span class=" flex-center">Autonomie</span>
-                <span class=" flex-center">195 Km</span>
-            </div>
-            <div class="flex-center">
-                <span class="price flex-center">40€ / J</span>
-            </div>
-        </a>
-        <a href="{{ path('detailCar_reservation') }}" class="car">
-            <img src="../img/car/ds3-crossback.jpg" alt="voiture">
-            <div class="mark flex-center">
-                <p>DS 3 Crossback</p>
-            </div>
-            <div class="gray">
-                <span class=" flex-center">Catégorie</span>
-                <span class=" flex-center">SUV</span>
-            </div>
-            <div>
-                <span class=" flex-center">Nombre de place</span>
-                <span class=" flex-center">5</span>
-            </div>
-            <div class="gray">
-                <span class=" flex-center">Autonomie</span>
-                <span class=" flex-center">320 Km</span>
-            </div>
-            <div class="flex-center">
-                <span class="price flex-center">75€ / J</span>
-            </div>
-        </a>
-        <a href="{{ path('detailCar_reservation') }}" class="car">
-            <img src="../img/car/Berlingo-ludospace.jpg" alt="voiture">
-            <div class="mark flex-center">
-                <p>Citroën e-Berlingo</p>
-            </div>
-            <div class="gray">
-                <span class=" flex-center">Catégorie</span>
-                <span class=" flex-center">Ludospace</span>
-            </div>
-            <div>
-                <span class=" flex-center">Nombre de place</span>
-                <span class=" flex-center">5</span>
-            </div>
-            <div class="gray">
-                <span class=" flex-center">Autonomie</span>
-                <span class=" flex-center">170 Km</span>
-            </div>
-            <div class="flex-center">
-                <span class="price flex-center">30€ / J</span>
-            </div>
-        </a>
+        </div>
+        {% endfor %}
+        <div id="voitures"></div>
     </div> 
 </section>
+{% block javascript %} 
+<script>
+    const box = document.querySelector("#voitures")
+    fetch('{{ path("app_vehicules") }}')
+    .then(res => res.json())
+    .then(data => {
+        let html = "";
+        console.log(data)
+        data.forEach(voiture => {
+            html += `<p>Marque : ${voiture.nom}</p>`
+
+            console.log(html)
+        })
+
+        box.innerHTML = html;
+    })
+</script>
 {% endblock %}
+{% endblock %}
+

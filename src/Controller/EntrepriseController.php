@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Marque;
+use App\Entity\Vehicule;
 use App\Form\MarqueFormType;
 use App\Form\ModeleFormType;
 use App\Form\VehiculeFormType;
@@ -38,7 +39,7 @@ class EntrepriseController extends AbstractController
     //     ]);
     // }
 
-    #[Route('/entreprise/gestionMultiple', name: 'app_gestionMultiple')]
+    #[Route('/gestionMultiple', name: 'app_gestionMultiple')]
     public function new(Request $request, EntityManagerInterface $entityManager, VehiculeRepository $vehiculeRepository, MarqueRepository $marqueRepository, ModeleRepository $modeleRepository, CategorieRepository $categorieRepository): Response
     {
        
@@ -86,30 +87,34 @@ class EntrepriseController extends AbstractController
 
        if ($detailVehicule->isSubmitted() && $detailVehicule->isValid()) {
         $uploadedFile = $detailVehicule['img']->getData(); // Récupérer le fichier image téléchargé
-    
+        
         // Générer un nom de fichier unique pour éviter les collisions
         $newFileName = uniqid().'.'.$uploadedFile->guessExtension();
-    
-        // Déplacer le fichier téléchargé vers le répertoire de destination (par exemple, public/uploads)
+        
+        // Déplacer le fichier téléchargé vers le répertoire de destination (par exemple, public/img/car)
         try {
             $uploadedFile->move(
-                $this->getParameter('kernel.project_dir') . '/public/img/car', // Obtenez le répertoire de destination à partir des paramètres Symfony
+                $this->getParameter('kernel.project_dir') . '/public/img/car',
                 $newFileName
             );
+            
+            // Enregistrer le chemin relatif du fichier dans la base de données
+            $vehicule = $detailVehicule->getData();
+            $vehicule->setImg('/img/car/'.$newFileName); // Enregistrez le chemin relatif du fichier dans la colonne img
+        
+            $entityManager->persist($vehicule);
+            $entityManager->flush();
+            
+            $this->addFlash('success', 'Détails véhicule ajoutés avec succès.');
+            
+            return $this->redirectToRoute('app_gestionMultiple');
         } catch (FileException $e) {
             // Gérer l'erreur de téléchargement du fichier
+            $this->addFlash('error', 'Une erreur est survenue lors du téléchargement du fichier.');
+            // Rediriger vers une page d'erreur ou afficher un message d'erreur
+        }
         }
     
-        // Maintenant, enregistrez le chemin du fichier dans la base de données plutôt que le contenu binaire
-        $vehicule = $detailVehicule->getData();
-        $vehicule->setImg($newFileName); // Enregistrez le nom de fichier dans la colonne img
-    
-        $entityManager->persist($vehicule);
-        $entityManager->flush();
-        $this->addFlash('success', 'Détails véhicule ajoutés avec succès.');
-    
-        return $this->redirectToRoute('app_gestionMultiple');
-    }
     
    
        return $this->render('entreprise/gestionMultiple.html.twig', [
@@ -124,13 +129,13 @@ class EntrepriseController extends AbstractController
         ]);
     }
 
-    #[Route('/entreprise/image', name: 'image_entreprise')]
-    public function image(VehiculeRepository $vehiculeRepository): Response
+    #[Route('/entreprise/image/{id}', name: 'image_entreprise')]
+    public function image(Vehicule $id, VehiculeRepository $vehiculeRepository): Response
     {
-       $vehicule = $vehiculeRepository->findAll();
+       $vehicule = $vehiculeRepository->find($id);
 
         return $this->render('entreprise/image.html.twig', [
-            'vehicules' => $vehicule
+            'vehicule' => $vehicule
         ]);
     }
 
@@ -164,16 +169,31 @@ class EntrepriseController extends AbstractController
         // Gestion de la soumission du formulaire
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $uploadedFile = $form['img']->getData();
+        if ($uploadedFile) {
+            $newFileName = uniqid().'.'.$uploadedFile->guessExtension();
+            try {
+                $uploadedFile->move(
+                    $this->getParameter('kernel.project_dir') . '/public/img/car',
+                    $newFileName
+                );
+                $entity->setImg('/img/car/'.$newFileName);
+            } catch (FileException $e) {
+                // Gérer l'erreur de téléchargement du fichier
+                $this->addFlash('error', 'Une erreur est survenue lors du téléchargement du fichier.');
+                return $this->redirectToRoute('edit_entity', ['type' => $type, 'id' => $id]);
+            }
+        }
             $entityManager->flush();
             $this->addFlash('success', ucfirst($type) . ' modifié avec succès.');
             return $this->redirectToRoute('app_gestionMultiple');
         }
  
-        // Rendu de la vue avec le formulaire pour éditer l'entité
-        return $this->render('entreprise/edit_entity.html.twig', [
-            'form' => $form->createView(),
-            'type' => $type,
-        ]);
+            // Rendu de la vue avec le formulaire pour éditer l'entité
+            return $this->render('entreprise/edit_entity.html.twig', [
+                'form' => $form->createView(),
+                'type' => $type,
+            ]);
         // }else{
 
         // $this->addFlash('danger', 'Vous n\'avez pas les droits pour cette action.');
@@ -220,5 +240,21 @@ class EntrepriseController extends AbstractController
         //     $this->addFlash('danger', 'Vous n\'avez pas les droits pour cette action.');
         //     return $this->redirectToRoute('app_gestionMultiple');
         // } 
+    }
+
+    #[Route('/entreprise/mention', name: 'mention_entreprise')]
+    public function mention(): Response
+    {
+        return $this->render('entreprise/mention.html.twig', [
+            
+        ]);
+    }
+
+    #[Route('/entreprise/planSite', name: 'planSite_entreprise')]
+    public function planSite(): Response
+    {
+        return $this->render('entreprise/planSite.html.twig', [
+            
+        ]);
     }
 }

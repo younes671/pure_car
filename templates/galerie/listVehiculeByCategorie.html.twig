@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Galerie{% endblock %}
+
+{% block body %}
+<section id="gallery">
+    <h2>Liste des véhicules par catégorie</h2>
+    <p style="margin-bottom: 50px;">Découvrez tous nos véhicules. Cliquez sur une image pour afficher les véhicules correspondant à la même catégorie.</p>
+    <div class="flex-wrap flex-around">
+       {% for vehicule in vehicules %}
+            <h2>{{ vehicule.modele.nom }}</h2>
+            <ul>
+                {% for vehicule in vehicules %}
+                <img class="voit" src="{{ vehicule.img }}" alt="">
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

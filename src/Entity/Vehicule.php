@@ -52,7 +52,7 @@ class Vehicule
     #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'vehicule')]
     private Collection $VehiculeReservations;
 
-    #[ORM\Column(type: Types::BLOB)]
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
     private $img = null;
 
     public function __construct()

@@ -2,28 +2,6 @@
 
 {% block title %}Gestion multiple{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }} {# Ceci inclut les feuilles de style définies dans le modèle parent #}
-
-    {# Définir une largeur plus grande pour la page gestionMultiple #}
-    <style>
-        #content {
-            width: 1500px; 
-        }
-        .table{
-            width: 99%;
-            overflow: hidden;
-        }
-        #content-logo{
-            height: 200px;
-        }
-        #logo{
-            height: 100%;
-            width: 200px;
-        }
-    </style>
-{% endblock %}
-
 {% block body %}
     {% for flash_message in app.flashes('success') %}
     <div class="alert alert-success">
@@ -47,7 +25,7 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">Nom</th>
+                                <th scope="col">Type</th>
                                 <th scope="col">Modifier</th>
                                 <th scope="col">Supprimer</th>
                             </tr>
@@ -74,7 +52,7 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">Nom</th>
+                                <th scope="col">Marque</th>
                                 <th scope="col">Modifier</th>
                                 <th scope="col">Supprimer</th>
                             </tr>
@@ -140,33 +118,35 @@
                 <table class="table table-striped forms">
                     <thead class="thead-dark">
                         <tr>
-                            <th class="colonne" scope="col">Autonomie</th>
-                            <th scope="col">Nombre porte</th>
-                            <th scope="col">Nombre place</th>
-                            <th scope="col">Nombre bagage</th>
-                            <th scope="col">Prix</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Categorie</th>
+                            {# <th scope="col">Cat.</th> #}
+                            <th scope="col">Marque</th>
                             <th scope="col">Modèle</th>
-                            <th scope="col">Bluetooth</th>
+                            <th class="colonne" scope="col">Autonomie</th>
+                            {# <th scope="col">Nombre porte</th>
+                            <th scope="col">Nombre place</th>
+                            <th scope="col">Nombre bagage</th> #}
+                            <th scope="col">Prix/J</th>
+                            <th scope="col">Img</th>
+                            {# <th scope="col">Bluetooth</th>
                             <th scope="col">Climatisation</th>
-                            <th scope="col">GPS</th>
-                            <th scope="col">Modifier</th>
-                            <th scope="col">Supprimer</th>
+                            <th scope="col">GPS</th> #}
+                            <th scope="col">Editer</th>
+                            <th scope="col">Supp.</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for vehicule in vehicules %}
                             <tr>
-                                <td>{{ vehicule.autonomie }}</td>
-                                <td>{{ vehicule.nbPorte }}</td>
-                                <td>{{ vehicule.nbPlace }}</td>
-                                <td>{{ vehicule.nbBagage }}</td>
-                                <td>{{ vehicule.prix ~ ' €/jour'}}</td>
-                                <td><a href="{{ path('image_entreprise') }}">{{ vehicule.img }}</a></td>
-                                <td>{{ vehicule.categorie.nom }}</td>
+                                {# <td>{{ vehicule.categorie.nom }}</td> #}
+                                <td>{{ vehicule.modele.marque.nom }}</td>
                                 <td>{{ vehicule.modele.nom }}</td>
-                                <td>
+                                <td>{{ vehicule.autonomie }}</td>
+                                {# <td>{{ vehicule.nbPorte }}</td>
+                                <td>{{ vehicule.nbPlace }}</td>
+                                <td>{{ vehicule.nbBagage }}</td> #}
+                                <td>{{ vehicule.prix ~ ' €'}}</td>
+                                <td><a href="{{ path('image_entreprise', {'id': vehicule.id}) }}"><i class="fa-solid fa-image"></i></a></td>
+                                {# <td>
                                    {% if vehicule.bluetooth %}
                                         <i class="fa-solid fa-check"></i>
                                    {% endif %} 
@@ -180,7 +160,7 @@
                                     {% if vehicule.gps %}
                                     <i class="fa-solid fa-check"></i>
                                     {% endif %} 
-                                </td>
+                                </td> #}
                                 <td><a href="{{ path('edit_entity', {'type': 'detailVehicule', 'id': vehicule.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a></td>
                                 <td><a href="{{ path('delete_entity', {'type': 'detailVehicule', 'id': vehicule.id}) }}" class="delete-link" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette ligne ?')"><i class="fa-solid fa-trash"></i></a></td>
                             </tr>

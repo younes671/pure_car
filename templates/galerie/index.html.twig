@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% block description %}Galerie de vehicule par categorie{% endblock %}
 {% block title %}Galerie{% endblock %}
 
 {% block body %}
@@ -7,47 +7,17 @@
     <h2>Galerie</h2>
     <p style="margin-bottom: 50px;">Découvrez tous nos véhicules. Cliquez sur une images pour afficher les véhicules correpondant à la même catégorie.</p>
     <div class="flex-wrap flex-around">
-        <div id="suv">
-            <h2> SUV</h2>
-            {% for vehicule in vehicules %}
-            <img class="voit" src="{{ vehicule.img }}" alt="image voiture">
-            {# {{ dump(vehicule.img) }} {% if false %}{% endif %} #}
-            {% endfor %}
-            <a href="../img/gallery/suv/audi-e-tron.jpg"  data-lightbox="suv" data-title="AUDI E-TRON"><img src="../img/gallery/suv/miniature.jpg" alt=""></a>
-            <a href="../img/gallery/suv/jaguar-i-pace.jpg"  data-lightbox="suv" data-title="JAQUAR I-SPACE"></a>
-            <a href="../img/gallery/suv/kia-niro-electrique.jpg"  data-lightbox="suv" data-title="KIA NIRO"></a>
-            <a href="../img/gallery/suv/mercedes-eqc.jpg"  data-lightbox="suv" data-title="MERCEDES EQC"></a>
-            <a href="../img/gallery/suv/tesla-model-x.jpg"  data-lightbox="suv" data-title="TESLA MODEL X"></a>
-        </div>
-        <div id="citadine">
-            <h2> Citadine</h2>
-            <a href="../img/gallery/citadine/ok-bmw_i3_12.jpg"  data-lightbox="citadine" data-title="BMW I3"><img src="../img/gallery/citadine/miniature.jpg" alt=""></a>
-            <a href="../img/gallery/citadine/mini-cooper.jpg"  data-lightbox="citadine" data-title="MINI COOPER"></a>
-            <a href="../img/gallery/citadine/ok-renault_zoe_z.e._3.jpg"  data-lightbox="citadine" data-title="ZOE"></a>
-            <a href="../img/gallery/citadine/smart-forfour-electric-drive.jpg"  data-lightbox="citadine" data-title="SMART FOR FOUR"></a>
-
-        </div>
-        <div id="berline">
-            <h2>Berline</h2>
-            <a href="../img/gallery/berline/tesla-model-3.jpg "  data-lightbox="berline" data-title="TESLA MODEL 3"><img src="../img/gallery/berline/miniature.jpg" alt=""></a>
-            <a href="../img/gallery/berline/nissan-leaf-2.jpg"  data-lightbox="berline" data-title="NISSAN LEAF"></a>
-            <a href="../img/gallery/berline/toyota-mirai.jpg"  data-lightbox="berline" data-title="TOYOTA MIRAI"></a>
-            <a href="../img/gallery/berline/vw-e-golf.jpg"  data-lightbox="berline" data-title="VW E-GOLF"></a>
-            <a href="../img/gallery/berline/hyundai-ioniq.jpg"  data-lightbox="berline" data-title="HYUNDAI IONIQ"></a>
-        </div>
-        <div id="monospace">
-            <h2>Monospace</h2>
-            <a href="../img/gallery/monospace/partner.jpg"  data-lightbox="monospace" data-title="PEUGEOT PARTNER"><img src="../img/gallery/monospace/miniature.jpg" alt=""></a>
-            <a href="../img/gallery/monospace/nissan-e-nv200.jpg"  data-lightbox="monospace" data-title="NISSAN E-NV200"></a>
-            <a href="../img/gallery/monospace/berlingo.jpg"  data-lightbox="monospace" data-title="CITROEN BERLINGO"></a>
-        </div>
-        <div id="utilitaires">
-            <h2>Utilitaires</h2>
-            <a href="../img/gallery/utilitaires/nissan-e200.jpg"  data-lightbox="utilitaires" data-title="NISSAN E-200"><img src="../img/gallery/utilitaires/miniature.jpg" alt=""></a>
-            <a href="../img/gallery/utilitaires/kangoo.jpg"  data-lightbox="utilitaires" data-title="KA?GOO"></a>
-            <a href="../img/gallery/utilitaires/master.jpg"  data-lightbox="utilitaires" data-title="RENAULT MASTER"></a>
-            <a href="../img/gallery/utilitaires/berlingo.jpg"  data-lightbox="utilitaires" data-title="CITROEN BERLINGO"></a>
-        </div>
+        {# <div id="suv"> #}
+        {% for categorie, image in imagesParCategorie %}
+        <div class="img-galerie">
+            <h2>{{ categorie }}</h2>
+        {# </div> #}
+        {% if image %}
+        <a href=" {{ path('vehiculeByCategorie_galerie', {'categorie': image.categoryId} ) }} "><img class="voit" src="{{ image.img }}" alt="Image de {{ categorie }}"></a>
+        {% else %}
+            <p>Aucune image disponible pour cette catégorie.</p>
+        {% endif %}
+        {% endfor %}
     </div>
 </section>
 {% endblock %}
