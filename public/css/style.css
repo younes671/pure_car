@@ -455,7 +455,7 @@ figcaption{
 }
 
 .voit:hover{
-    box-shadow: 0px 0px 20px #000;
+    box-shadow: 0px 0px 5px #000;
     transform: scale(1.05);
 }
 
@@ -535,6 +535,18 @@ form label{
     margin: 20px 0 20px 0;
 }
 
+.field-checkbox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 340px;
+    /* border:solid 1px #c0c0c0; */
+    border-radius : 10px;
+    height: 20px;
+    text-align: center;
+    margin: 20px 0 20px 0;
+}
 
 #message {
     height: 200px;
@@ -549,7 +561,7 @@ form label{
 }
 
 .button{
-    border: none;
+    border: 1px solid black;
 }
 
 .ag-name{
@@ -607,7 +619,6 @@ label[for=rgpd], .rgpd-link{
 
 #search-content .button{
     height: 40px;
-    /* margin-bottom: 82px; */
 }
 
 #search-content form{
@@ -656,7 +667,7 @@ label[for=rgpd], .rgpd-link{
     color: #2baae2 !important;
     font-size: 30px;
     font-family: 'Exo-Reg';
-    background-color: white;
+    background-color: #e6e5e5;
 }
 
 .price{

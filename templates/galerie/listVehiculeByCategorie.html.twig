@@ -3,19 +3,24 @@
 {% block title %}Galerie{% endblock %}
 
 {% block body %}
-<section id="gallery">
+</section>
+<section id="content-cars">
     <h2>Liste des véhicules par catégorie</h2>
-    <p style="margin-bottom: 50px;">Découvrez tous nos véhicules. Cliquez sur une image pour afficher les véhicules correspondant à la même catégorie.</p>
-    <div class="flex-wrap flex-around">
-       {% for vehicule in vehicules %}
-            <h2>{{ vehicule.modele.nom }}</h2>
-            <ul>
-                {% for vehicule in vehicules %}
-                <img class="voit" src="{{ vehicule.img }}" alt="">
-                {% endfor %}
-            </ul>
+    <div class="flex-wrap flex-between">
+        {% for vehicule in vehicules %}
+        <div class="car">
+            <img class="voit-resa" src=" {{ vehicule.img }} " alt="voiture">
+            <div class="mark flex-center">
+                <p >{{ vehicule.modele.marque.nom ~ ' ' ~ vehicule.modele.nom }}</p>
+            </div>
+            <div>
+                <span class="price flex-center">{{ vehicule.prix ~ ' €/J' }}</span>
+                <span><a href="{{ path('detailCar_reservation', { 'vehiculeId' : vehicule.id }) }}" class="booking-btn flex-center button">Voir détail</a></span>
+            </div>
+        </div>
         {% endfor %}
-    </div>
+        <div id="voitures"></div>
+    </div> 
 </section>
 
 {% endblock %}

@@ -31,28 +31,21 @@ class EntrepriseController extends AbstractController
         ]);
     }
 
-    // #[Route('/entreprise', name: 'app_entreprise')]
-    // public function new_edit(): Response
-    // {
-    //     return $this->render('entreprise/index.html.twig', [
-    //         'controller_name' => 'EntrepriseController',
-    //     ]);
-    // }
 
     #[Route('/gestionMultiple', name: 'app_gestionMultiple')]
     public function new(Request $request, EntityManagerInterface $entityManager, VehiculeRepository $vehiculeRepository, MarqueRepository $marqueRepository, ModeleRepository $modeleRepository, CategorieRepository $categorieRepository): Response
     {
        
-       $marque = $marqueRepository->findAll();
-       $modele = $modeleRepository->findAll();
-       $categorie = $categorieRepository->findAll();
+       $marque = $marqueRepository->findBy([], ['nom' => 'ASC']);
+       $modele = $modeleRepository->findBy([], ['nom' => 'ASC']);
+       $categorie = $categorieRepository->findBy([], ['nom' => 'ASC']);
        $vehicule = $vehiculeRepository->findAll();
        
 
        $marqueForm = $this->createForm(MarqueFormType::class);
-       $modeleForm = $this->createForm(ModeleFormType::class);
+       $modeleForm = $this->createForm(ModeleFormType::class, null, ['marques' => $marque]);
        $categorieForm = $this->createForm(CategorieFormType::class);
-       $detailVehicule = $this->createForm(VehiculeFormType::class);
+       $detailVehicule = $this->createForm(VehiculeFormType::class, null, ['categories' => $categorie, 'modeles' => $modele]);
     
        $marqueForm->handleRequest($request);
        $modeleForm->handleRequest($request);
@@ -161,6 +154,28 @@ class EntrepriseController extends AbstractController
             case 'detailVehicule':
                 $entity = $vehiculeRepository->find($id);
                 $form = $this->createForm(VehiculeFormType::class, $entity);
+
+                $form->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $uploadedFile = $form['img']->getData();
+                if ($uploadedFile) {
+                    $newFileName = uniqid().'.'.$uploadedFile->guessExtension();
+                    try {
+                        $uploadedFile->move(
+                            $this->getParameter('kernel.project_dir') . '/public/img/car',
+                            $newFileName
+                        );
+                        $entity->setImg('/img/car/'.$newFileName);
+                    } catch (FileException $e) {
+                        // Gérer l'erreur de téléchargement du fichier
+                        $this->addFlash('error', 'Une erreur est survenue lors du téléchargement du fichier.');
+                        return $this->redirectToRoute('edit_entity', ['type' => $type, 'id' => $id]);
+                    }
+                }
+                    $entityManager->flush();
+                    $this->addFlash('success', ucfirst($type) . ' modifié avec succès.');
+                    return $this->redirectToRoute('app_gestionMultiple');
+                }
                 break;
             default:
                 throw new \Exception('Type d\'entité non valide');
@@ -169,21 +184,6 @@ class EntrepriseController extends AbstractController
         // Gestion de la soumission du formulaire
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $uploadedFile = $form['img']->getData();
-        if ($uploadedFile) {
-            $newFileName = uniqid().'.'.$uploadedFile->guessExtension();
-            try {
-                $uploadedFile->move(
-                    $this->getParameter('kernel.project_dir') . '/public/img/car',
-                    $newFileName
-                );
-                $entity->setImg('/img/car/'.$newFileName);
-            } catch (FileException $e) {
-                // Gérer l'erreur de téléchargement du fichier
-                $this->addFlash('error', 'Une erreur est survenue lors du téléchargement du fichier.');
-                return $this->redirectToRoute('edit_entity', ['type' => $type, 'id' => $id]);
-            }
-        }
             $entityManager->flush();
             $this->addFlash('success', ucfirst($type) . ' modifié avec succès.');
             return $this->redirectToRoute('app_gestionMultiple');

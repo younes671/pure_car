@@ -34,7 +34,7 @@ class Vehicule
     #[ORM\Column]
     private ?bool $gps = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $nbBagage = null;
 
     #[ORM\Column]
@@ -142,7 +142,7 @@ class Vehicule
         return $this->nbBagage;
     }
 
-    public function setNbBagage(int $nbBagage): static
+    public function setNbBagage(?int $nbBagage): static
     {
         $this->nbBagage = $nbBagage;
 
