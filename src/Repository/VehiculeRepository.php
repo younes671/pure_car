@@ -62,6 +62,33 @@ class VehiculeRepository extends ServiceEntityRepository
         ->getResult();
     }
 
+    public function searchByCriteria($categoryId, $mark, $place, $minAutonomy, $maxAutonomy)
+    {
+        $qb = $this->createQueryBuilder('v')
+                   ->leftJoin('v.modele', 'm')
+                   ->leftJoin('m.marque', 'marque');
+
+        if ($categoryId) {
+            $qb->andWhere('v.categorie = :categoryId')
+                ->setParameter('categoryId', $categoryId);
+        }
+        if ($mark) {
+            $qb->andWhere('marque.nom = :mark')
+               ->setParameter('mark', $mark);
+        }
+        if ($place) {
+            $qb->andWhere('v.nbPlace = :place')
+               ->setParameter('place', $place);
+        }
+        if ($minAutonomy !== null && $maxAutonomy !== null) {
+            $qb->andWhere('v.autonomie BETWEEN :minAutonomy AND :maxAutonomy') 
+               ->setParameter('minAutonomy', $minAutonomy)
+               ->setParameter('maxAutonomy', $maxAutonomy);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
     
 
 

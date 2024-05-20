@@ -4,34 +4,71 @@
 
 {% block body %}
 <section id="search-content" >
-    <form action="" method="post" class="flex-center">
+    <form action="" id="search" method="post" class="flex-center">
         <div class="flex-wrap flex-center select-content">
             <div class="flex-wrap flex-center select">
                 <select name="category" id="category" class="flex-center">
-                    <option value="Categorie">--Catégorie--</option>
+                    <!-- Sélection de la catégorie -->
+                    <option value="">--Catégorie--</option>
+                    <!-- Crée une liste vide pour stocker les catégories -->
+                    {% set categories = [] %}
+                    <!-- Boucle sur les véhicules pour récupérer les catégories uniques -->
                     {% for vehicule in vehicules %}
-                    <option value="Categorie">{{ vehicule.categorie.nom }}</option>
+                        <!-- Vérifie si la catégorie du véhicule n'est pas déjà dans la liste -->
+                        {% if vehicule.categorie.nom not in categories %}
+                            <!-- Ajoute une option pour la catégorie -->
+                            <option value="{{ vehicule.categorie.id }}">{{ vehicule.categorie.nom }}</option>
+                            <!-- Ajoute la catégorie à la liste des catégories -->
+                            {% set categories = categories|merge([vehicule.categorie.nom]) %}
+                        {% endif %}
                     {% endfor %}
                 </select>
+                <!-- Sélection de la marque -->
                 <select name="mark" id="mark">
-                    <option value="Categorie">--Marque--</option>
+                    <!-- Option par défaut -->
+                    <option value="">--Marque--</option>
+                    <!-- Crée une liste vide pour stocker les marques -->
+                    {% set marques = [] %}
+                    <!-- Boucle sur les véhicules pour récupérer les marques uniques -->
                     {% for vehicule in vehicules %}
-                    <option value="marque">{{ vehicule.modele.marque.nom }}</option>
+                        <!-- Vérifie si la marque du véhicule n'est pas déjà dans la liste -->
+                        {% if vehicule.modele.marque.nom not in marques %}
+                            <!-- Ajoute une option pour la marque -->
+                            <option value="{{ vehicule.modele.marque.nom }}">{{ vehicule.modele.marque.nom }}</option>
+                            <!-- Ajoute la marque à la liste des marques -->
+                            {% set marques = marques|merge([vehicule.modele.marque.nom]) %}
+                        {% endif %}
                     {% endfor %}
                 </select>
             </div>
             <div class="flex-wrap flex-center select">
+                <!-- Sélection du nombre de places -->
                 <select name="nbPlace" id="nbPlace">
-                    <option value="Categorie">--Nombre de place--</option>
+                    <!-- Option par défaut -->
+                    <option value="">--Nombre de place--</option>
+                    <!-- Crée une liste vide pour stocker les nombres de places -->
+                    {% set places = [] %}
+                    <!-- Boucle sur les véhicules pour récupérer les nombres de places uniques -->
                     {% for vehicule in vehicules %}
-                    <option value="place">{{ vehicule.nbPlace }}</option>
+                        <!-- Vérifie si le nombre de places du véhicule n'est pas déjà dans la liste -->
+                        {% if vehicule.nbPlace not in places %}
+                            <!-- Ajoute une option pour le nombre de places -->
+                            <option value="{{ vehicule.nbPlace }}">{{ vehicule.nbPlace }}</option>
+                            <!-- Ajoute le nombre de places à la liste des nombres de places -->
+                            {% set places = places|merge([vehicule.nbPlace]) %}
+                        {% endif %}
                     {% endfor %}
                 </select>
-                <select name="autonomy" id="autonomy">
-                    <option value="Categorie">--Autonomie--</option>
-                    {% for vehicule in vehicules %}
-                    <option value="autonomie">{{ vehicule.autonomie }}</option>
-                    {% endfor %}
+                <!-- Sélection de l'autonomie -->
+                <select name="autonomyRange" id="autonomyRange">
+                    <!-- Option par défaut -->
+                    <option value="">--Autonomie--</option>
+                   <!-- Sélection de la plage d'autonomie -->
+                    <option value="0-100">0 - 100 km</option>
+                    <option value="100-200">100 - 200 km</option>
+                    <option value="200-300">200 - 300 km</option>
+                    <option value="300-400">300 - 400 km</option>
+                    <!-- Ajoutez d'autres options selon vos besoins -->
                 </select>
             </div>
         </div>
@@ -45,29 +82,75 @@
 
 {% block javascript %} 
 <script>
-    const box = document.querySelector("#voitures");
-    fetch('{{ path("app_vehicules") }}')
-    .then(function(res) {
-        return res.json();
-    })
-    .then(function(data) {
-        let html = "";
-        data.vehicules.forEach(function(voiture) {
-            html += '<div class="car">';
-            html += '<img class="voit-resa" src="' + voiture.image + '" alt="voiture">';
-            html += '<div class="mark flex-center">';
-            html += '<p>' + voiture.marque + ' ' + voiture.modele + '</p>';
-            html += '</div>';
-            html += '<div>';
-            html += '<span class="price flex-center">' + voiture.prix + ' €/J</span>';
-            html += "<span><a href='/reservation/detailCar/" + voiture.id + "' class='booking-btn flex-center button'>Voir détail</a></span>";
-            html += '</div>';
-            html += '</div>';
+    document.addEventListener("DOMContentLoaded", function() {
+        const box = document.querySelector("#voitures");
+        const form = document.getElementById('search');
+
+        // Fonction pour afficher les véhicules
+        function displayVehicles(vehicles) {
+            let html = "";
+            if (vehicles.length === 0) {
+                html += '<h2>Aucun véhicule ne correspond à vos critères.</h2>';
+            } else {
+            vehicles.forEach(function(voiture) {
+                html += '<div class="car">';
+                html += '<img class="voit-resa" src="' + voiture.image + '" alt="voiture">';
+                html += '<div class="mark flex-center">';
+                html += '<p>' + voiture.marque + ' ' + voiture.modele + '</p>';
+                html += '</div>';
+                html += '<div>';
+                html += '<span class="price flex-center">' + voiture.prix + ' €/J</span>';
+                html += "<span><a href='/reservation/detailCar/" + voiture.id + "' class='booking-btn flex-center button'>Voir détail</a></span>";
+                html += '</div>';
+                html += '</div>';
+            });
+          }
+            box.innerHTML = html; // Mettre à jour le contenu de la boîte avec les véhicules
+        }
+
+        // Écouter l'événement de soumission du formulaire de recherche
+        form.addEventListener("submit", function(event) {
+            event.preventDefault(); // Empêcher le formulaire de se soumettre normalement
+            const body = {
+                category: this.category.value,
+                mark: this.mark.value,
+                nbPlace: this.nbPlace.value,
+                autonomyRange: this.autonomyRange.value,
+            }
+            fetch('{{ path("app_vehicules_search") }}', {
+                method: 'POST',
+                body: JSON.stringify(body),
+                headers: {
+                    "Content-Type": "application/json",
+                  },
+            })
+            .then(function(res) {
+                return res.json(); // Convertir la réponse en JSON
+            })
+            .then(function(data) {
+                displayVehicles(data.vehicules); // Appeler la fonction pour afficher les véhicules avec les résultats de la recherche
+
+            })
+            .catch(function(error) {
+                console.error('Erreur lors de la récupération des données de recherche :', error);
+            });
         });
 
-        box.innerHTML = html;
+        // Afficher tous les véhicules au chargement de la page
+        fetch('{{ path("app_vehicules") }}')
+        .then(function(res) {
+            return res.json();
+        })
+        .then(function(data) {
+            
+            displayVehicles(data.vehicules); // Appeler la fonction pour afficher tous les véhicules au chargement de la page
+        })
+        .catch(function(error) {
+            console.error('Erreur lors de la récupération des données de véhicules :', error);
+        });
     });
 </script>
+
 
 {% endblock %}
 
