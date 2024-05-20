@@ -37,6 +37,7 @@
                                     <td>{{ categorie.nom }}</td>
                                     <td><a href="{{ path('edit_entity', {'type': 'categorie', 'id': categorie.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a></td>
                                     <td><a href="{{ path('delete_entity', {'type': 'categorie', 'id': categorie.id}) }}" class="delete-link" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette ligne ?')"><i class="fa-solid fa-trash"></i></a></td>
+                                </tr>
                             {% endfor %}
                         </tbody>
                     </table>
@@ -106,9 +107,9 @@
                 {{ form_row(detailVehiculeForm.nbPlace) }}
                 {{ form_row(detailVehiculeForm.nbBagage) }}
                 {{ form_row(detailVehiculeForm.prix) }}
-                {{ form_row(detailVehiculeForm.img) }}
                 {{ form_row(detailVehiculeForm.categorie) }}
                 {{ form_row(detailVehiculeForm.modele) }}
+                {{ form_row(detailVehiculeForm.img) }}
                 {{ form_row(detailVehiculeForm.bluetooth) }}
                 {{ form_row(detailVehiculeForm.climatisation) }}
                 {{ form_row(detailVehiculeForm.gps) }}

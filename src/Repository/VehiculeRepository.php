@@ -52,6 +52,16 @@ class VehiculeRepository extends ServiceEntityRepository
         ->getOneOrNullResult();
     }
 
+    public function getAllVehiculesOrderedByMarque()
+    {
+    return $this->createQueryBuilder('v')
+        ->leftJoin('v.modele', 'm')
+        ->leftJoin('m.marque', 'marque')
+        ->orderBy('marque.nom', 'ASC')
+        ->getQuery()
+        ->getResult();
+    }
+
     
 
 

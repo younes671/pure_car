@@ -8,13 +8,16 @@
     {% endblock %}
 
 {% block body %}
-    <h1>Édition 
+<section class="flex-center" id="page_registration">
+    <h2>Édition 
         {% if type == 'marque' %}de la marque
         {% elseif type == 'modele' %}du modèle
         {% elseif type == 'categorie' %}de la catégorie
-        {% endif %}</h1>
-
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+        {% endif %}</h2>
+            <div class="form-container">
+            {{ form_start(form, {'attr': {'class': 'forms'}}) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+            </div>
+</section>
 {% endblock %}

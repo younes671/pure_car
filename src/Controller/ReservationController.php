@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Categorie;
 use App\Entity\Vehicule;
 use App\Repository\ModeleRepository;
 use App\Repository\VehiculeRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\MarqueRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -17,33 +19,29 @@ class ReservationController extends AbstractController
     #[Route('/reservation', name: 'app_reservation')]
     public function index(VehiculeRepository $vehiculeRepository): Response
     {
-        $vehicules = $vehiculeRepository->findAll();
+        $vehicules = $vehiculeRepository->getAllVehiculesOrderedByMarque();
         return $this->render('reservation/index.html.twig', [
             'vehicules' => $vehicules
         ]);
     }
 
     #[Route('/vehicules', name: 'app_vehicules')]
-    public function vehicules(CategorieRepository $vehiculeRepository): Response
+    public function vehicules(VehiculeRepository $vehiculeRepository): Response
     {
-        $vehicules = $vehiculeRepository->findAll();
+        $vehicules = $vehiculeRepository->getAllVehiculesOrderedByMarque();
+            
+        $serializedVehicules = [];
+        foreach ($vehicules as $vehicule) {
+            $serializedVehicules[] = [
+                'id' => $vehicule->getId(),
+                'marque' => $vehicule->getModele()->getMArque()->getNom(), // Assurez-vous d'ajuster ces propriétés en fonction de votre classe Vehicule
+                'modele' => $vehicule->getModele()->getNom(),
+                'image' => $vehicule->getImg(),
+                'prix' => $vehicule->getPrix()
+            ];
+        }
     
-
-    return new JsonResponse(['vehicules' => $vehicules], 200, ["Content-Type" => "application/json"]);
-
-
-        
-        // $serializedVehicules = [];
-        // foreach ($vehicules as $vehicule) {
-        //     $serializedVehicules[] = [
-        //         'id' => $vehicule->getId(),
-        //         'marque' => $vehicule->getPrix(), // Assurez-vous d'ajuster ces propriétés en fonction de votre classe Vehicule
-        //         'modele' => $vehicule->getModele()->getMarque()->getNom(),
-        //         // Ajoutez d'autres propriétés selon vos besoins
-        //     ];
-        // }
-    
-        // return new JsonResponse(['vehicules' => $serializedVehicules], 200, ["Content-Type" => "application/json"]);
+        return new JsonResponse(['vehicules' => $serializedVehicules], 200, ["Content-Type" => "application/json"]);
         
     }
 
@@ -56,4 +54,37 @@ class ReservationController extends AbstractController
             'vehicules' => $vehicule,
         ]);
     }
+
+    #[Route('/vehicules', name: 'app_vehicules_search')]
+    public function search(Request $request, VehiculeRepository $vehiculeRepository, CategorieRepository $categorieRepository, MarqueRepository $marqueRepository): JsonResponse
+    {
+        // Récupérer les critères de recherche depuis la requête
+        $category = $request->request->get('category');
+        $mark = $request->request->get('mark');
+        $place = $request->request->get('nbPlace');
+        $autonomy = $request->request->get('autonomy');
+
+        // Implémenter la logique de recherche avec les critères choisis
+        // Vous devrez remplacer cette partie avec la logique de filtrage réelle
+
+        
+        $filteredVehicules = $vehiculeRepository->findByCriteria($category, $mark, $place, $autonomy);
+
+
+        $serializedVehicules = [];
+        foreach ($filteredVehicules as $vehicule) {
+            $serializedVehicules[] = [
+                'id' => $vehicule->getId(),
+                'marque' => $vehicule->getModele()->getMarque()->getNom(),
+                'modele' => $vehicule->getModele()->getNom(),
+                'autonomie' => $vehicule->getAutonomie(),
+                'prix' => $vehicule->getPrix(),
+                'nbPlace' => $vehicule->getNbPlace(),
+                'nbBagage' => $vehicule->getNbBagage(),
+            ];
+        }
+
+        return new JsonResponse(['vehicules' => $serializedVehicules], 200, ["Content-Type" => "application/json"]);
+    }
+
 }

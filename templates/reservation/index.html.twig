@@ -9,49 +9,29 @@
             <div class="flex-wrap flex-center select">
                 <select name="category" id="category" class="flex-center">
                     <option value="Categorie">--Catégorie--</option>
-                    <option value="berline">Berline</option>
-                    <option value="citadine">Citadine</option>
-                    <option value="ludospace">Ludospace</option>
-                    <option value="monospace">Monospace</option>
-                    <option value="suv">SUV</option>
-                    <option value="utilitaires">Utilitaires</option>
+                    {% for vehicule in vehicules %}
+                    <option value="Categorie">{{ vehicule.categorie.nom }}</option>
+                    {% endfor %}
                 </select>
                 <select name="mark" id="mark">
-                    <option value="marque">--Marque--</option>
-                    <option value="audi">Audi</option> 
-                    <option value="bmw">BMW</option>
-                    <option value="citroen">Citroën</option>
-                    <option value="ds">DS</option>
-                    <option value="hyundai">Hyundai</option>
-                    <option value="jaguar">Jaguar</option>
-                    <option value="kia">Kia</option>
-                    <option value="mercedes">Mercedes</option>
-                    <option value="mini">Mini-Cooper</option>
-                    <option value="mitsubishi">Mitsubishi</option>
-                    <option value="nissan">Nissan</option>
-                    <option value="peugeot">Peugeot</option>
-                    <option value="renault">Renault</option>
-                    <option value="smart">Smart</option>
-                    <option value="tesla">Tesla</option>
-                    <option value="toyota">Toyota</option>
-                    <option value="vw">Volkswagen</option>
+                    <option value="Categorie">--Marque--</option>
+                    {% for vehicule in vehicules %}
+                    <option value="marque">{{ vehicule.modele.marque.nom }}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="flex-wrap flex-center select">
-                <select name="place" id="place">
-                    <option value="place">--Nombre de place--</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="5">5</option>
-                    <option value="7">7</option>
+                <select name="nbPlace" id="nbPlace">
+                    <option value="Categorie">--Nombre de place--</option>
+                    {% for vehicule in vehicules %}
+                    <option value="place">{{ vehicule.nbPlace }}</option>
+                    {% endfor %}
                 </select>
                 <select name="autonomy" id="autonomy">
-                    <option value="autonomie">--Autonomie--</option>
-                    <option value="100">100 Km à 199Km</option>
-                    <option value="200">200 Km à 299Km</option>
-                    <option value="300">300 Km à 399 Km</option>
-                    <option value="400">400 Km à 499 Km</option>
-                    <option value="500">500 Km et plus</option>
+                    <option value="Categorie">--Autonomie--</option>
+                    {% for vehicule in vehicules %}
+                    <option value="autonomie">{{ vehicule.autonomie }}</option>
+                    {% endfor %}
                 </select>
             </div>
         </div>
@@ -60,39 +40,36 @@
 </section>
 <section id="content-cars">
     <h2>Nos véhicules</h2>
-    <div class="flex-wrap flex-between">
-        {% for vehicule in vehicules %}
-        <div class="car">
-            <img class="voit-resa" src=" {{ vehicule.img }} " alt="voiture">
-            <div class="mark flex-center">
-                <p >{{ vehicule.modele.marque.nom ~ ' ' ~ vehicule.modele.nom }}</p>
-            </div>
-            <div>
-                <span class="price flex-center">{{ vehicule.prix ~ ' €/J' }}</span>
-                <span><a href="{{ path('detailCar_reservation', { 'vehiculeId' : vehicule.id }) }}" class="booking-btn flex-center button">Voir détail</a></span>
-            </div>
-        </div>
-        {% endfor %}
-        <div id="voitures"></div>
-    </div> 
+        <div id="voitures" class="flex-wrap flex-between"></div>
 </section>
+
 {% block javascript %} 
 <script>
-    const box = document.querySelector("#voitures")
+    const box = document.querySelector("#voitures");
     fetch('{{ path("app_vehicules") }}')
-    .then(res => res.json())
-    .then(data => {
+    .then(function(res) {
+        return res.json();
+    })
+    .then(function(data) {
         let html = "";
-        console.log(data)
-        data.forEach(voiture => {
-            html += `<p>Marque : ${voiture.nom}</p>`
-
-            console.log(html)
-        })
+        data.vehicules.forEach(function(voiture) {
+            html += '<div class="car">';
+            html += '<img class="voit-resa" src="' + voiture.image + '" alt="voiture">';
+            html += '<div class="mark flex-center">';
+            html += '<p>' + voiture.marque + ' ' + voiture.modele + '</p>';
+            html += '</div>';
+            html += '<div>';
+            html += '<span class="price flex-center">' + voiture.prix + ' €/J</span>';
+            html += "<span><a href='/reservation/detailCar/" + voiture.id + "' class='booking-btn flex-center button'>Voir détail</a></span>";
+            html += '</div>';
+            html += '</div>';
+        });
 
         box.innerHTML = html;
-    })
+    });
 </script>
+
 {% endblock %}
+
 {% endblock %}
 

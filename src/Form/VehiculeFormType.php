@@ -36,14 +36,12 @@ class VehiculeFormType extends AbstractType
             ])
            
             ->add('nbBagage', NumberType::class, [
-                'attr' => ['class' => 'field'],
-                'required' => false
+                'label_attr' => ['class' => 'field-nbBagage'],
+                'required' => false,
+                'attr' => ['class' => 'field']
             ])
             ->add('prix', NumberType::class, [
                 'attr' => ['class' => 'field']
-            ])
-            ->add('img', FileType::class, [
-                'data_class' => null
             ])
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
@@ -58,6 +56,10 @@ class VehiculeFormType extends AbstractType
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir un modèle',
                 'attr' => ['class' => 'field']
+            ])
+            ->add('img', FileType::class, [
+                'data_class' => null,
+                'attr' => ['class' => 'field'],
             ])
             ->add('bluetooth', CheckboxType::class, [
                 'label_attr' => ['class' => 'field-checkbox'],
@@ -76,7 +78,7 @@ class VehiculeFormType extends AbstractType
             ])
             ->add('valider', SubmitType::class, [
                 'attr' => [
-                    'class' => 'button'
+                    'class' => 'button',
                 ]])
         ;
     }

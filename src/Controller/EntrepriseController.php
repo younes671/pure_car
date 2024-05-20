@@ -137,6 +137,9 @@ class EntrepriseController extends AbstractController
    {
     // if ($security->isGranted('ROLE_ADMIN') || $security->isGranted('ROLE_COMPTABLE'))
     // {
+
+        $modele = $modeleRepository->findBy([], ['nom' => 'ASC']);
+        $categorie = $categorieRepository->findBy([], ['nom' => 'ASC']);
         // Récupérer l'entité à éditer en fonction du type et de l'ID
         switch ($type) {
             case 'marque':
@@ -153,7 +156,7 @@ class EntrepriseController extends AbstractController
                 break;
             case 'detailVehicule':
                 $entity = $vehiculeRepository->find($id);
-                $form = $this->createForm(VehiculeFormType::class, $entity);
+                $form = $this->createForm(VehiculeFormType::class, $entity,  ['categories' => $categorie, 'modeles' => $modele]);
 
                 $form->handleRequest($request);
                 if ($form->isSubmitted() && $form->isValid()) {
