@@ -21,19 +21,32 @@
                         <img src="{{ asset('img/logo/logo-original.png') }}" id="logo" alt="logo-original">
                         <img src="{{ asset('img/logo/logo-mobile.png') }}" id="logo-mobile" alt="logo-mobile" >
                     </a>
-                    <a href="{{ path('app_login') }}" class="button flex-center" id="connect">Connexion</a>
+                    {% if app.user %}
+                        <a href="{{ path('app_logout') }}" class="button flex-center" id="connect">Déconnexion</a>    
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="button flex-center" id="connect">Connexion</a>
+                    {% endif %}
                 </div>
                 <div id="menu">
                         <input type="checkbox" class="burger">
-                        <nav id="main-menu" class="flex-center">
+                            <nav id="main-menu" class="flex-center">
                             <ul class="flex-center">
-                                <li><a href="{{ path('app_home') }}">Accueil</a></li>
-                                <li><a href="{{ path('app_register') }}">Inscription</a></li>
-                                <li><a href="{{ path('app_galerie') }}">Galerie</a></li>
-                                <li><a href="{{ path('app_reservation') }}">Reservation</a></li>
-                                <li><a href="{{ path('app_entreprise') }}">Contact</a></li>
-                                <li><a href="{{ path('app_gestionMultiple') }}">Gestion parc</a></li>
-                                <li><a href="">Mon profil</a></li>
+                                    <li><a href="{{ path('app_home') }}">Accueil</a></li>
+                                {% if app.user %}
+                                        
+                                {% else %}
+                                    <li><a href="{{ path('app_register') }}">Inscription</a></li>
+                                {% endif %}
+                                    <li><a href="{{ path('app_galerie') }}">Galerie</a></li>
+                                    <li><a href="{{ path('app_reservation') }}">Reservation</a></li>
+                                    <li><a href="{{ path('app_entreprise') }}">Contact</a></li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li><a href="{{ path('app_gestionMultiple') }}">Gestion parc</a></li>
+                                    <li><a href="{{ path('app_user') }}">Gestion client</a></li>
+                                {% endif %}
+                                {% if app.user %}
+                                    <li><a href="">Mon profil</a></li>
+                                {% endif %}
                             </ul>
                         </nav>
                     </div> 
@@ -49,7 +62,6 @@
                         <div class="block-footer-inner">
                             <a href="" class="link-footer">Contact</a>
                             <a href="{{ path('mention_entreprise') }}" class="link-footer">Mentions légales</a>
-                            <a href="{{ path('planSite_entreprise') }}" class="link-footer">Plan du site</a>
                             <div id="rs">
                                 <a href="https://fr-fr.facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
                                 <a href="https://twitter.com/" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
@@ -60,10 +72,6 @@
                             <h4>Horaires</h4>
                             <p>Lundi au Vendredi<br>08h00 - 22h00<br>Samedi<br>08h00 - 12h00<br>13h00 - 19h00</p>
                         </div>
-                                         
-                        {# <div class="block-footer-inner">
-                            <a href=""><img src="img/logo/logo-footer.png" alt="logo"></a>
-                        </div> #}
                 </div>
     
                  <div id="copyright" class="flex-center">

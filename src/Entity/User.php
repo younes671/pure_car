@@ -45,9 +45,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'user')]
     private Collection $UserReservation;
 
+    #[ORM\Column(length: 100)]
+    private ?string $pseudo = null;
+
     public function __construct()
     {
         $this->UserReservation = new ArrayCollection();
+        // Définir le rôle par défaut
+        $this->roles = ['ROLE_USER'];
     }
 
     public function getId(): ?int
@@ -163,6 +168,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $userReservation->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): static
+    {
+        $this->pseudo = $pseudo;
 
         return $this;
     }

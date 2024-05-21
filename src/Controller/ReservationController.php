@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
-use App\Entity\Categorie;
 use App\Entity\Vehicule;
+use App\Entity\Categorie;
+use App\Entity\Reservation;
+use App\Form\ReservationType;
+use App\Repository\MarqueRepository;
 use App\Repository\ModeleRepository;
 use App\Repository\VehiculeRepository;
 use App\Repository\CategorieRepository;
-use App\Repository\MarqueRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -25,7 +28,7 @@ class ReservationController extends AbstractController
         ]);
     }
 
-    #[Route('/vehicules', name: 'app_vehicules')]
+    #[Route('reservation/vehicules', name: 'app_vehicules')]
     public function vehicules(VehiculeRepository $vehiculeRepository): Response
     {
         $vehicules = $vehiculeRepository->getAllVehiculesOrderedByMarque();
@@ -34,7 +37,7 @@ class ReservationController extends AbstractController
         foreach ($vehicules as $vehicule) {
             $serializedVehicules[] = [
                 'id' => $vehicule->getId(),
-                'marque' => $vehicule->getModele()->getMArque()->getNom(), // Assurez-vous d'ajuster ces propriétés en fonction de votre classe Vehicule
+                'marque' => $vehicule->getModele()->getMArque()->getNom(), 
                 'modele' => $vehicule->getModele()->getNom(),
                 'categorie' => $vehicule->getCategorie()->getNom(),
                 'image' => $vehicule->getImg(),
@@ -53,6 +56,32 @@ class ReservationController extends AbstractController
         // var_dump($vehicule); exit;
         return $this->render('reservation/detail_car.html.twig', [
             'vehicules' => $vehicule,
+        ]);
+    }
+
+    #[Route('/reservation/reservationClient/{vehiculeId}', name: 'reservationClient_reservation')]
+    public function reservationClient(Request $request, EntityManagerInterface $entityManager, VehiculeRepository $vehiculeRepository, Vehicule $vehiculeId): Response
+    {
+        $vehicule = $vehiculeRepository->findBy(['id' => $vehiculeId]);
+
+        $reservationForm = $this->createForm(ReservationType::class);
+
+        $reservationForm->handleRequest($request);
+
+        if ($reservationForm->isSubmitted() && $reservationForm->isValid()) {
+            $reservation = $reservationForm->getData();
+            $entityManager->persist($reservation);
+            $entityManager->flush();
+            $this->addFlash('success', 'Réservation effectuée avec succès.');
+            return $this->redirectToRoute('profil_user');
+        }else{
+            $this->addFlash('danger', 'La réservation a échouée.');
+            return $this->redirectToRoute('profil_user');
+        }
+
+        return $this->render('reservation/detail_car.html.twig', [
+            'vehicules' => $vehicule,
+            'reservationForm' => $reservationForm
         ]);
     }
 
@@ -83,7 +112,6 @@ class ReservationController extends AbstractController
 
              // Utiliser les critères pour filtrer les véhicules
             $filteredVehicules = $vehiculeRepository->searchByCriteria($category, $mark, $place, $minAutonomy, $maxAutonomy);
-// var_dump($filteredVehicules); exit;
             $serializedVehicules = [];
             foreach ($filteredVehicules as $vehicule) {
                 $serializedVehicules[] = [

@@ -11,23 +11,23 @@
             <p>{{ vehicule.modele.marque.nom ~ ' ' ~ vehicule.modele.nom }}</p>
         </div>
         <div class="gray">
-            <span class=" flex-center">Catégorie</span>
+            <span class=" flex-center-bold">Catégorie</span>
             <span class=" flex-center">{{ vehicule.categorie.nom }}</span>
         </div>
         <div>
-            <span class=" flex-center">Autonomie</span>
+            <span class=" flex-center-bold">Autonomie</span>
             <span class=" flex-center">{{ vehicule.autonomie ~ ' km' }}</span>
         </div>
         <div class="gray">
-            <span class=" flex-center">Nombre de place</span>
+            <span class=" flex-center-bold">Nombre de place</span>
             <span class=" flex-center">{{ vehicule.nbPlace }}</span>
         </div>
         <div>
-            <span class=" flex-center">Nombre de porte</span>
+            <span class=" flex-center-bold">Nombre de porte</span>
             <span class=" flex-center">{{ vehicule.nbPorte }}</span>
         </div>
         <div class="gray">
-            <span class=" flex-center">Nombre de place</span>
+            <span class=" flex-center-bold">Nombre de place</span>
             {% if vehicule.nbBagage > 1 %}
                 <span class=" flex-center">{{ vehicule.nbBagage ~ ' valises' }}</span>
             {% else %}
@@ -35,7 +35,7 @@
             {% endif %}
         </div>
         <div>
-            <span class=" flex-center">Climatisation</span>
+            <span class=" flex-center-bold">Climatisation</span>
             {% if vehicule.climatisation %}
                 <span class=" flex-center">Oui</span>
             {% else %}
@@ -43,7 +43,7 @@
             {% endif %}
         </div>
         <div class="gray">
-            <span class=" flex-center">Bluetooth</span>
+            <span class=" flex-center-bold">Bluetooth</span>
                 {% if vehicule.bluetooth %}
                     <span class=" flex-center">Oui</span>
                 {% else %}
@@ -51,7 +51,7 @@
                 {% endif %}
         </div>
         <div>
-            <span class=" flex-center">GPS</span>
+            <span class=" flex-center-bold">GPS</span>
                 {% if vehicule.gps %}
                     <span class=" flex-center">Oui</span>
                 {% else %}

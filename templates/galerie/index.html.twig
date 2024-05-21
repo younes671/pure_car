@@ -10,7 +10,7 @@
         {# <div id="suv"> #}
         {% for categorie, image in imagesParCategorie %}
         <div class="img-galerie">
-            <h2>{{ categorie }}</h2>
+            <h3 class="titre-galerie">{{ categorie }}</h3>
         {# </div> #}
         {% if image %}
         <a href=" {{ path('vehiculeByCategorie_galerie', {'categorie': image.categoryId} ) }} "><img class="voit" src="{{ image.img }}" alt="Image de {{ categorie }}"></a>

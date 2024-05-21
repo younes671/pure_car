@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des clients{% endblock %}
+
+{% block body %}
+<section id="content-user" class="flex-center-user">
+   
+        <h2>Liste des clients</h2>
+        <div class="table-responsive">
+            <table class="table table-striped forms">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Pseudo</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.pseudo}}</td>
+                        <td> {{ user.email }} </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+</section>
+{% endblock %}

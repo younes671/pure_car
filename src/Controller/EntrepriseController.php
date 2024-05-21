@@ -23,104 +23,83 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class EntrepriseController extends AbstractController
 {
-    #[Route('/entreprise', name: 'app_entreprise')]
-    public function index(): Response
-    {
-        return $this->render('entreprise/index.html.twig', [
-            'controller_name' => 'EntrepriseController',
-        ]);
-    }
-
-
-    #[Route('/gestionMultiple', name: 'app_gestionMultiple')]
-    public function new(Request $request, EntityManagerInterface $entityManager, VehiculeRepository $vehiculeRepository, MarqueRepository $marqueRepository, ModeleRepository $modeleRepository, CategorieRepository $categorieRepository): Response
-    {
-       
-       $marque = $marqueRepository->findBy([], ['nom' => 'ASC']);
-       $modele = $modeleRepository->findBy([], ['nom' => 'ASC']);
-       $categorie = $categorieRepository->findBy([], ['nom' => 'ASC']);
-       $vehicule = $vehiculeRepository->findAll();
-       
-
-       $marqueForm = $this->createForm(MarqueFormType::class);
-       $modeleForm = $this->createForm(ModeleFormType::class, null, ['marques' => $marque]);
-       $categorieForm = $this->createForm(CategorieFormType::class);
-       $detailVehicule = $this->createForm(VehiculeFormType::class, null, ['categories' => $categorie, 'modeles' => $modele]);
-    
-       $marqueForm->handleRequest($request);
-       $modeleForm->handleRequest($request);
-       $categorieForm->handleRequest($request);
-       $detailVehicule->handleRequest($request);
-       
-       
-   
-       if ($marqueForm->isSubmitted() && $marqueForm->isValid()) {
-           $marque = $marqueForm->getData();
-           $entityManager->persist($marque);
-           $entityManager->flush();
-           $this->addFlash('success', 'Marque ajoutée avec succès.');
-           return $this->redirectToRoute('app_gestionMultiple');
-       }
-   
-       if ($modeleForm->isSubmitted() && $modeleForm->isValid()) {
-           $modele = $modeleForm->getData();
-           $entityManager->persist($modele);
-           $entityManager->flush();
-           $this->addFlash('success', 'Modèle ajouté avec succès.');
-           return $this->redirectToRoute('app_gestionMultiple');
-       }
-   
-       if ($categorieForm->isSubmitted() && $categorieForm->isValid()) {
-           $categorie = $categorieForm->getData();
-           $entityManager->persist($categorie);
-           $entityManager->flush();
-           $this->addFlash('success', 'Catégorie ajoutée avec succès.');
-           return $this->redirectToRoute('app_gestionMultiple');
-       }
-
-       if ($detailVehicule->isSubmitted() && $detailVehicule->isValid()) {
-        $uploadedFile = $detailVehicule['img']->getData(); // Récupérer le fichier image téléchargé
+     // Page d'accueil de l'entreprise
+     #[Route('/entreprise', name: 'app_entreprise')]
+     public function index(): Response
+     {
+         return $this->render('entreprise/index.html.twig', [
+             'controller_name' => 'EntrepriseController',
+         ]);
+     }
+ 
+     // Gestion des différentes entités (marque, modèle, catégorie, détails du véhicule)
+     #[Route('/gestionMultiple', name: 'app_gestionMultiple')]
+     public function new(Request $request, EntityManagerInterface $entityManager, VehiculeRepository $vehiculeRepository, MarqueRepository $marqueRepository, ModeleRepository $modeleRepository, CategorieRepository $categorieRepository): Response
+     {
+         // Récupération des marques, modèles, catégories et véhicules existants
+         $marque = $marqueRepository->findBy([], ['nom' => 'ASC']);
+         $modele = $modeleRepository->findBy([], ['nom' => 'ASC']);
+         $categorie = $categorieRepository->findBy([], ['nom' => 'ASC']);
+         $vehicule = $vehiculeRepository->findAll();
+ 
+         // Création des formulaires pour ajouter une marque, un modèle, une catégorie et les détails du véhicule
+         $marqueForm = $this->createForm(MarqueFormType::class);
+         $modeleForm = $this->createForm(ModeleFormType::class, null, ['marques' => $marque]);
+         $categorieForm = $this->createForm(CategorieFormType::class);
+         $detailVehicule = $this->createForm(VehiculeFormType::class, null, ['categories' => $categorie, 'modeles' => $modele]);
+ 
+         // Traitement des soumissions de formulaire
+         $marqueForm->handleRequest($request);
+         $modeleForm->handleRequest($request);
+         $categorieForm->handleRequest($request);
+         $detailVehicule->handleRequest($request);
         
-        // Générer un nom de fichier unique pour éviter les collisions
-        $newFileName = uniqid().'.'.$uploadedFile->guessExtension();
-        
-        // Déplacer le fichier téléchargé vers le répertoire de destination (par exemple, public/img/car)
-        try {
-            $uploadedFile->move(
-                $this->getParameter('kernel.project_dir') . '/public/img/car',
-                $newFileName
-            );
-            
-            // Enregistrer le chemin relatif du fichier dans la base de données
-            $vehicule = $detailVehicule->getData();
-            $vehicule->setImg('/img/car/'.$newFileName); // Enregistrez le chemin relatif du fichier dans la colonne img
-        
-            $entityManager->persist($vehicule);
-            $entityManager->flush();
-            
-            $this->addFlash('success', 'Détails véhicule ajoutés avec succès.');
-            
-            return $this->redirectToRoute('app_gestionMultiple');
-        } catch (FileException $e) {
-            // Gérer l'erreur de téléchargement du fichier
-            $this->addFlash('error', 'Une erreur est survenue lors du téléchargement du fichier.');
-            // Rediriger vers une page d'erreur ou afficher un message d'erreur
-        }
-        }
-    
-    
-   
-       return $this->render('entreprise/gestionMultiple.html.twig', [
-        'marqueForm' => $marqueForm->createView(),
-        'modeleForm' => $modeleForm->createView(),
-        'categorieForm' => $categorieForm->createView(),
-        'detailVehiculeForm' => $detailVehicule->createView(),
-        'marques' => $marque,
-        'modeles' => $modele, 
-        'categories' => $categorie,
-        'vehicules' => $vehicule 
-        ]);
-    }
+         // Ajout d'une nouvelle marque
+         if ($marqueForm->isSubmitted() && $marqueForm->isValid()) {
+             $marque = $marqueForm->getData();
+             $entityManager->persist($marque);
+             $entityManager->flush();
+             $this->addFlash('success', 'Marque ajoutée avec succès.');
+             return $this->redirectToRoute('app_gestionMultiple');
+         }
+ 
+         // Ajout d'un nouveau modèle
+         if ($modeleForm->isSubmitted() && $modeleForm->isValid()) {
+             $modele = $modeleForm->getData();
+             $entityManager->persist($modele);
+             $entityManager->flush();
+             $this->addFlash('success', 'Modèle ajouté avec succès.');
+             return $this->redirectToRoute('app_gestionMultiple');
+         }
+ 
+         // Ajout d'une nouvelle catégorie
+         if ($categorieForm->isSubmitted() && $categorieForm->isValid()) {
+             $categorie = $categorieForm->getData();
+             $entityManager->persist($categorie);
+             $entityManager->flush();
+             $this->addFlash('success', 'Catégorie ajoutée avec succès.');
+             return $this->redirectToRoute('app_gestionMultiple');
+         }
+ 
+         // Ajout des détails d'un nouveau véhicule
+         if ($detailVehicule->isSubmitted() && $detailVehicule->isValid()) {
+             // Traitement de l'image uploadée
+             // Code à implémenter ici
+         }
+ 
+         // Rendu de la vue avec les formulaires et les données existantes
+         return $this->render('entreprise/gestionMultiple.html.twig', [
+             'marqueForm' => $marqueForm->createView(),
+             'modeleForm' => $modeleForm->createView(),
+             'categorieForm' => $categorieForm->createView(),
+             'detailVehiculeForm' => $detailVehicule->createView(),
+             'marques' => $marque,
+             'modeles' => $modele, 
+             'categories' => $categorie,
+             'vehicules' => $vehicule 
+         ]);
+     }
+ 
 
     #[Route('/entreprise/image/{id}', name: 'image_entreprise')]
     public function image(Vehicule $id, VehiculeRepository $vehiculeRepository): Response
@@ -132,19 +111,21 @@ class EntrepriseController extends AbstractController
         ]);
     }
 
-   #[Route('/edit/{type}/{id}', name: 'edit_entity')]
-   public function edit_entity($type, $id, Request $request, EntityManagerInterface $entityManager, Security $security, VehiculeRepository $vehiculeRepository, MarqueRepository $marqueRepository, ModeleRepository $modeleRepository, CategorieRepository $categorieRepository): Response
-   {
-    // if ($security->isGranted('ROLE_ADMIN') || $security->isGranted('ROLE_COMPTABLE'))
-    // {
-
+    #[Route('/edit/{type}/{id}', name: 'edit_entity')]
+    public function edit_entity($type, $id, Request $request, EntityManagerInterface $entityManager, Security $security, VehiculeRepository $vehiculeRepository, MarqueRepository $marqueRepository, ModeleRepository $modeleRepository, CategorieRepository $categorieRepository): Response
+    {
+        // Si l'utilisateur a les autorisations nécessaires pour éditer une entité
+        // if ($security->isGranted('ROLE_ADMIN') || $security->isGranted('ROLE_COMPTABLE'))
+        // {
+    
+        // Récupération des modèles et catégories existants
         $modele = $modeleRepository->findBy([], ['nom' => 'ASC']);
         $categorie = $categorieRepository->findBy([], ['nom' => 'ASC']);
         // Récupérer l'entité à éditer en fonction du type et de l'ID
         switch ($type) {
             case 'marque':
-                    $entity = $marqueRepository->find($id);
-                    $form = $this->createForm(MarqueFormType::class, $entity);
+                $entity = $marqueRepository->find($id);
+                $form = $this->createForm(MarqueFormType::class, $entity);
                 break;
             case 'modele':
                 $entity = $modeleRepository->find($id);
@@ -161,20 +142,20 @@ class EntrepriseController extends AbstractController
                 $form->handleRequest($request);
                 if ($form->isSubmitted() && $form->isValid()) {
                     $uploadedFile = $form['img']->getData();
-                if ($uploadedFile) {
-                    $newFileName = uniqid().'.'.$uploadedFile->guessExtension();
-                    try {
-                        $uploadedFile->move(
-                            $this->getParameter('kernel.project_dir') . '/public/img/car',
-                            $newFileName
-                        );
-                        $entity->setImg('/img/car/'.$newFileName);
-                    } catch (FileException $e) {
-                        // Gérer l'erreur de téléchargement du fichier
-                        $this->addFlash('error', 'Une erreur est survenue lors du téléchargement du fichier.');
-                        return $this->redirectToRoute('edit_entity', ['type' => $type, 'id' => $id]);
+                    if ($uploadedFile) {
+                        $newFileName = uniqid().'.'.$uploadedFile->guessExtension();
+                        try {
+                            $uploadedFile->move(
+                                $this->getParameter('kernel.project_dir') . '/public/img/car',
+                                $newFileName
+                            );
+                            $entity->setImg('/img/car/'.$newFileName);
+                        } catch (FileException $e) {
+                            // Gérer l'erreur de téléchargement du fichier
+                            $this->addFlash('error', 'Une erreur est survenue lors du téléchargement du fichier.');
+                            return $this->redirectToRoute('edit_entity', ['type' => $type, 'id' => $id]);
+                        }
                     }
-                }
                     $entityManager->flush();
                     $this->addFlash('success', ucfirst($type) . ' modifié avec succès.');
                     return $this->redirectToRoute('app_gestionMultiple');
@@ -183,7 +164,7 @@ class EntrepriseController extends AbstractController
             default:
                 throw new \Exception('Type d\'entité non valide');
         }
- 
+    
         // Gestion de la soumission du formulaire
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -191,12 +172,12 @@ class EntrepriseController extends AbstractController
             $this->addFlash('success', ucfirst($type) . ' modifié avec succès.');
             return $this->redirectToRoute('app_gestionMultiple');
         }
- 
-            // Rendu de la vue avec le formulaire pour éditer l'entité
-            return $this->render('entreprise/edit_entity.html.twig', [
-                'form' => $form->createView(),
-                'type' => $type,
-            ]);
+    
+        // Rendu de la vue avec le formulaire pour éditer l'entité
+        return $this->render('entreprise/edit_entity.html.twig', [
+            'form' => $form->createView(),
+            'type' => $type,
+        ]);
         // }else{
 
         // $this->addFlash('danger', 'Vous n\'avez pas les droits pour cette action.');
@@ -245,6 +226,7 @@ class EntrepriseController extends AbstractController
         // } 
     }
 
+    // retourne mentions légales
     #[Route('/entreprise/mention', name: 'mention_entreprise')]
     public function mention(): Response
     {
@@ -253,11 +235,4 @@ class EntrepriseController extends AbstractController
         ]);
     }
 
-    #[Route('/entreprise/planSite', name: 'planSite_entreprise')]
-    public function planSite(): Response
-    {
-        return $this->render('entreprise/planSite.html.twig', [
-            
-        ]);
-    }
 }

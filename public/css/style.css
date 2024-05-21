@@ -59,6 +59,24 @@ section{
     justify-content: center;
     align-items: center;
     white-space: wrap; /* Empêche le texte de passer à la ligne */
+    font-size: 20px;
+}
+
+.flex-center-bold{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: wrap; /* Empêche le texte de passer à la ligne */
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+.flex-center-user{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    white-space: wrap; /* Empêche le texte de passer à la ligne */
 }
 
 .flex-around{
@@ -373,6 +391,16 @@ footer a:hover, .mail:hover{
     justify-content: center;
 }
 
+#content-user h2{
+    font-size: 40px;
+    line-height: 40px;
+    color : #2baae2;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
 figure{
     flex-direction: column;
     width: 245px;
@@ -514,8 +542,8 @@ figcaption{
     padding: 20px 0 20px 0;
     background: #f0f0f0;
     border-radius: 10px;
-    box-shadow: 0px 0px 5px #000;
-    /* overflow: hidden; */
+    box-shadow: 0px 0px 1px #000;
+    overflow: hidden;
 }
 
 form p{
@@ -813,6 +841,13 @@ a.booking-btn.flex-center.button{
         text-align: center;
     }
 
+    .titre-galerie{
+        background-color: #2babe2a9;
+        color: white;
+        display: flex;
+        justify-content: center;
+        margin: 30px 0 15px 0;
+    }
 
     #gallery h2{
         text-align: center;
