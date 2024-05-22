@@ -871,54 +871,56 @@ a.booking-btn.flex-center.button{
 #mention li{
     font-family: 'Exo-Reg';
 }
-/* ---------------------------------------------------------PLAN DU SITE */
+/* ---------------------------------------------------------CHOICE RESERVATION */
 
-#plan a{
-    font-size : 25px;
-    text-decoration: underline;
-    line-height: 40px;
-    color : #4e4e4e;
+/* Styles de base pour le conteneur */
+#gallery {
+    text-align: center;
+    padding: 20px;
 }
 
-.list-plan{
-    padding-left: 25px;
-}
-
-.list-plan:before{
-    content: ".";
-    font-size: 40px;
-    color : #4e4e4e
-}
-
-#plan a:hover{
-    color:#2288b4;
-    font-size: 30px;
-}
-
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-} 
-.form-container {
+#gallery .flex-wrap {
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 15px;
+    justify-content: center;
+    gap: 20px; /* Espacement entre les cartes */
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: #f8f8f8; /* Couleur de fond des cartes */
+    border: 1px solid #ddd; /* Bordure des cartes */
+    border-radius: 8px; /* Coins arrondis */
+    padding: 20px;
+    width: 300px; /* Largeur fixe des cartes */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre portée */
+    display: flex;
     flex-direction: column;
+    align-items: center; /* Centre les éléments à l'intérieur des cartes */
+    text-align: center; /* Centre le texte */
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+.card p {
+    margin: 10px 0;
+}
+
+.titre-card{
+    color: #2baae2;
+}
+
+.card .button {
+    margin-top: auto; /* Place le bouton en bas de la carte */
+    padding: 10px 20px;
+    text-decoration: none;
 }
 
 .gestion{
     display: flex;
     justify-content: center;
     margin-top: 15px;
-}
-.container {
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .fa-check{
@@ -1341,6 +1343,44 @@ th{
         width: 100%;
     }
 }
+
+/* Styles de base pour le conteneur */
+#gallery {
+    text-align: center;
+    padding: 20px;
+}
+
+#gallery .flex-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Espacement entre les cartes */
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: #f8f8f8; /* Couleur de fond des cartes */
+    border: 1px solid #ddd; /* Bordure des cartes */
+    border-radius: 8px; /* Coins arrondis */
+    padding: 20px;
+    width: 300px; /* Largeur fixe des cartes */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre portée */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre les éléments à l'intérieur des cartes */
+    text-align: center; /* Centre le texte */
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+.card p {
+    margin: 10px 0;
+}
+
+
+
+
 
 
 

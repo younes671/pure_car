@@ -62,6 +62,21 @@ class ReservationController extends AbstractController
     #[Route('/reservation/reservationClient/{vehiculeId}', name: 'reservationClient_reservation')]
     public function reservationClient(Request $request, EntityManagerInterface $entityManager, VehiculeRepository $vehiculeRepository, Vehicule $vehiculeId): Response
     {
+         // Vérifier si l'utilisateur est connecté
+        $user = $this->getUser();
+
+        // Si l'utilisateur n'est pas connecté
+        if (!$user) {
+            // Stocker l'ID du véhicule dans la session
+            $request->getSession()->set('selected_vehicle_id', $vehiculeId->getId());
+
+            // Rediriger vers la page de connexion
+            return $this->redirectToRoute('reservation_choice', ['vehiculeId' => $vehiculeId->getId()]);
+            
+        }
+  
+        
+
         $vehicule = $vehiculeRepository->findBy(['id' => $vehiculeId]);
 
         $reservationForm = $this->createForm(ReservationType::class);
@@ -70,23 +85,63 @@ class ReservationController extends AbstractController
 
         if ($reservationForm->isSubmitted() && $reservationForm->isValid()) {
             $reservation = $reservationForm->getData();
+            $vehicule = $vehiculeRepository->find($vehiculeId);
+            $reservation->setVehicule($vehicule);
             $entityManager->persist($reservation);
             $entityManager->flush();
             $this->addFlash('success', 'Réservation effectuée avec succès.');
-            return $this->redirectToRoute('profil_user');
-        }else{
-            $this->addFlash('danger', 'La réservation a échouée.');
-            return $this->redirectToRoute('profil_user');
+            // return $this->redirectToRoute('app_home');
         }
-
-        return $this->render('reservation/detail_car.html.twig', [
+        return $this->render('reservation/reservation.html.twig', [
             'vehicules' => $vehicule,
             'reservationForm' => $reservationForm
+
         ]);
     }
 
+    #[Route('/reservation/reservationInvite/{vehiculeId}', name: 'reservationInvite_reservation')]
+    public function reservationInvite(Request $request, EntityManagerInterface $entityManager, VehiculeRepository $vehiculeRepository, Vehicule $vehiculeId): Response
+    {
+         
+        $vehicule = $vehiculeRepository->findBy(['id' => $vehiculeId]);
+
+        $reservationForm = $this->createForm(ReservationType::class);
+
+        $reservationForm->handleRequest($request);
+
+        if ($reservationForm->isSubmitted() && $reservationForm->isValid()) {
+            $reservation = $reservationForm->getData();
+            $vehicule = $vehiculeRepository->find($vehiculeId);
+            $reservation->setVehicule($vehicule);
+            $entityManager->persist($reservation);
+            $entityManager->flush();
+            $this->addFlash('success', 'Réservation effectuée avec succès.');
+            return $this->redirectToRoute('app_home');
+        }
+            return $this->render('reservation/reservation.html.twig', [
+                'vehicules' => $vehicule,
+                'reservationForm' => $reservationForm
+
+        ]);
+    }
+
+    #[Route('/reservation/choice/{vehiculeId}', name: 'reservation_choice')]
+    public function reservationChoice($vehiculeId, VehiculeRepository $vehiculeRepository, Request $request): Response
+    {
+        $vehicule = $vehiculeRepository->find($vehiculeId);
+        // Stocker l'ID du véhicule dans la session
+        $request->getSession()->set('selected_vehicle_id', $vehiculeId);
+
+        return $this->render('reservation/choice.html.twig', [
+            'vehicule' => $vehicule
+        ]);
+    }
+
+
+
+
     #[Route('/vehicules/search', name: 'app_vehicules_search')]
-    public function search(Request $request, VehiculeRepository $vehiculeRepository, CategorieRepository $categorieRepository, MarqueRepository $marqueRepository): JsonResponse
+    public function search(Request $request, VehiculeRepository $vehiculeRepository): JsonResponse
     {
         // Convertir le contenu JSON en tableau associatif
         $jsonData = json_decode($request->getContent(), true);

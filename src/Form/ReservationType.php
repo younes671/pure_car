@@ -42,18 +42,18 @@ class ReservationType extends AbstractType
             ->add('ville', TextType::class, [
                 'attr' => ['class' => 'field']
             ])
-            ->add('vehicule', EntityType::class, [
-                'class' => Vehicule::class,
-                'choice_label' => 'id',
-            ])
-            ->add('facture', EntityType::class, [
-                'class' => Facture::class,
-                'choice_label' => 'id',
-            ])
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
-            ])
+            // ->add('vehicule', EntityType::class, [
+            //     'class' => Vehicule::class,
+            //     'choice_label' => 'nom',
+            // ])
+            // ->add('facture', EntityType::class, [
+            //     'class' => Facture::class,
+            //     'choice_label' => 'id',
+            // ])
+            // ->add('user', EntityType::class, [
+            //     'class' => User::class,
+            //     'choice_label' => 'id',
+            // ])
             ->add('valider', SubmitType::class, [
                 'attr' => [
                     'class' => 'button'

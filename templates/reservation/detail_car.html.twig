@@ -60,7 +60,7 @@
         </div>
         <div class="price-content">
             <span class="price flex-center">{{ vehicule.prix ~ ' €/J' }}</span>
-            <span><a href="" class="booking-btn flex-center button">Je réserve</a></span>
+            <span><a href=" {{ path('reservationClient_reservation', {'vehiculeId': vehicule.id}) }} " class="booking-btn flex-center button">Je réserve</a></span>
         </div>
     </div>
     {% endfor %}

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Choix réservation{% endblock %}
+
+{% block body %}
+        <section id="gallery">
+            <h2>Choix de réservation</h2>
+            <div class="flex-wrap flex-around">
+                <div class="img-galerie card">
+                    <h3 class="titre-card">Connectez-vous</h3>
+                    <p>Si vous avez un compte connectez-vous</p>
+                    <a href="{{ path('app_login') }}" class="button flex-center" id="connect">Connexion</a>
+                </div>
+                <div class="img-galerie card">
+                    <h3 class="titre-card">Créer un compte</h3>
+                    <p>Si vous n'avez pas de compte, créer un compte pour profiter de nombreux avantages</p>
+                    <a href="{{ path('app_register') }}" class="button flex-center" id="connect">Inscription</a>
+                </div>
+                <div class="img-galerie card">
+                    <h3 class="titre-card">Continuez en tant qu'invité</h3>
+                    <p>Vous pouvez toujours faire votre réservation si vous renoncez de créer un compte</p>
+                    <a href="{{ path('reservationInvite_reservation', {'vehiculeId': vehicule.id}) }}" class="button flex-center" id="connect">Réservation</a>
+                </div>
+            </div>
+        </section>
+
+{% endblock %}

@@ -5,19 +5,25 @@
 {% block body %}
 <section class="flex-center" id="page_registration">
     <div class="form-container">
-        <h2 class="gestion">Ajouter un véhicule</h2>
+        <h2 class="gestion">Réservation</h2>
+        {% for flash_message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ flash_message }}
+        </div>
+        {% endfor %}
+        {% for flash_message in app.flashes('danger') %}
+        <div class="alert alert-danger">
+            {{ flash_message }}
+        </div>
+        {% endfor %}
         {{ form_start(reservationForm, {'attr': {'class': 'forms'}}) }}
         {{ form_row(reservationForm.nom) }}
-        {{ form_row(reservationForm.nbPorte) }}
-        {{ form_row(reservationForm.nbPlace) }}
-        {{ form_row(reservationForm.nbBagage) }}
-        {{ form_row(reservationForm.prix) }}
-        {{ form_row(reservationForm.categorie) }}
-        {{ form_row(reservationForm.modele) }}
-        {{ form_row(reservationForm.img) }}
-        {{ form_row(reservationForm.bluetooth) }}
-        {{ form_row(reservationForm.climatisation) }}
-        {{ form_row(reservationForm.gps) }}
+        {{ form_row(reservationForm.prenom) }}
+        {{ form_row(reservationForm.adresse) }}
+        {{ form_row(reservationForm.cp) }}
+        {{ form_row(reservationForm.ville) }}
+        {{ form_row(reservationForm.dateDebut) }}
+        {{ form_row(reservationForm.dateFin) }}
         {{ form_end(reservationForm) }}
     </div>
 </section>
