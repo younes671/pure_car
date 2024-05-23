@@ -3,61 +3,61 @@
 {% block title %}Liste des réservations de {{ user.nom }} {{ user.prenom }}{% endblock %}
 
 {% block body %}
-<h2>Informations du client</h2>
-{% for flash_message in app.flashes('success') %}
-    <div class="alert alert-success">
-        {{ flash_message }}
-    </div>
-    {% endfor %}
-    {% for flash_message in app.flashes('danger') %}
-    <div class="alert alert-danger">
-        {{ flash_message }}
-    </div>
-    {% endfor %}
-<table class="table">
-    <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Prénom</th>
-            <th>Adresse</th>
-            <!-- Ajoutez d'autres colonnes si nécessaire -->
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>{{ user.nom }}</td>
-            <td>{{ user.prenom }}</td>
-            <td>{{ user.adresse ~ ' ' ~ user.cp ~ ' ' ~ user.ville }}</td>
-            <!-- Ajoutez d'autres colonnes si nécessaire -->
-        </tr>
-    </tbody>
-</table>
+<section id="page_registration" >
+        <h2>Informations du client</h2>
+        {% for flash_message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ flash_message }}
+            </div>
+            {% endfor %}
+            {% for flash_message in app.flashes('danger') %}
+            <div class="alert alert-danger">
+                {{ flash_message }}
+            </div>
+            {% endfor %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Adresse</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ app.user.nom }}</td>
+                    <td>{{ app.user.prenom }}</td>
+                    <td>{{ app.user.adresse ~ ' ' ~ app.user.cp ~ ' ' ~ app.user.ville }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-<h2>Liste des réservations de {{ user.nom }} {{ user.prenom }}</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Véhicule</th>
-            <th>Date de début</th>
-            <th>Date de fin</th>
-            <!-- Ajoutez d'autres colonnes selon vos besoins -->
-        </tr>
-    </thead>
-    <tbody>
-        {% for reservation in reservations %}
-        {% if reservation %}
-        <tr>
-            <td>{{ loop.index }}</td>
-            <td>{{ reservation.vehicule.modele.marque.nom ~ ' ' ~ reservation.vehicule.modele.nom }}</td>
-            <td>{{ reservation.dateDebut|date('Y-m-d') }}</td>
-            <td>{{ reservation.dateFin|date('Y-m-d') }}</td>
-            <!-- Ajoutez d'autres colonnes selon vos besoins -->
-        </tr>
-        {% endfor %}    
-        {% else %}
-            <h3>Il n'y a aucune réservation pour ce profil</h3>
-        {% endif %}
-    </tbody>
-</table>
+        <h2>Liste des réservations de {{ app.user.nom }} {{ app.user.prenom }}</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Véhicule</th>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reservation in reservations %}
+                {% if reservation %}
+                {% if reservation.confirmation %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ reservation.vehicule.modele.marque.nom ~ ' ' ~ reservation.vehicule.modele.nom }}</td>
+                    <td>{{ reservation.dateDebut|date('Y-m-d') }}</td>
+                    <td>{{ reservation.dateFin|date('Y-m-d') }}</td>
+                </tr>
+                {% endif %}
+                {% else %}
+                <h3>Il n'y a aucune réservation pour ce profil</h3>
+                {% endif %}
+                {% endfor %}    
+            </tbody>
+        </table>
+</section>
 {% endblock %}

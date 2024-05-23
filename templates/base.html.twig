@@ -45,7 +45,7 @@
                                     <li><a href="{{ path('app_user') }}">Gestion client</a></li>
                                 {% endif %}
                                 {% if app.user %}
-                                    <li><a href="">Mon profil</a></li>
+                                    <li><a href="{{ path('profil_user', {'idClient': app.user.id}) }}"><i class="fa-regular fa-user"></i>&nbsp; {{ app.user.pseudo }} </p></li>
                                 {% endif %}
                             </ul>
                         </nav>

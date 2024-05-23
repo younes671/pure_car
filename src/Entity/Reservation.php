@@ -44,6 +44,12 @@ class Reservation
     #[ORM\Column(length: 70)]
     private ?string $ville = null;
 
+    #[ORM\Column]
+    private ?int $prix = null;
+
+    #[ORM\Column]
+    private ?bool $confirmation = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -165,6 +171,30 @@ class Reservation
     public function setVille(string $ville): static
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getPrix(): ?int
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(int $prix): static
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function isConfirmation(): ?bool
+    {
+        return $this->confirmation;
+    }
+
+    public function setConfirmation(bool $confirmation): static
+    {
+        $this->confirmation = $confirmation;
 
         return $this;
     }

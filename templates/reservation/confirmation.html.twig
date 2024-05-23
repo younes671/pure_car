@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation de la réservation{% endblock %}
+
+{% block body %}
+    <h1>Récapitulatif de la réservation</h1>
+    <p>Date de début : {{ reservation.dateDebut|date('Y-m-d') }}</p>
+    <p>Date de fin : {{ reservation.dateFin|date('Y-m-d') }}</p>
+    <p>Prix : {{ reservation.prix }} </p>
+
+    <form action="{{ path('reservation_annuler', { 'reservationId': reservation.id }) }}" method="post">
+        <button class="button" type="submit">Annuler</button>
+    </form>
+
+    <form action="{{ path('reservation_confirmer', { 'reservationId': reservation.id }) }}" method="post">
+        <button class="button" type="submit">Confirmer</button>
+    </form>
+{% endblock %}

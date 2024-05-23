@@ -27,6 +27,11 @@
         </div>
     </div>
 </section>
+        {% for flash_message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ flash_message }}
+        </div>
+        {% endfor %}
 <section class="flex-wrap flex-center" id="step">
     <h2>Gagnez du temps, louez en ligne</h2>
     <div class="flex-wrap flex-center">

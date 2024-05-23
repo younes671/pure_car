@@ -27,11 +27,11 @@ class ReservationType extends AbstractType
             ])
             ->add('dateDebut', DateType::class, [
                 'widget' => 'single_text',
-                'attr' => ['class' => 'field']
+                'attr' => ['class' => 'field date']
             ])
             ->add('dateFin', DateType::class, [
                 'widget' => 'single_text',
-                'attr' => ['class' => 'field']
+                'attr' => ['class' => 'field date']
             ])
             ->add('adresse', TextType::class, [
                 'attr' => ['class' => 'field']

@@ -138,6 +138,10 @@ section{
     font-size: 20px;
 }
 
+#main-menu ul li a{
+    color: #2baae2;
+}
+
 #main-menu ul{
     width: 830px;
     height: 45px;
@@ -391,6 +395,10 @@ footer a:hover, .mail:hover{
     justify-content: center;
 }
 
+#page_registration h2{
+    margin-top: 50px;
+}
+
 #content-user h2{
     font-size: 40px;
     line-height: 40px;
@@ -575,6 +583,10 @@ form label{
     height: 40px;
     text-align: center;
     margin: 20px 0 20px 0;
+}
+
+.date{
+    color: #2baae2;
 }
 
 .field-nbBagage{
@@ -908,6 +920,10 @@ a.booking-btn.flex-center.button{
 }
 
 .titre-card{
+    color: #2baae2;
+}
+
+.titre-resa{
     color: #2baae2;
 }
 

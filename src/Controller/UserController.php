@@ -34,9 +34,10 @@ class UserController extends AbstractController
     #[Route('/user/profil/{idClient}', name: 'profil_user')]
     public function profilUser(User $idClient, ReservationRepository $reservationRepository): Response
     {
-        $userProfil = $reservationRepository->find($idClient);
-        return $this->render('user/profil .html.twig', [
-            'usersProfil' => $userProfil,
+        $reservation = $reservationRepository->findBy(['user' => $idClient]);
+        // var_dump($reservation); exit;
+        return $this->render('user/profil.html.twig', [
+            'reservations' => $reservation,
         ]);
     }
 

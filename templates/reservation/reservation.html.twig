@@ -6,17 +6,13 @@
 <section class="flex-center" id="page_registration">
     <div class="form-container">
         <h2 class="gestion">Réservation</h2>
-        {% for flash_message in app.flashes('success') %}
-        <div class="alert alert-success">
-            {{ flash_message }}
-        </div>
-        {% endfor %}
-        {% for flash_message in app.flashes('danger') %}
+        {% for flash_message in app.flashes('error') %}
         <div class="alert alert-danger">
             {{ flash_message }}
         </div>
         {% endfor %}
         {{ form_start(reservationForm, {'attr': {'class': 'forms'}}) }}
+        <h3 class="titre-resa" > {{ vehicule.modele.marque.nom ~ ' ' ~ vehicule.modele.nom }} </h3>
         {{ form_row(reservationForm.nom) }}
         {{ form_row(reservationForm.prenom) }}
         {{ form_row(reservationForm.adresse) }}

@@ -48,6 +48,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100)]
     private ?string $pseudo = null;
 
+    #[ORM\Column(length: 100)]
+    private ?string $nom = null;
+
+    #[ORM\Column(length: 70)]
+    private ?string $prenom = null;
+
+    #[ORM\Column(length: 70)]
+    private ?string $adresse = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $cp = null;
+
+    #[ORM\Column(length: 70)]
+    private ?string $ville = null;
+
     public function __construct()
     {
         $this->UserReservation = new ArrayCollection();
@@ -180,6 +195,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPseudo(string $pseudo): static
     {
         $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): static
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(string $adresse): static
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getCp(): ?string
+    {
+        return $this->cp;
+    }
+
+    public function setCp(string $cp): static
+    {
+        $this->cp = $cp;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(string $ville): static
+    {
+        $this->ville = $ville;
 
         return $this;
     }
