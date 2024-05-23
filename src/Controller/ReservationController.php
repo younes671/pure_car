@@ -137,16 +137,22 @@ class ReservationController extends AbstractController
             $reservation = $reservationForm->getData();
             $vehicule = $vehiculeRepository->find($vehiculeId);
             $reservation->setVehicule($vehicule);
+
+            // Calcul du prix en fonction de la durée de location
+            $dateDebut = $reservation->getDateDebut();
+            $dateFin = $reservation->getDateFin();
+            $nbJours = $dateDebut->diff($dateFin)->days;
+            $prixTotal = $nbJours * $vehicule->getPrix();
+            $reservation->setPrix($prixTotal);
+
             $entityManager->persist($reservation);
             $entityManager->flush();
-                // Vérification de la réussite de la réservation
-                if ($reservation->getId()) {
-                    $this->addFlash('success', 'Réservation effectuée avec succès.');
-                    return $this->redirectToRoute('app_home');
-                } else {
-                    // Si la réservation échoue, ajoutez un message d'erreur
-                    $this->addFlash('error', 'La réservation a échoué. Veuillez réessayer.');
-                }
+
+            // Afficher les détails de la réservation et les options de confirmation ou d'annulation
+            return $this->render('reservation/confirmation.html.twig', [
+                'reservation' => $reservation,
+                'vehicule' => $vehicule,
+            ]);
         }
             return $this->render('reservation/reservation.html.twig', [
                 'vehicule' => $vehicule,
@@ -188,8 +194,13 @@ class ReservationController extends AbstractController
         $entityManager->remove($reservation);
         $entityManager->flush();
 
-        $this->addFlash('success', 'La réservation a été annulée avec succès.');
-        return $this->redirectToRoute('profil_user', ['idClient' => $userId->getId()]);
+        if ($user) {
+            $this->addFlash('success', 'La réservation a été annulée avec succès.');
+            return $this->redirectToRoute('profil_user', ['idClient' => $userId->getId()]);
+        } else {
+            $this->addFlash('success', 'La réservation a été annulée avec succès.');
+            return $this->redirectToRoute('app_home');
+        }
     }
 
     #[Route('/reservation/confirmer/{reservationId}', name: 'reservation_confirmer', methods: ['POST'])]
@@ -201,8 +212,15 @@ class ReservationController extends AbstractController
         $reservation = $reservationRepository->find($reservationId);
         $reservation->setConfirmation(true);
         $entityManager->flush();
-        $this->addFlash('success', 'La réservation a été confirmée avec succès.');
-        return $this->redirectToRoute('profil_user', ['idClient' => $userId->getId()]);
+        if ($user) {
+            $this->addFlash('success', 'La réservation a été confirmée avec succès.');
+            return $this->redirectToRoute('profil_user', ['idClient' => $userId->getId()]);
+        } else {
+            $this->addFlash('success', 'La réservation a été confirmée avec succès.');
+            return $this->redirectToRoute('app_home');
+        }
+        
+       
     }
 
 
