@@ -5,6 +5,11 @@
 {% block body %}
 <section id="page_registration" class="flex-center">
     <h2>Connexion</h2>
+        {% for flash_message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ flash_message }}
+        </div>
+        {% endfor %}
         <form method="post" id="forms">
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -29,6 +34,7 @@
             <p class="flex-center"><button class="button" type="submit">
                 Se connecter
             </button></p>
+            <p><a href="{{ path('app_forgot_password_request') }}" class="registration-link">Mot de passe oublié</a></p>
             <p>Vous n'avez pas de compte ? <a href="{{ path('app_register') }}" class="registration-link">Inscrivez-vous maintenant</a></p>
         </form>
 </section>

@@ -426,7 +426,7 @@ figcaption{
 
 /*------------------------------------------------------------------CONTACT.HTML*/
 #contact, #page_connexion, #page_registration, #gallery, #mention, #plan{
-    margin-top: 100px;
+    /* margin-top: 100px; */
     flex-direction: column;
 }
 
@@ -445,7 +445,7 @@ figcaption{
 }
 
 #forms{
-    margin-top: 100px;
+    margin-top: 30px;
     width: 540px;
     padding: 50px 0 20px 0;
     background: #f0f0f0;
@@ -571,6 +571,30 @@ form p{
 form label{
     font-size: 15px;
     color: #2baae2;
+}
+
+#change_password_form_plainPassword_first{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 340px;
+    border:solid 1px #c0c0c0;
+    border-radius : 10px;
+    height: 40px;
+    text-align: center;
+    margin: 20px 0 20px 0;
+}
+
+#change_password_form_plainPassword_second{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 340px;
+    border:solid 1px #c0c0c0;
+    border-radius : 10px;
+    height: 40px;
+    text-align: center;
+    margin: 20px 0 20px 0;
 }
 
 .field{
