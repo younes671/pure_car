@@ -13,11 +13,15 @@ use App\Repository\ModeleRepository;
 use App\Repository\VehiculeRepository;
 use App\Repository\CategorieRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ReservationRepository;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
@@ -233,6 +237,41 @@ class EntrepriseController extends AbstractController
         return $this->render('entreprise/mention.html.twig', [
             
         ]);
+    }
+
+
+    #[Route('/entreprise/emailContact', name: 'emailContact_entreprise')]
+    public function emailContact( MailerInterface $mailer, Request $request): RedirectResponse
+    {
+
+        // Récupérer les données soumises par le formulaire
+        $name = filter_var($request->request->get('name'), FILTER_SANITIZE_SPECIAL_CHARS);
+        $firstname = filter_var($request->request->get('firstname'), FILTER_SANITIZE_SPECIAL_CHARS);
+        $email = filter_var($request->request->get('email'), FILTER_SANITIZE_EMAIL);
+        $phone = filter_var($request->request->get('phone'), FILTER_SANITIZE_SPECIAL_CHARS);
+        $subject = filter_var($request->request->get('subject'), FILTER_SANITIZE_SPECIAL_CHARS);
+        $message = filter_var($request->request->get('message'), FILTER_SANITIZE_SPECIAL_CHARS);
+
+        // Composer le contenu de l'email
+        $emailContent = "Nom: $name\n";
+        $emailContent .= "Prénom: $firstname\n";
+        $emailContent .= "Email: $email\n";
+        $emailContent .= "Téléphone: $phone\n\n";
+        $emailContent .= "Message:\n$message";
+
+        // Envoyer l'email
+        $email = (new TemplatedEmail())
+            ->from('user@email.com')
+            ->to('admin@email.com') // Adresse email de réception
+            ->subject($subject)
+            ->text($emailContent);
+
+        $mailer->send($email);
+
+        
+            $this->addFlash('success', 'Email envoyé avec succès.');
+            return $this->redirectToRoute('app_entreprise');
+        
     }
 
 }

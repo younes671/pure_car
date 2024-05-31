@@ -609,6 +609,19 @@ form label{
     margin: 20px 0 20px 0;
 }
 
+.field-text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 340px;
+    resize: none;
+    border:solid 1px #c0c0c0;
+    border-radius : 15px;
+    height: 150px;
+    text-align: center;
+    margin: 20px 0 20px 0;
+}
+
 .date{
     color: #2baae2;
 }
