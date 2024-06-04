@@ -6,7 +6,11 @@
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
-
+    {% for flash_message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ flash_message }}
+    </div>
+    {% endfor %}
     <section id="page_registration" class="flex-center">
         <h2>Inscription gratuite</h2>
         <p class="text-intro">Créez votre compte et louez un véhicule éléctrique en toute simplicité: rapide, flexible et facile. Gérer votre reservation sans contrainte et gagnez du temps pour vos prochaines réservations. Cumulez des points à chaques locations et recevez des offres promotionnelles</p>

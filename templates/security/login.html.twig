@@ -10,6 +10,11 @@
             {{ flash_message }}
         </div>
         {% endfor %}
+        {% for flash_message in app.flashes('danger') %}
+        <div class="alert alert-danger">
+            {{ flash_message }}
+        </div>
+        {% endfor %}
         <form method="post" id="forms">
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>

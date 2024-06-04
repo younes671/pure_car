@@ -21,6 +21,8 @@
                     <th>Nom</th>
                     <th>Prénom</th>
                     <th>Adresse</th>
+                    <th>Supprimer son compte</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +30,8 @@
                     <td>{{ app.user.nom }}</td>
                     <td>{{ app.user.prenom }}</td>
                     <td>{{ app.user.adresse ~ ' ' ~ app.user.cp ~ ' ' ~ app.user.ville }}</td>
+                    <td><p><a href="{{ path('delete_user', {'id': app.user.id} ) }}" class="registration-link">Supprimer mon compte</a></p></td>
+                    <td><p><a href="{{ path('app_forgot_password_request') }}" class="registration-link">Editer mot de passe</a></p></td>
                 </tr>
             </tbody>
         </table>
