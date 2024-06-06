@@ -176,6 +176,32 @@ section{
     width: 100%;
 }
 
+/* ------------------------------------Mot de passe */
+
+.requirement{
+    color: red;
+}
+
+.success{
+    color: green;
+}
+
+#page_registration h6{
+    line-height: 40px;
+    color : #2baae2;
+    display: flex;
+    justify-content: center;
+}
+
+#page_registration span{
+    font-size: 17px;
+}
+
+#password-requirements{
+    margin-bottom: 20px;
+}
+
+
 /* ------------------------------------Menu mobile */
 
 #menu{

@@ -23,6 +23,14 @@
             {{ form_row(registrationForm.plainPassword, {
                 label: 'Password'
             }) }}
+            <div id="password-requirements">
+                <h6>Exigences du mot de passe : </h6>
+                    <span class="requirement caractere">-Au moins un caractère spécial (!@#$%^&*()[]{};:<>|./?)</span><br>
+                    <span class="requirement majuscule">-Au moins une lettre majuscule</span><br>
+                    <span class="requirement minuscule">-Au moins une lettre minuscule</span><br>
+                    <span class="requirement chiffre">-Au moins un chiffre</span><br>
+                    <span class="requirement longueur">-Minimum 12 caractères</span>
+            </div>
             <p><input type="checkbox" name="rgpd" id="rgpd" required><label for="rgpd">J'ai lu et j'accèpte <a href="" class="rgpd-link">la Politique de Protection des Données Personnelles</a></label></p>
             <p class="submit-content"><input type="submit" value="Valider" class="button"></p>
         {{ form_end(registrationForm) }}

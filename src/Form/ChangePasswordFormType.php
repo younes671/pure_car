@@ -22,6 +22,7 @@ class ChangePasswordFormType extends AbstractType
                 'options' => [
                     'attr' => [
                         'autocomplete' => 'new-password',
+                        'id' => 'change_password_form_plainPassword_first'
                     ],
                 ],
                 'first_options' => [
