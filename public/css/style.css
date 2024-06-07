@@ -201,6 +201,133 @@ section{
     margin-bottom: 20px;
 }
 
+/* ------------------------------------API BORNE */
+
+main{
+    min-height: 100vh;
+    max-width: 100vw;
+    padding: 20px;
+}
+
+.map{
+    margin-top: 25px;
+}
+
+.users{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.user{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* position: relative; */
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 27px;
+    font-size: .8rem;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 15px 20px -20px;
+    /* transition: .5s; */
+}
+
+.user h2 {
+    font-size: 1.2rem;
+}
+
+.user img {
+    width: 80px;
+    border-radius: 50%;
+    /* filter: grayscale(1); */
+    /* transition: .5s; */
+}
+
+.user:hover img {
+    /* filter: grayscale(0); */
+}
+
+.user:hover {
+    /* transform: translateY(-5px) */
+}
+
+.top{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.details{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 0px 0px 16px 16px;
+}
+
+.txt-light{
+    color: #666666;
+}
+
+.plus {
+    text-decoration: none;
+    color: #c80c54;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.formAddMembre{
+    display: flex;
+    justify-content: center;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input{
+    border-radius: 10px;
+    height: 35px;
+    padding: 10px;
+}
+
+.btn{
+    height: 35px;
+    width: 120px;
+    background-color: blue;
+    color: white;
+    border-radius: 10px;
+    border: none;
+}
+
+.ville{
+    width: 200px;
+    margin-top: 10px;
+}
+
+#map { 
+    height: 580px; 
+    margin: 10px;
+}
+
+/* ------------------------------------MAP */
+
+.ville{
+    width: 200px;
+    margin-top: 10px;
+}
+
+#map { 
+    height: 580px; 
+    margin: 10px;
+}
+
+.odswidget-map{
+    min-height: 1080px !important;
+}
 
 /* ------------------------------------Menu mobile */
 
@@ -320,6 +447,20 @@ footer a:hover, .mail:hover{
 .fa-brands{
     font-size: 25px;
     margin: 15px;
+}
+
+/* --------------------------------------------------------------PROFIL */
+
+.fa-trash{
+    color: #c80c54;
+}
+
+.fa-pen-to-square{
+    color: #2baae2;
+}
+
+.fa-solid:hover{
+    font-size: 22px;
 }
 
 
@@ -895,7 +1036,7 @@ a.booking-btn.flex-center.button{
     justify-content: center;
 }
 
-/* -------------------------------------------------------Page inscription */
+/* -------------------------------------------------------PAGE INSCRIPTION */
 
 #page_registration form{
     /* margin-top: 0; */
@@ -974,6 +1115,24 @@ a.booking-btn.flex-center.button{
     text-align: center; /* Centre le texte */
 }
 
+.card-profil {
+    background-color: #ffffff; /* Couleur de fond des cartes */
+    border: 1px solid #3f3f3f55; /* Bordure des cartes */
+    border-radius: 8px; /* Coins arrondis */
+    padding: 20px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre portée */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center; /* Centre les éléments à l'intérieur des cartes */
+    text-align: center; /* Centre le texte */
+}
+
+.blue{
+    color: #2baae2;
+}
+
 .card h3 {
     margin-top: 0;
 }
@@ -1014,7 +1173,7 @@ th{
     font-weight: bolder;
 }
 
-/*-------------------------------------------------------------GestionMultiple */
+/*-------------------------------------------------------------GESTIO MULTIPLE */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Répartit les colonnes de manière égale */
@@ -1040,7 +1199,7 @@ th{
 
 /* Style supplémentaire selon vos besoins */
 
-/* ------------------------------------------------------------Responsive */
+/* ------------------------------------------------------------RESPONSIVE */
 @media screen and (max-width : 1080px){
     #content{
         width: 100%;

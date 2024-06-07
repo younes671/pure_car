@@ -18,6 +18,10 @@ framework:
     php_errors:
         log: true
 
+    http_client:
+            scoped_clients:
+                jph:
+                    base_uri: https://odre.opendatasoft.com/api/explore/v2.1/catalog/datasets/bornes-irve/
 when@test:
     framework:
         test: true

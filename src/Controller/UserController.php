@@ -3,15 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\UserFormType;
 use App\Entity\Reservation;
 use App\Repository\UserRepository;
-use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ReservationRepository;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
 
 class UserController extends AbstractController
 {
@@ -65,6 +67,26 @@ class UserController extends AbstractController
             $this->addFlash('danger', 'Vous n\'avez pas accès à cette page, veuillez vous connectez.');
             return $this->redirectToRoute('app_login');
         }
+    }
+
+    #[Route('/user/edit/{id}', name: 'edit_user')]
+    public function editUser(User $user, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        // Créer un formulaire pour l'édition de l'utilisateur
+        $editForm = $this->createForm(UserFormType::class, $user);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            // Enregistrer les modifications dans la base de données
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Informations modifiées avec succès.');
+            return $this->redirectToRoute('profil_user', ['idClient' => $user->getId()]);
+        }
+
+        return $this->render('user/edit.html.twig', [
+            'editForm' => $editForm->createView(),
+        ]);
     }
 
 

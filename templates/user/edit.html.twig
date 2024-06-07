@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    {% for flash_message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ flash_message }}
+    </div>
+    {% endfor %}
+    <section id="page_registration" class="flex-center">
+        <h2>Editer vos informations</h2>
+        {{ form_errors(editForm) }}
+        {{ form_start(editForm, {'attr': {'id': 'forms'}}) }}
+            {{ form_row(editForm.pseudo, {'attr': {'class': 'field'}}) }}
+            {{ form_row(editForm.email, {'attr': {'class': 'field'}}) }}
+            {{ form_row(editForm.nom) }}
+            {{ form_row(editForm.prenom) }}
+            {{ form_row(editForm.adresse) }}
+            {{ form_row(editForm.cp) }}
+            {{ form_row(editForm.ville) }}
+            <p class="submit-content"><input type="submit" value="Valider" class="button"></p>
+        {{ form_end(editForm) }}
+    </section>
+
+{% endblock %}
