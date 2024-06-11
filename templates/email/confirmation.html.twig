@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Email de confirmation{% endblock %}
+
+{% block body %}
+        <h1>Confirmation de votre réservation</h1>
+        <p>Bonjour {{ reservation.nom }},</p>
+        <p>Votre réservation a été confirmée avec succès. Voici les détails de votre réservation :</p>
+        <ul>
+            <li>Date de début : {{ reservation.dateDebut|date('Y-m-d') }}</li>
+            <li>Date de fin : {{ reservation.dateFin|date('Y-m-d') }}</li>
+            <li>Prix total : {{ reservation.prix }} €</li>
+            <li>Véhicule : {{ reservation.vehicule.modele.marque.nom }} - {{ reservation.vehicule.modele.nom }}</li>
+        </ul>
+        <p>Merci pour votre réservation.</p>
+{% endblock %}

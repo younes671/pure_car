@@ -3,16 +3,21 @@
 {% block title %}Confirmation de la réservation{% endblock %}
 
 {% block body %}
-    <h1>Récapitulatif de la réservation</h1>
+<section class="flex-center" id="page_registration">
+    <h2>Récapitulatif de la réservation</h2>
     <p>Date de début : {{ reservation.dateDebut|date('Y-m-d') }}</p>
     <p>Date de fin : {{ reservation.dateFin|date('Y-m-d') }}</p>
     <p>Prix : {{ reservation.prix }} </p>
-
-    <form action="{{ path('reservation_annuler', { 'reservationId': reservation.id }) }}" method="post">
+    <div class="flex-wrap flex-around">
+    <a href="{{ path('annuler_reservation', { 'reservationId': reservation.id }) }}">
         <button class="button" type="submit">Annuler</button>
-    </form>
+    </a>
+    </div>
+    <div class="flex-wrap flex-around">
 
-    <form action="{{ path('reservation_confirmer', { 'reservationId': reservation.id }) }}" method="post">
+    <a href="{{ path('reservation_confirmer', { 'reservationId': reservation.id }) }}">
         <button class="button" type="submit">Confirmer</button>
-    </form>
+    </a>
+    </div>
+</section>
 {% endblock %}

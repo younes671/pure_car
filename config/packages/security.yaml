@@ -34,6 +34,8 @@ security:
         # - { path: ^/user/profil, roles: [ROLE_ADMIN, ROLE_USER] }
         # - { path: ^/user/delete, roles: [ROLE_ADMIN, ROLE_USER] }
         - { path: ^/gestionMultiple, roles: ROLE_ADMIN }
+        - { path: ^/edit, roles: ROLE_ADMIN }
+        - { path: ^/delete, roles: ROLE_ADMIN }
         # - { path: ^/user, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 

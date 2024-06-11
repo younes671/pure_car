@@ -7,6 +7,7 @@ use App\Entity\Vehicule;
 use App\Entity\Categorie;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
+use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
 use App\Repository\MarqueRepository;
 use App\Repository\ModeleRepository;
@@ -20,6 +21,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mailer\MailerInterface;
 
 class ReservationController extends AbstractController
 {
@@ -74,7 +76,7 @@ class ReservationController extends AbstractController
 
         // Si l'utilisateur n'est pas connecté
         if (!$user) {
-            // Rediriger vers la page de connexion
+            // Rediriger vers la page de choix
             return $this->redirectToRoute('reservation_choice', ['vehiculeId' => $vehiculeId->getId()]);
         }
 
@@ -174,22 +176,60 @@ class ReservationController extends AbstractController
     }
 
     #[Route('/reservation/confirmation/{reservationId}', name: 'reservation_confirmation')]
-    public function confirmationReservation($reservationId, ReservationRepository $reservationRepository, EntityManagerInterface $entityManager): Response
+    public function confirmationReservation($reservationId, ReservationRepository $reservationRepository): Response
     {
-        // Récupérère les détails de la réservation à partir de l'ID
+       // Récupérer la réservation par son ID
         $reservation = $reservationRepository->find($reservationId);
-        // Affiche la page de confirmation avec les détails de la réservation
-        return $this->render('reservation/confirmation.html.twig', [
-            'reservation' => $reservation,
-        ]);
+
+         // Vérifier si la réservation existe
+        if (!$reservation) {
+            throw $this->createNotFoundException('La réservation n\'existe pas.');
+        }
+         // Vérifier si l'utilisateur est connecté
+        $user = $this->getUser();
+        if (!$user) {
+            // Rediriger vers la page de choix si l'utilisateur n'est pas connecté
+            return $this->redirectToRoute('reservation_choice', ['vehiculeId' => $reservation->getVehicule()->getId()]);
+        }
+
+        // Vérifier si l'e-mail est présent
+        if (!$reservation->getEmail()) {
+            // Rediriger vers la page de choix si la réservation ou l'e-mail est absent
+            return $this->redirectToRoute('reservation_choice', ['vehiculeId' => $reservation->getVehicule()->getId()]);
+        }
+            // Récupérère les détails de la réservation à partir de l'ID
+            $reservation = $reservationRepository->find($reservationId);
+            // Affiche la page de confirmation avec les détails de la réservation
+            return $this->render('reservation/confirmation.html.twig', [
+                'reservation' => $reservation,
+            ]);
+        
     }
 
-    #[Route('/reservation/annuler/{reservationId}', name: 'reservation_annuler', methods: ['POST'])]
+    #[Route('/reservation/annuler/{reservationId}', name: 'annuler_reservation')]
     public function annulerReservation($reservationId, UserRepository $userRepository, EntityManagerInterface $entityManager, ReservationRepository $reservationRepository): RedirectResponse
     {
+        
         $reservation = $reservationRepository->find($reservationId);
         $user = $this->getUser();
         $userId = $userRepository->findOneBy(['id' => $user]);
+          // Vérifier si la réservation existe
+        if (!$reservation) {
+            throw $this->createNotFoundException('La réservation n\'existe pas.');
+        }
+         // Vérifier si l'utilisateur est connecté
+        $user = $this->getUser();
+        if (!$user) {
+            // Rediriger vers la page de choix si l'utilisateur n'est pas connecté
+            return $this->redirectToRoute('reservation_choice', ['vehiculeId' => $reservation->getVehicule()->getId()]);
+        }
+
+        // Vérifier si l'e-mail est présent
+        if (!$reservation->getEmail()) {
+            // Rediriger vers la page de choix si la réservation ou l'e-mail est absent
+            return $this->redirectToRoute('reservation_choice', ['vehiculeId' => $reservation->getVehicule()->getId()]);
+        }
+
         // Supprimer la réservation de la base de données
         $entityManager->remove($reservation);
         $entityManager->flush();
@@ -203,24 +243,46 @@ class ReservationController extends AbstractController
         }
     }
 
-    #[Route('/reservation/confirmer/{reservationId}', name: 'reservation_confirmer', methods: ['POST'])]
-    public function confirmerReservation($reservationId, EntityManagerInterface $entityManager, ReservationRepository $reservationRepository, UserRepository $userRepository): RedirectResponse
+    #[Route('/reservation/confirmer/{reservationId}', name: 'reservation_confirmer')]
+    public function confirmerReservation($reservationId, EntityManagerInterface $entityManager, ReservationRepository $reservationRepository, UserRepository $userRepository, MailerInterface $mailer): RedirectResponse
     {
+        $reservation = $reservationRepository->find($reservationId);
         $user = $this->getUser();
         $userId = $userRepository->findOneBy(['id' => $user]);
+
+          // Vérifier si la réservation existe
+        if (!$reservation) {
+            throw $this->createNotFoundException('La réservation n\'existe pas.');
+        }
+         
+        if (!$reservation->getEmail()) {
+            // Rediriger vers la page de choix si la réservation ou l'e-mail est absent
+            return $this->redirectToRoute('reservation_choice', ['vehiculeId' => $reservation->getVehicule()->getId()]);
+        }
 
         $reservation = $reservationRepository->find($reservationId);
         $reservation->setConfirmation(true);
         $entityManager->flush();
+
+        // Envoyer un email de confirmation avec le récapitulatif de la réservation
+        $email = (new Email())
+            ->from('noreply@votreapp.com')
+            ->to($reservation->getEmail())
+            ->subject('Confirmation de votre réservation')
+            ->html($this->renderView('email/confirmation.html.twig', [
+                'reservation' => $reservation,
+                'user' => $user,
+            ]));
+
+        $mailer->send($email);
+        
         if ($user) {
-            $this->addFlash('success', 'La réservation a été confirmée avec succès.');
+            $this->addFlash('success', 'La réservation a été effectuée avec succès et un e-mail a été envoyé à l\'adresse ' . $reservation->getEmail() .'.');
             return $this->redirectToRoute('profil_user', ['idClient' => $userId->getId()]);
         } else {
-            $this->addFlash('success', 'La réservation a été confirmée avec succès.');
+            $this->addFlash('success', 'La réservation a été effectuée avec succès et un e-mail a été envoyé à l\'adresse ' . $reservation->getEmail() . '.');
             return $this->redirectToRoute('app_home');
         }
-        
-       
     }
 
 

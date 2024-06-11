@@ -13,6 +13,7 @@
         {% endfor %}
         {{ form_start(reservationForm, {'attr': {'class': 'forms'}}) }}
         <h3 class="titre-resa" > {{ vehicule.modele.marque.nom ~ ' ' ~ vehicule.modele.nom }} </h3>
+        {{ form_row(reservationForm.email) }}
         {{ form_row(reservationForm.nom) }}
         {{ form_row(reservationForm.prenom) }}
         {{ form_row(reservationForm.adresse) }}

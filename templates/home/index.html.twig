@@ -4,7 +4,14 @@
 
 {% block body %}
 <section id="slider">
-    <!-- Slider desktop -->
+    {% for categorie, image in imagesParCategorie %}
+        {% if image %}
+        <img id="slider"  src="{{ image.img }}" alt="Image de {{ categorie }}">
+        {% else %}
+            <p>Aucune image disponible pour cette catégorie.</p>
+        {% endif %}
+    {% endfor %}
+    {# <!-- Slider desktop -->
     <img src="img/slider-desktop/audi-slider-desktop.jpg" alt="audi e-tron" class="slider1">
     <img src="img/slider-desktop/louez-a-partir-de-30e-slider-desktop.jpg" alt="Location à partir 30 euros" class="slider1">
     <img src="img/slider-desktop/tesla-slider-desktop.jpg" alt="Tesla model 3 disponible en location" class="slider1">
@@ -15,7 +22,7 @@
     <!-- Slider mobile -->
     <img src="img/slider-mobile/audi-slider-mobile.jpg" alt="audi e-tron" class="slider3">
     <img src="img/slider-mobile/louez-a-partir-de-30e-slider-mobile.jpg" alt="Location à partir 30 euros" class="slider3">
-    <img src="img/slider-mobile/tesla-slider-mobile.jpg" alt="Tesla model 3 disponible en location" class="slider3">
+    <img src="img/slider-mobile/tesla-slider-mobile.jpg" alt="Tesla model 3 disponible en location" class="slider3"> #}
 </section>
 <section id="description" class="flex-center">
     <div class="flex-center">
@@ -56,7 +63,7 @@
             </figure>
         </div>
     </div>
-    <h2>Service</h2>
+    <h2 class="service">Service</h2>
     <div class="flex-wrap flex-center">
         <p><a href="{{ path('borne_list') }}" class="registration-link">Vous cherchez une borne de recharge ?</a></p>
     </div>
