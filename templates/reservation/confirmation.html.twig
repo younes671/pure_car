@@ -9,15 +9,12 @@
     <p>Date de fin : {{ reservation.dateFin|date('Y-m-d') }}</p>
     <p>Prix : {{ reservation.prix }} </p>
     <div class="flex-wrap flex-around">
-    <a href="{{ path('annuler_reservation', { 'reservationId': reservation.id }) }}">
+    <p><a href="{{ path('annuler_reservation', { 'reservationId': reservation.id }) }}">
         <button class="button" type="submit">Annuler</button>
-    </a>
-    </div>
-    <div class="flex-wrap flex-around">
-
+    </a> 
     <a href="{{ path('reservation_confirmer', { 'reservationId': reservation.id }) }}">
         <button class="button" type="submit">Confirmer</button>
-    </a>
+    </a></p>
     </div>
 </section>
 {% endblock %}
