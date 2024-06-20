@@ -1071,6 +1071,9 @@ a.booking-btn.flex-center.button{
     text-align-last: center;
 }
 /* -----------------------------------------------------------GALLERY.HTML */
+h3{
+    margin-top: 60px;
+}
     #gallery div h2, #mention h3{
         font-size: 30px;
         color: #4e4e4e;
