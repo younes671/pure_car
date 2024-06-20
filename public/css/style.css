@@ -60,6 +60,7 @@ section{
     align-items: center;
     white-space: wrap; /* Empêche le texte de passer à la ligne */
     font-size: 20px;
+    width: 100%;
 }
 
 .flex-center-bold{
