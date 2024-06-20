@@ -6,7 +6,7 @@
 <section id="search-content" >
     <form action="" id="search" method="post" class="flex-center">
         <div class="flex-wrap flex-center select-content">
-            <div class="flex-wrap flex-center select">
+            {# <div class="flex-wrap flex-center select"> #}
                 <select name="category" id="category" class="flex-center">
                     <!-- Sélection de la catégorie -->
                     <option value="">--Catégorie--</option>
@@ -40,8 +40,8 @@
                         {% endif %}
                     {% endfor %}
                 </select>
-            </div>
-            <div class="flex-wrap flex-center select">
+            {# </div> #}
+            {# <div class="flex-wrap flex-center select"> #}
                 <!-- Sélection du nombre de places -->
                 <select name="nbPlace" id="nbPlace">
                     <!-- Option par défaut -->
@@ -70,7 +70,7 @@
                     <option value="300-400">300 - 400 km</option>
                     <!-- Ajoutez d'autres options selon vos besoins -->
                 </select>
-            </div>
+            {# </div> #}
         </div>
         <input type="submit" value="Rechercher" class="button flex-center">
     </form>
