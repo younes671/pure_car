@@ -463,7 +463,7 @@ footer a:hover, .mail:hover{
 #slider{
     display: flex;
     overflow: hidden;
-    width: 1200px;
+    width: 1080px;
     height: 700px;
     object-fit: cover;
 }
