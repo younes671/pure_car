@@ -6,23 +6,13 @@
 <section id="slider">
     {% for categorie, image in imagesParCategorie %}
         {% if image %}
-        <img id="slider"  src="{{ image.img }}" alt="Image de {{ categorie }}"></a>
+        <a href=" {{ path('vehiculeByCategorie_galerie', {'categorie': image.categoryId} ) }} ">
+            <img id="slider"  src="{{ image.img }}" alt="Image de {{ categorie }}">
+        </a>
         {% else %}
             <p>Aucune image disponible pour cette catégorie.</p>
         {% endif %}
     {% endfor %}
-    {# <!-- Slider desktop -->
-    <img src="img/slider-desktop/audi-slider-desktop.jpg" alt="audi e-tron" class="slider1">
-    <img src="img/slider-desktop/louez-a-partir-de-30e-slider-desktop.jpg" alt="Location à partir 30 euros" class="slider1">
-    <img src="img/slider-desktop/tesla-slider-desktop.jpg" alt="Tesla model 3 disponible en location" class="slider1">
-    <!-- Slider Tablette -->
-    <img src="img/slider-tab/audi-slider-tablette.jpg" alt="audi e-tron" class="slider2">
-    <img src="img/slider-tab/louez-a-partir-de-30e-slider-tablette.jpg" alt="Location à partir 30 euros" class="slider2">
-    <img src="img/slider-tab/tesla-slider-tablette.jpg" alt="Tesla model 3 disponible en location" class="slider2">
-    <!-- Slider mobile -->
-    <img src="img/slider-mobile/audi-slider-mobile.jpg" alt="audi e-tron" class="slider3">
-    <img src="img/slider-mobile/louez-a-partir-de-30e-slider-mobile.jpg" alt="Location à partir 30 euros" class="slider3">
-    <img src="img/slider-mobile/tesla-slider-mobile.jpg" alt="Tesla model 3 disponible en location" class="slider3"> #}
 </section>
 <section id="description" class="flex-center">
     <div class="flex-center">

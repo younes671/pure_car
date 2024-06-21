@@ -87,8 +87,6 @@ class EntrepriseController extends AbstractController
  
          // Ajout des détails d'un nouveau véhicule
          if ($detailVehicule->isSubmitted() && $detailVehicule->isValid()) {
-             // Traitement de l'image uploadée
-             // Code à implémenter ici
          }
  
          // Rendu de la vue avec les formulaires et les données existantes
@@ -118,10 +116,7 @@ class EntrepriseController extends AbstractController
     #[Route('/edit/{type}/{id}', name: 'edit_entity')]
     public function edit_entity($type, $id, Request $request, EntityManagerInterface $entityManager, Security $security, VehiculeRepository $vehiculeRepository, MarqueRepository $marqueRepository, ModeleRepository $modeleRepository, CategorieRepository $categorieRepository): Response
     {
-        // Si l'utilisateur a les autorisations nécessaires pour éditer une entité
-        // if ($security->isGranted('ROLE_ADMIN') || $security->isGranted('ROLE_COMPTABLE'))
-        // {
-    
+        
         // Récupération des modèles et catégories existants
         $modele = $modeleRepository->findBy([], ['nom' => 'ASC']);
         $categorie = $categorieRepository->findBy([], ['nom' => 'ASC']);
@@ -145,6 +140,7 @@ class EntrepriseController extends AbstractController
 
                 $form->handleRequest($request);
                 if ($form->isSubmitted() && $form->isValid()) {
+                    // téléchargement nouvelle image
                     $uploadedFile = $form['img']->getData();
                     if ($uploadedFile) {
                         $newFileName = uniqid().'.'.$uploadedFile->guessExtension();
@@ -181,19 +177,12 @@ class EntrepriseController extends AbstractController
         return $this->render('entreprise/edit_entity.html.twig', [
             'form' => $form->createView(),
             'type' => $type,
-        ]);
-        // }else{
-
-        // $this->addFlash('danger', 'Vous n\'avez pas les droits pour cette action.');
-        // return $this->redirectToRoute('app_gestionMultiple');
-        // }   
+        ]); 
    }
 
    #[Route('/delete/{type}/{id}', name: 'delete_entity')]
     public function delete_entity($type, $id, EntityManagerInterface $entityManager, Security $security, VehiculeRepository $vehiculeRepository, MarqueRepository $marqueRepository, ModeleRepository $modeleRepository, CategorieRepository $categorieRepository): Response
     {
-        // if ($security->isGranted('ROLE_ADMIN') || $security->isGranted('ROLE_COMPTABLE'))
-        // {
             // Récupérer l'entité à supprimer en fonction du type et de l'ID
             switch ($type) {
                 case 'marque':
@@ -224,10 +213,6 @@ class EntrepriseController extends AbstractController
                     $this->addFlash('success', ucfirst($type) . ' supprimé avec succès.');
     
                     return $this->redirectToRoute('app_gestionMultiple');
-        // }else{
-        //     $this->addFlash('danger', 'Vous n\'avez pas les droits pour cette action.');
-        //     return $this->redirectToRoute('app_gestionMultiple');
-        // } 
     }
 
     // retourne mentions légales

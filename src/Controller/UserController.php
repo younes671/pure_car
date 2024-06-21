@@ -20,6 +20,7 @@ class UserController extends AbstractController
     #[Route('/user', name: 'app_user')]
     public function index(UserRepository $userRepository): Response
     {
+        // récupère liste de tous les utilisateurs
         $user = $userRepository->findAll();
         return $this->render('user/index.html.twig', [
             'users' => $user,
@@ -30,12 +31,14 @@ class UserController extends AbstractController
     #[Route('/user/detail', name: 'detail_user')]
     public function detailUser(ReservationRepository $reservationRepository): Response
     {
+        // récupère liste de toutes les réservations de tous les utilisateurs
         $userReservation = $reservationRepository->findAll();
         return $this->render('user/listClient.html.twig', [
             'usersReservation' => $userReservation,
         ]);
     }
 
+    //suppression utilisateur
     #[Route('/user/delete/{id}', name: 'delete_user')]
     public function supprimerUtilisateur(User $user, UserRepository $userRepository, EntityManagerInterface $entityManager): RedirectResponse
     {
@@ -52,13 +55,13 @@ class UserController extends AbstractController
         return $this->redirectToRoute('app_register');
     }
 
+    // affiche profil utilisateur
     #[Route('/user/profil/{idClient}', name: 'profil_user')]
     public function profilUser(User $idClient, Security $security, ReservationRepository $reservationRepository): Response
     {
         if ($security->isGranted('ROLE_ADMIN') || $security->isGranted('ROLE_USER'))
         {
         $reservation = $reservationRepository->findBy(['user' => $idClient]);
-        // var_dump($reservation); exit;
         return $this->render('user/profil.html.twig', [
             'reservations' => $reservation,
         ]);
@@ -69,6 +72,7 @@ class UserController extends AbstractController
         }
     }
 
+    // edit le profil utilisateur
     #[Route('/user/edit/{id}', name: 'edit_user')]
     public function editUser(User $user, Request $request, EntityManagerInterface $entityManager): Response
     {

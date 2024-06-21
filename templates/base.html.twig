@@ -44,7 +44,7 @@
                                     <li><a href="{{ path('app_entreprise') }}">Contact</a></li>
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <li><a href="{{ path('app_gestionMultiple') }}">Gestion parc</a></li>
-                                    <li><a href="{{ path('app_user') }}">Gestion client</a></li>
+                                    <li><a href="{{ path('app_user') }}">Liste client</a></li>
                                 {% endif %}
                                 {% if app.user %}
                                     <li><a href="{{ path('profil_user', {'idClient': app.user.id}) }}"><i class="fa-regular fa-user"></i>&nbsp; {{ app.user.pseudo }} </p></li>

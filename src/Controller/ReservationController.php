@@ -28,12 +28,14 @@ class ReservationController extends AbstractController
     #[Route('/reservation', name: 'app_reservation')]
     public function index(VehiculeRepository $vehiculeRepository): Response
     {
+        // récupère liste véhicule par marque
         $vehicules = $vehiculeRepository->getAllVehiculesOrderedByMarque();
         return $this->render('reservation/index.html.twig', [
             'vehicules' => $vehicules
         ]);
     }
 
+    // récupère liste véhicule et convertit en Json pour manipulation DOM
     #[Route('reservation/vehicules', name: 'app_vehicules')]
     public function vehicules(VehiculeRepository $vehiculeRepository): Response
     {
@@ -58,13 +60,14 @@ class ReservationController extends AbstractController
     #[Route('/reservation/detailCar/{vehiculeId}', name: 'detailCar_reservation')]
     public function detailCar(VehiculeRepository $vehiculeRepository, Vehicule $vehiculeId): Response
     {
+        //récupère véhicule par son Id
         $vehicule = $vehiculeRepository->findBy(['id' => $vehiculeId]);
-        // var_dump($vehicule); exit;
         return $this->render('reservation/detail_car.html.twig', [
             'vehicules' => $vehicule,
         ]);
     }
 
+    // réservation avec compte utilisateur
     #[Route('/reservation/reservationClient/{vehiculeId}', name: 'reservationClient_reservation')]
     public function reservationClient(UserRepository $userRepository, Request $request, EntityManagerInterface $entityManager, VehiculeRepository $vehiculeRepository, Vehicule $vehiculeId): Response
     {
@@ -84,6 +87,7 @@ class ReservationController extends AbstractController
         $reservation = new Reservation();
 
         // Remplir automatiquement les autres champs avec les informations de l'utilisateur
+        $reservation->setEmail($userId->getEmail());
         $reservation->setNom($userId->getNom());
         $reservation->setPrenom($userId->getPrenom());
         $reservation->setAdresse($userId->getAdresse());
@@ -92,7 +96,7 @@ class ReservationController extends AbstractController
 
         // Créer le formulaire de réservation
         $reservationForm = $this->createForm(ReservationType::class, $reservation);
-
+        
         $reservationForm->handleRequest($request);
 
         if ($reservationForm->isSubmitted() && $reservationForm->isValid()) {
@@ -105,11 +109,14 @@ class ReservationController extends AbstractController
             $dateDebut = $reservation->getDateDebut();
             $dateFin = $reservation->getDateFin();
             $nbJours = $dateDebut->diff($dateFin)->days;
+            if($nbJours === 0){
+                $nbJours = 1;
+            }
             $prixTotal = $nbJours * $vehicule->getPrix();
             $reservation->setPrix($prixTotal);
 
-            $entityManager->persist($reservation);
-            $entityManager->flush();
+            $entityManager->persist($reservation);// prépare requete
+            $entityManager->flush();// enregistrement dans bdd
 
             // Afficher les détails de la réservation et les options de confirmation ou d'annulation
             return $this->render('reservation/confirmation.html.twig', [
@@ -124,7 +131,7 @@ class ReservationController extends AbstractController
         ]);
     }
 
-
+    // réservation sans compte utilisateur
     #[Route('/reservation/reservationInvite/{vehiculeId}', name: 'reservationInvite_reservation')]
     public function reservationInvite(Request $request, EntityManagerInterface $entityManager, VehiculeRepository $vehiculeRepository, Vehicule $vehiculeId): Response
     {
@@ -144,6 +151,9 @@ class ReservationController extends AbstractController
             $dateDebut = $reservation->getDateDebut();
             $dateFin = $reservation->getDateFin();
             $nbJours = $dateDebut->diff($dateFin)->days;
+            if($dateDebut === $dateFin){
+                $nbJours = 1;
+            }
             $prixTotal = $nbJours * $vehicule->getPrix();
             $reservation->setPrix($prixTotal);
 
@@ -163,6 +173,7 @@ class ReservationController extends AbstractController
         ]);
     }
 
+    // choix du véhicule
     #[Route('/reservation/choice/{vehiculeId}', name: 'reservation_choice')]
     public function reservationChoice($vehiculeId, VehiculeRepository $vehiculeRepository, Request $request): Response
     {
@@ -175,6 +186,7 @@ class ReservationController extends AbstractController
         ]);
     }
 
+    // demande de confirmation de réservation
     #[Route('/reservation/confirmation/{reservationId}', name: 'reservation_confirmation')]
     public function confirmationReservation($reservationId, ReservationRepository $reservationRepository): Response
     {
@@ -206,6 +218,7 @@ class ReservationController extends AbstractController
         
     }
 
+    //annuler réservation
     #[Route('/reservation/annuler/{reservationId}', name: 'annuler_reservation')]
     public function annulerReservation($reservationId, UserRepository $userRepository, EntityManagerInterface $entityManager, ReservationRepository $reservationRepository): RedirectResponse
     {
@@ -243,6 +256,7 @@ class ReservationController extends AbstractController
         }
     }
 
+    // message confirmation et envoi de notification par mail
     #[Route('/reservation/confirmer/{reservationId}', name: 'reservation_confirmer')]
     public function confirmerReservation($reservationId, EntityManagerInterface $entityManager, ReservationRepository $reservationRepository, UserRepository $userRepository, MailerInterface $mailer): RedirectResponse
     {
@@ -286,25 +300,26 @@ class ReservationController extends AbstractController
     }
 
 
+    // recherche véhicule selon critère choisit
     #[Route('/vehicules/search', name: 'app_vehicules_search')]
     public function search(Request $request, VehiculeRepository $vehiculeRepository): JsonResponse
     {
         // Convertir le contenu JSON en tableau associatif
         $jsonData = json_decode($request->getContent(), true);
 
-        // Récupérer les critères de recherche depuis les données JSON
+        // Récupère les critères de recherche depuis les données JSON
         $category = $jsonData['category'] ?? null;
         $mark = $jsonData['mark'] ?? null;
         $place = $jsonData['nbPlace'] ?? null;
         $autonomyRange = $jsonData['autonomyRange'] ?? null;
 
         if ($autonomyRange) {
-            // Définir les bornes de la fourchette d'autonomie
+            // Définit les bornes de la fourchette d'autonomie
             $autonomyBounds = explode('-', $autonomyRange);
             $minAutonomy = $autonomyBounds[0];
             $maxAutonomy = $autonomyBounds[1];
         } else {
-            // Si la fourchette d'autonomie est vide, définissez les bornes à null
+            // Si la fourchette d'autonomie est vide
             $minAutonomy = null;
             $maxAutonomy = null;
         }

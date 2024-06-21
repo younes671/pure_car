@@ -10,11 +10,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BorneController extends AbstractController
 {
+    // route pour la recherche de borne de recharge
     #[Route('/borne', name: 'borne_list')]
     public function index(): Response
     {
         return $this->render('borne/index.html.twig');
     }
-
-    
 }
