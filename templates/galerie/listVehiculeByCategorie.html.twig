@@ -5,17 +5,19 @@
 {% block body %}
 </section>
 <section id="content-cars">
-    <h2>Liste des véhicules par catégorie</h2>
-    <div class="flex-wrap flex-between">
+    <h2>Catégorie {{ categorie.nom }}</h2>
+    <div class="grid-container-categorie">
         {% for vehicule in vehicules %}
-        <div class="car">
-            <img class="voit-resa" src=" {{ vehicule.img }} " alt="voiture">
-            <div class="mark flex-center">
-                <p >{{ vehicule.modele.marque.nom ~ ' ' ~ vehicule.modele.nom }}</p>
-            </div>
-            <div>
-                <span class="price flex-center">{{ vehicule.prix ~ ' €/J' }}</span>
-                <span><a href="{{ path('detailCar_reservation', { 'vehiculeId' : vehicule.id }) }}" class="booking-btn flex-center button">Voir détail</a></span>
+        <div class="form-container-categorie">
+            <div class="car">
+                <img class="voit-resa" src=" {{ vehicule.img }} " alt="voiture">
+                <div class="mark flex-center">
+                    <p >{{ vehicule.modele.marque.nom ~ ' ' ~ vehicule.modele.nom }}</p>
+                </div>
+                <div>
+                    <span class="price flex-center">{{ vehicule.prix ~ ' €/J' }}</span>
+                    <span><a href="{{ path('detailCar_reservation', { 'vehiculeId' : vehicule.id }) }}" class="booking-btn flex-center button">Voir détail</a></span>
+                </div>
             </div>
         </div>
         {% endfor %}
