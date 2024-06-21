@@ -44,19 +44,19 @@ class EntrepriseController extends AbstractController
          $marque = $marqueRepository->findBy([], ['nom' => 'ASC']);
          $modele = $modeleRepository->findBy([], ['nom' => 'ASC']);
          $categorie = $categorieRepository->findBy([], ['nom' => 'ASC']);
-         $vehicule = $vehiculeRepository->findAll();
+         $detailVehicule = $vehiculeRepository->findAll();
  
          // Création des formulaires pour ajouter une marque, un modèle, une catégorie et les détails du véhicule
          $marqueForm = $this->createForm(MarqueFormType::class);
          $modeleForm = $this->createForm(ModeleFormType::class, null, ['marques' => $marque]);
          $categorieForm = $this->createForm(CategorieFormType::class);
-         $detailVehicule = $this->createForm(VehiculeFormType::class, null, ['categories' => $categorie, 'modeles' => $modele]);
+         $detailVehiculeForm = $this->createForm(VehiculeFormType::class, null, ['categories' => $categorie, 'modeles' => $modele]);
  
          // Traitement des soumissions de formulaire
          $marqueForm->handleRequest($request);
          $modeleForm->handleRequest($request);
          $categorieForm->handleRequest($request);
-         $detailVehicule->handleRequest($request);
+         $detailVehiculeForm->handleRequest($request);
         
          // Ajout d'une nouvelle marque
          if ($marqueForm->isSubmitted() && $marqueForm->isValid()) {
@@ -86,7 +86,12 @@ class EntrepriseController extends AbstractController
          }
  
          // Ajout des détails d'un nouveau véhicule
-         if ($detailVehicule->isSubmitted() && $detailVehicule->isValid()) {
+         if ($detailVehiculeForm->isSubmitted() && $detailVehiculeForm->isValid()) {
+             $detailVehicule = $detailVehiculeForm->getData();
+             $entityManager->persist($detailVehicule);
+             $entityManager->flush();
+             $this->addFlash('success', 'Vehicule ajouté avec succès.');
+             return $this->redirectToRoute('app_gestionMultiple');
          }
  
          // Rendu de la vue avec les formulaires et les données existantes
@@ -94,11 +99,11 @@ class EntrepriseController extends AbstractController
              'marqueForm' => $marqueForm->createView(),
              'modeleForm' => $modeleForm->createView(),
              'categorieForm' => $categorieForm->createView(),
-             'detailVehiculeForm' => $detailVehicule->createView(),
+             'detailVehiculeForm' => $detailVehiculeForm->createView(),
              'marques' => $marque,
              'modeles' => $modele, 
              'categories' => $categorie,
-             'vehicules' => $vehicule 
+             'vehicules' => $detailVehicule 
          ]);
      }
  

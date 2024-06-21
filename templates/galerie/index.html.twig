@@ -6,18 +6,21 @@
 <section id="gallery">
     <h2>Galerie</h2>
     <p style="margin-bottom: 50px;">Découvrez tous nos véhicules. Cliquez sur une images pour afficher les véhicules correpondant à la même catégorie.</p>
-    <div class="flex-wrap flex-around">
-        {# <div id="suv"> #}
-        {% for categorie, image in imagesParCategorie %}
-        <div class="img-galerie">
-            <h3 class="titre-galerie">{{ categorie }}</h3>
-        {# </div> #}
-        {% if image %}
-        <a href=" {{ path('vehiculeByCategorie_galerie', {'categorie': image.categoryId} ) }} "><img class="voit" src="{{ image.img }}" alt="Image de {{ categorie }}"></a>
-        {% else %}
-            <p>Aucune image disponible pour cette catégorie.</p>
-        {% endif %}
-        {% endfor %}
+    <div class="grid-container">
+        <div class="grid-item">
+                {% for categorie, image in imagesParCategorie %}
+                
+                    <h3 class="titre-galerie">{{ categorie }}</h3>
+              
+                {% if image %}
+                
+                    <a href=" {{ path('vehiculeByCategorie_galerie', {'categorie': image.categoryId} ) }} "><img class="voit" src="{{ image.img }}" alt="Image de {{ categorie }}"></a>
+                
+                {% else %}
+                    <p>Aucune image disponible pour cette catégorie.</p>
+                {% endif %}
+                {% endfor %}
+        </div>
     </div>
 </section>
 {% endblock %}

@@ -464,7 +464,7 @@ footer a:hover, .mail:hover{
     display: flex;
     overflow: hidden;
     width: 1080px;
-    height: 700px;
+    height: 550px;
     object-fit: cover;
 }
 
@@ -1058,6 +1058,10 @@ h3{
         text-align: center;
     }
 
+    #gallery{
+        display: flex;
+    }
+
     .titre-galerie{
         background-color: #2babe2a9;
         color: white;
@@ -1068,6 +1072,11 @@ h3{
 
     #gallery h2{
         text-align: center;
+    }
+
+    .img-galerie{
+        display: flex;
+        flex-direction: row;
     }
 
 /*----------------------------------------------------------- MENTION.HTML */
