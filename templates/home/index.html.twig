@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Page d'accueil{% endblock %}
+{% block meta %}Page d'accueil{% endblock %}
 
 {% block body %}
 <section id="slider">
@@ -34,21 +35,21 @@
     <div class="flex-wrap flex-center">
         <div class="flex-wrap flex-center">
             <figure class="flex-between">
-                <img src="img/icon-svg/icon-list.svg">
+                <img src="img/icon-svg/icon-list.svg" alt='pictogramme connexion'>
                 <figcaption><span class="number">1.</span> Je me connecte</figcaption>
             </figure>
             <figure class="flex-between">
-                <img src="img/icon-svg/icon-profil.svg">
+                <img src="img/icon-svg/icon-profil.svg" alt='pictogramme choix'>
                 <figcaption><span class="number">2.</span> Je fais mon choix</figcaption>
             </figure>
         </div>
         <div class="flex-wrap flex-center">
             <figure class="flex-between">
-                <img src="img/icon-svg/icon-validate.svg">
+                <img src="img/icon-svg/icon-validate.svg" alt='pictogramme reservation'>
                 <figcaption><span class="number">3.</span> Je réserve</figcaption>
             </figure>
             <figure class="flex-between">
-                <img src="img/icon-svg/icon-hand.svg">
+                <img src="img/icon-svg/icon-hand.svg" alt='pictogramme agence'>
                 <figcaption><span class="number">4.</span> Je me rend à l'agence</figcaption>
             </figure>
         </div>
