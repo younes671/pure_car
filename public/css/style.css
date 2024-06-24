@@ -114,6 +114,20 @@ section{
     display: none;
 }
 
+.lien-annuler{
+    text-decoration: underline !important;
+    color: #666666;
+}
+
+.lien-annuler:hover{
+    color: red;
+}
+
+.flex-annulation{
+    display: flex;
+    flex-direction: column-reverse;
+}
+
 /* -------------------------------------------------------------------------Header */
 
 #content-logo{

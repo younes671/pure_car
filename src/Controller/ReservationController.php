@@ -151,7 +151,7 @@ class ReservationController extends AbstractController
             $dateDebut = $reservation->getDateDebut();
             $dateFin = $reservation->getDateFin();
             $nbJours = $dateDebut->diff($dateFin)->days;
-            if($dateDebut === $dateFin){
+            if($nbJours === 0){
                 $nbJours = 1;
             }
             $prixTotal = $nbJours * $vehicule->getPrix();
