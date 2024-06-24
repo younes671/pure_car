@@ -103,7 +103,7 @@ section{
     width: 200px;
     color: #fff;
     background: #2baae2;
-    border-radius: 10px;
+    border-radius: 50px;
 }
 
 .button:hover{
@@ -741,6 +741,7 @@ form p{
 
 #rgpd{
     margin: 10px;
+    cursor: pointer;
 }
 
 .submit-content{
@@ -844,10 +845,6 @@ form label{
 
 .field:hover, .field:focus,#message:hover, #message:focus{
     border:solid #2baae2 1px;
-}
-
-.button{
-    border: 1px solid black;
 }
 
 .ag-name{
@@ -1201,6 +1198,7 @@ th{
 
 .grid-container {
     display: grid;
+    justify-content: center;
     grid-template-columns: repeat(auto-fill, 510px);
     gap: 20px;
 }
@@ -1208,6 +1206,7 @@ th{
 .form-container {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     border: 2px solid #ccc;
     box-shadow: 1px 1px 5px #0e0e0e;
     padding: 20px;
@@ -1264,7 +1263,7 @@ th{
     }
 
     #slider{
-        width: 100%;
+        width: 1080px;
     }
 
     .slider1{
@@ -1382,7 +1381,7 @@ th{
     }
 
     .booking-btn{
-        border-radius: 10px !important;
+        /* border-radius: 10px !important; */
         width: 200px !important;
         height: 45px !important;
         margin-top: 30px;
@@ -1519,6 +1518,7 @@ th{
     }
 
     #slider{
+        width: 830px;
         height: auto;
     }
 
@@ -1559,11 +1559,15 @@ th{
 }
 
  @media all and (min-width: 600px) and (max-width : 829px){
-    .slider2{
+    #slider{
+        width: 770px;
         display: flex;
-        width: 100%;
     }
 } 
+
+
+
+
 
 @media screen and (max-width : 1000px){
     /* INDEX.HTML */
