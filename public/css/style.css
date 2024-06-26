@@ -477,20 +477,20 @@ footer a:hover, .mail:hover{
 #slider{
     display: flex;
     overflow: hidden;
-    width: 1080px;
-    height: 550px;
-    object-fit: cover;
+    width: 100%;
+    height: 650px;
 }
 
-#slider a img{
+.sliderImg{
     position: relative;
-    min-width: 100%;
-    height: 100%;
+    width: 1080px; 
+    height: auto;
     animation-name: AutoSlide;
     animation-duration: 15s;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
     background-color: #2baae2;
+    object-fit: cover;
 }
 
 @keyframes AutoSlide {
@@ -1298,10 +1298,6 @@ th{
         width: 1080px;
     }
 
-    .slider1{
-        width: 100%;
-    }
-
     #mention{
         padding: 0 20px;
     }
@@ -1459,12 +1455,13 @@ th{
     }
 
     #slider{
-        width: 830px;
+        width: 100%;
         height: auto;
     }
 
-    .slider1{
-        display: none;
+    .sliderImg{
+        width: 800px;
+        height: 100%;
     }
 
     #part-1{
@@ -1506,23 +1503,7 @@ th{
 
 }
 
- @media all and (min-width: 600px) and (max-width : 829px){
-    #slider{
-        width: 770px;
-        display: flex;
-    }
-} 
-
-@media screen and (max-width : 599px){
-    /* slider */
-    .slider1, .slider2{
-        display: none;
-    }
-
-    .slider3{
-        display: flex;
-        width: 100%;
-    }
+@media screen and (min-width : 425px) and (max-width : 599px){
 
     /* description */
 
@@ -1658,17 +1639,28 @@ th{
     #gallery div a img{
         width: 100%;
     }
-}
 
-@media screen and (max-width : 425px){
-
-    #slider {
-        width: 425px !important;
+    #slider{
+        width: 100%;
+        height: auto;
     }
 
     .sliderImg{
-        min-width: 100%;
-        object-fit: cover;
+        width: 450px;
+        height: 100%;
+    }
+}
+
+@media screen and (min-width : 375px) and (max-width : 425px){
+
+    #slider{
+        max-width: 100%;
+        height: auto;
+    }
+
+    .sliderImg{
+        width: 400px;
+        height: 100%;
     }
 
     #password-requirements{
@@ -1697,10 +1689,11 @@ th{
     .button{
         margin-top: 25px;
     }
+
 }
 
 
-@media screen and (max-width : 375px)
+@media screen and (min-width : 320px) and (max-width : 375px)
 {
     .car{
         width: 100%;
@@ -1719,30 +1712,40 @@ th{
     }
 
     #slider{
-        width: 375px !important;
+        width: 100%;
+        height: 100%;
     }
 
-    #slider a img{
-        width: 100% !important;
-        object-fit: cover;
+    .sliderImg{
+        width: 375px;
+        height: 100%;
     }
 
     #content-cars h2 {
         font-size: 18px;
     }
-}
-
-@media screen and (max-width : 320px)
-{
-    #slider{
-        width: 350px !important;
+    #password-requirements{
+        margin-left: 25px;
+        padding: 15px;
     }
 
-    /* #slider a img{
-        min-width: 100%;
-        object-fit: cover;
-    } */
+    #forms, input{
+        width: 100%;
+    }
 
+}
+
+@media screen and (min-width : 280px) and (max-width : 320px)
+{
+    #slider{
+        max-width: 100%;
+        height: auto;
+    }
+
+    .sliderImg{
+        width: 320px;
+        height: 100%;
+    }
     .booking-btn{
         margin-top: 1px;
         max-width: 100%;
@@ -1764,12 +1767,20 @@ th{
 
     .registration-link{
         font-size: 15px;
-       padding: 10px;
+        padding: 10px;
     }
 
     .service{
         margin: 10px;
     }
+
+    #forms, input{
+        width: 100%;
+    }
+
+    h2{
+        font-size: 15px;
+}
 }
 
 
