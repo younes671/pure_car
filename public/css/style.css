@@ -464,9 +464,9 @@ footer a:hover, .mail:hover{
 
 /* Slider */
 
-.service{
+/* .service{
     margin-top: 100px;
-}
+} */
 
 .slider2, .slider3{
     display: none;
@@ -1254,7 +1254,39 @@ th{
 }
 
 
-/* Style supplémentaire selon vos besoins */
+#gallery .flex-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Espacement entre les cartes */
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: #f8f8f8; /* Couleur de fond des cartes */
+    border: 1px solid #ddd; /* Bordure des cartes */
+    border-radius: 8px; /* Coins arrondis */
+    padding: 20px;
+    width: 300px; /* Largeur fixe des cartes */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre portée */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre les éléments à l'intérieur des cartes */
+    text-align: center; /* Centre le texte */
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+.card p {
+    margin: 10px 0;
+}
+
+/* Styles de base pour le conteneur */
+#gallery {
+    text-align: center;
+    padding: 20px;
+}
 
 /* ------------------------------------------------------------RESPONSIVE */
 @media screen and (max-width : 1080px){
@@ -1274,156 +1306,64 @@ th{
         padding: 0 20px;
     }
 
-}
-
-@media screen and (max-width : 599px){
-    /* slider */
-    .slider1, .slider2{
-        display: none;
+    #logo{
+        margin-left: 20px;
     }
 
-    .slider3{
-        display: flex;
+     /* INDEX.HTML */
+     #description div{
         width: 100%;
     }
 
-    /* description */
-
-    #part-2{
-        font-size: 24px;
+    #description div:nth-child(2) p{
+        padding: 0px 20px;
     }
 
-    #description h1{
-        margin-bottom: 20px;
-    }
-/* gagnez du temps */
-
-    #step h2{
-        font-size: 20px;
+    figure{
+        margin-bottom : 50px;
     }
 
-/*footer*/
+    #step{
+        margin-bottom: 0;
+    }
+/* FOOTER */
     #footer{
-        margin-top: 0;
+        margin-top : 50px;
     }
 
-    #copyright{
-        height: auto;
-    }
-
-    #rs{
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-    }
-
-    #rs img{
-        width: 50px;
-    }
-
-    /*Contact*/
-    #forms{
-        display: flex;
+    .footer-inner{
         justify-content: center;
-        width: 100% !important;
-        margin-top: 50px;
-        border-radius: 0;
-        box-shadow: none;
     }
 
-    #categorie_form{
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .block-footer-inner{
+        width: 220px;
+        margin-bottom: 50px;
     }
 
-    form p{
-        flex-direction: column;
-        align-items: center;
-        padding : 0 30px 30px 30px;
-    }
+ 
 
-    form label{
-        font-size: 20px;
-        line-height: 30px;
-    }
-
-    .field, #message{
-        width: 100%;
-    }
-
-    body .select{
-        margin-top: 0;
-    }
-
-    body .select select{
-        margin-top: 0px;
-        margin-right: 0 ;
-    }
-
-    /* CAR.HTML */
-    #content-details img{
-        width: 100%;
-        padding-right: 0;
-    }
-
-    .title-info{
-        text-align: center;
-    }
-
-    .info .text{
+/* BOOKING.HTML module de recherche */
+    .select{
         margin-top: 20px;
     }
 
-    .info .condition, .price-content{
-        flex-direction: column;
-        align-items: center;
+    .select-content{
+        padding : 0px
     }
 
-    .booking-btn{
-        /* border-radius: 10px !important; */
-        width: 200px !important;
-        height: 45px !important;
-        margin-top: 30px;
-    }
-    
-    .info .condition p{
-        width: 90%;
+    #search-content form{
+        justify-content: space-around;
+        height: 100%;
     }
 
-    .price-content{
-        height: auto !important;
-    }
-    .price{
-        height: 50px !important;
+    #content-cars div{
+        justify-content: space-around;
     }
 
-    /* connexion.html */
-    #page_connexion form{
-        width: 100%;
-        padding: 50px 0 0 0;
-        border-radius: 0;
-        box-shadow: none;
-    }
-    #page_connexion form p{
-        padding : 0 30px 30px 30px;
-    }
-
-    #page_connexion p{
+    /* car.html */
+    #content-cars h2{
         display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #page_registration h2{
-        margin-bottom: 0;
-        font-size: 35px
-    }
-
-    /* gallerie.html */
-
-    #gallery div a img{
-        width: 100%;
+        justify-content: center;
     }
 }
 
@@ -1444,6 +1384,7 @@ th{
 
     #logo{
         display: none;
+        margin-right: 10px;
     }
 
     #connect{
@@ -1556,6 +1497,13 @@ th{
         margin-right: 0;
     }
 
+    .footer-inner{
+        width: 100%;
+    } 
+    footer{
+        height: auto;
+    }
+
 }
 
  @media all and (min-width: 600px) and (max-width : 829px){
@@ -1565,118 +1513,268 @@ th{
     }
 } 
 
+@media screen and (max-width : 599px){
+    /* slider */
+    .slider1, .slider2{
+        display: none;
+    }
 
-
-
-
-@media screen and (max-width : 1000px){
-    /* INDEX.HTML */
-    #description div{
+    .slider3{
+        display: flex;
         width: 100%;
     }
 
-    #description div:nth-child(2) p{
-        padding: 0px 20px;
+    /* description */
+
+    #part-2{
+        font-size: 24px;
     }
 
-    figure{
-        margin-bottom : 50px;
+    #description h1{
+        margin-bottom: 20px;
+    }
+/* gagnez du temps */
+
+    #step h2{
+        font-size: 20px;
     }
 
-    #step{
-        margin-bottom: 0;
-    }
-/* FOOTER */
+/*footer*/
     #footer{
-        margin-top : 50px;
+        margin-top: 0;
     }
 
-    .footer-inner{
+    #copyright{
+        height: auto;
+    }
+
+    #rs{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+
+    #rs img{
+        width: 50px;
+    }
+
+    /*Contact*/
+    #forms{
+        display: flex;
         justify-content: center;
+        width: 100% !important;
+        margin-top: 50px;
+        border-radius: 0;
+        box-shadow: none;
     }
 
-    .block-footer-inner{
-        width: 220px;
-        margin-bottom: 50px;
+    #categorie_form{
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
- 
+    form p{
+        flex-direction: column;
+        align-items: center;
+        padding : 0 30px 30px 30px;
+    }
 
-/* BOOKING.HTML module de recherche */
-    .select{
+    form label{
+        font-size: 20px;
+        line-height: 30px;
+    }
+
+    body .select{
+        margin-top: 0;
+    }
+
+    body .select select{
+        margin-top: 0px;
+        margin-right: 0 ;
+    }
+
+    /* CAR.HTML */
+    #content-details img{
+        width: 100%;
+        padding-right: 0;
+    }
+
+    .title-info{
+        text-align: center;
+    }
+
+    .info .text{
         margin-top: 20px;
     }
 
-    .select-content{
-        padding : 0px
+    .info .condition, .price-content{
+        flex-direction: column;
+        align-items: center;
     }
 
-    #search-content form{
-        justify-content: space-around;
-        height: 100%;
+    .booking-btn{
+        /* border-radius: 10px !important; */
+        width: 200px !important;
+        height: 45px !important;
+        margin-top: 30px;
+    }
+    
+    .info .condition p{
+        width: 90%;
     }
 
-    #content-cars div{
-        justify-content: space-around;
+    .price-content{
+        height: auto !important;
+    }
+    .price{
+        height: 50px !important;
     }
 
-    /* car.html */
-    #content-cars h2{
+    /* connexion.html */
+    #page_connexion form{
+        width: 100%;
+        padding: 50px 0 0 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+    #page_connexion form p{
+        padding : 0 30px 30px 30px;
+    }
+
+    #page_connexion p{
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #page_registration h2{
+        margin-bottom: 0;
+        font-size: 35px
+    }
+
+    /* gallerie.html */
+
+    #gallery div a img{
+        width: 100%;
     }
 }
 
-@media screen and (max-width : 880px)
-{
-   .footer-inner{
-       width: 100%;
-   } 
-   footer{
-       height: auto;
-   }
+@media screen and (max-width : 425px){
+
+    #slider {
+        width: 425px !important;
+    }
+
+    .sliderImg{
+        min-width: 100%;
+        object-fit: cover;
+    }
+
+    #password-requirements{
+        margin-left: 15px;
+    }
+
+    #rgpd{
+        width: 40px;
+        height: 40px;
+    }
+
+    .booking-btn{
+        margin-top: 1px;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .field{
+        margin: 10px 25px 0 25px;
+    }
+
+    label{
+        margin-top: 10px;
+    }
+
+    .button{
+        margin-top: 25px;
+    }
 }
 
-@media screen and (max-width : 333px)
+
+@media screen and (max-width : 375px)
 {
     .car{
         width: 100%;
     }
+
+    .booking-btn{
+        margin: 0;
+        margin-top: 1px;
+        max-width: 100%;
+        height: auto;
+    }
+
+    #rgpd{
+        width: 40px;
+        height: 40px;
+    }
+
+    #slider{
+        width: 375px !important;
+    }
+
+    #slider a img{
+        width: 100% !important;
+        object-fit: cover;
+    }
+
+    #content-cars h2 {
+        font-size: 18px;
+    }
 }
 
-/* Styles de base pour le conteneur */
-#gallery {
-    text-align: center;
-    padding: 20px;
+@media screen and (max-width : 320px)
+{
+    #slider{
+        width: 350px !important;
+    }
+
+    /* #slider a img{
+        min-width: 100%;
+        object-fit: cover;
+    } */
+
+    .booking-btn{
+        margin-top: 1px;
+        max-width: 100%;
+        height: auto;
+    }
+
+    #rgpd{
+        width: 40px;
+        height: 40px;
+    }
+
+    #step h2{
+        font-size: 18px;
+    }
+
+    #part-2{
+        font-size: 19px;
+    }
+
+    .registration-link{
+        font-size: 15px;
+       padding: 10px;
+    }
+
+    .service{
+        margin: 10px;
+    }
 }
 
-#gallery .flex-wrap {
-    display: flex;
-    justify-content: center;
-    gap: 20px; /* Espacement entre les cartes */
-    flex-wrap: wrap;
-}
 
-.card {
-    background-color: #f8f8f8; /* Couleur de fond des cartes */
-    border: 1px solid #ddd; /* Bordure des cartes */
-    border-radius: 8px; /* Coins arrondis */
-    padding: 20px;
-    width: 300px; /* Largeur fixe des cartes */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre portée */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centre les éléments à l'intérieur des cartes */
-    text-align: center; /* Centre le texte */
-}
 
-.card h3 {
-    margin-top: 0;
-}
 
-.card p {
-    margin: 10px 0;
-}
 
 
 

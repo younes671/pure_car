@@ -8,7 +8,7 @@
     {% for categorie, image in imagesParCategorie %}
         {% if image %}
         <a href=" {{ path('vehiculeByCategorie_galerie', {'categorie': image.categoryId} ) }} ">
-            <img id="slider"  src="{{ image.img }}" alt="Image de {{ categorie }}">
+            <img class="sliderImg"  src="{{ image.img }}" alt="Image de {{ categorie }}">
         </a>
         {% else %}
             <p>Aucune image disponible pour cette catégorie.</p>
