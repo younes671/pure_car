@@ -98,9 +98,9 @@
                 html += '<div class="mark flex-center">';
                 html += '<p>' + voiture.marque + ' ' + voiture.modele + '</p>';
                 html += '</div>';
-                html += '<div>';
+                html += '<div class="detail">';
                 html += '<span class="price flex-center">' + voiture.prix + ' €/J</span>';
-                html += "<span><a href='/reservation/detailCar/" + voiture.id + "' class='booking-btn flex-center button'>Voir détail</a></span>";
+                html += "<span><a href='/reservation/detailCar/" + voiture.id + "' class='booking-btn flex-center button-detail'>Voir détail</a></span>";
                 html += '</div>';
                 html += '</div>';
             });

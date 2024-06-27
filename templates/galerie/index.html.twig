@@ -14,7 +14,7 @@
                 {# </div> #}
                 {% if image %}
                 {# <div> #}
-                    <a href=" {{ path('vehiculeByCategorie_galerie', {'categorie': image.categoryId} ) }} "><img class="voit" src="{{ image.img }}" alt="Image de {{ categorie }}"></a>
+                    <a href=" {{ path('vehiculeByCategorie_galerie', {'categorie': image.categoryId} ) }} "><img class="voit-gallery" src="{{ image.img }}" alt="Image de {{ categorie }}"></a>
                 {% else %}
                     <p>Aucune image disponible pour cette catégorie.</p>
                 {% endif %}

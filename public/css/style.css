@@ -106,6 +106,14 @@ section{
     border-radius: 50px;
 }
 
+.button-detail{
+    width: 200px;
+    color: #fff;
+    background: #2baae2;
+    height: 100%;
+}
+
+
 .button:hover{
     background: #2288b4;
 }
@@ -468,12 +476,6 @@ footer a:hover, .mail:hover{
     margin-top: 100px;
 } */
 
-.slider2, .slider3{
-    display: none;
-}
-
-
-
 #slider{
     display: flex;
     overflow: hidden;
@@ -484,7 +486,7 @@ footer a:hover, .mail:hover{
 .sliderImg{
     position: relative;
     width: 1080px; 
-    height: auto;
+    height: 100%;
     animation-name: AutoSlide;
     animation-duration: 15s;
     animation-iteration-count: infinite;
@@ -677,6 +679,16 @@ figcaption{
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
+.voit-gallery{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border: 1px solid rgba(0, 0, 0, 0.499);
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
 .p-resa{
     display: flex;
     align-items: center;
@@ -781,7 +793,6 @@ form label{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 340px;
     border:solid 1px #c0c0c0;
     border-radius : 10px;
     height: 40px;
@@ -793,7 +804,6 @@ form label{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 340px;
     resize: none;
     border:solid 1px #c0c0c0;
     border-radius : 15px;
@@ -922,6 +932,7 @@ label[for=rgpd], .rgpd-link{
     margin-top: 50px;
     border-radius: 7px;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
+    overflow: hidden;
 }
 
 
@@ -1052,7 +1063,7 @@ a.booking-btn.flex-center.button{
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 550px;
+    /* width: 550px; */
 }
 
 #civility{
@@ -1079,6 +1090,7 @@ h3{
         display: flex;
         justify-content: center;
         margin: 30px 0 15px 0;
+        border-radius: 5px;
     }
 
     #gallery h2{
@@ -1174,6 +1186,25 @@ h3{
     margin-top: auto; /* Place le bouton en bas de la carte */
     padding: 10px 20px;
     text-decoration: none;
+}
+
+.booking-btn{
+    margin: 0;
+    margin-top: 1px;
+    max-width: 100%;
+    height: auto;
+}
+
+.detail{
+    overflow: hidden;
+}
+
+.button-detail{
+    height: 100%;
+}
+
+.button-detail:hover{
+    background-color: #2288b4;
 }
 
 .gestion{
@@ -1361,6 +1392,26 @@ th{
         display: flex;
         justify-content: center;
     }
+
+    .booking-btn{
+        margin: 0;
+        margin-top: 1px;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .detail{
+        overflow: hidden;
+    }
+
+    .button-detail{
+        height: 100%;
+    }
+
+    .voit-gallery{
+        width: 100%;
+        height: 100%;
+    }
 }
 
 
@@ -1496,11 +1547,55 @@ th{
 
     .footer-inner{
         width: 100%;
-    } 
+    }
+
     footer{
         height: auto;
     }
 
+    #gallery p{
+        font-size: 12px;
+    }
+
+    .titre-card{
+        font-size: 19px;
+    }
+
+    .button {
+        height: 30px;
+        font-size: 17px;
+    }
+
+    .booking-btn{
+        margin: 0;
+        margin-top: 1px;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .detail{
+        overflow: hidden;
+    }
+
+    .button-detail{
+        height: 100%;
+    }
+
+    #forms{
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .feld{
+        width: 100%;
+        margin: 15px 20px 15px 20px;
+    }
+
+
+    .voit-gallery{
+        width: 100%;
+        height: 100%;
+    }
 }
 
 @media screen and (min-width : 425px) and (max-width : 599px){
@@ -1595,10 +1690,18 @@ th{
     }
 
     .booking-btn{
-        /* border-radius: 10px !important; */
-        width: 200px !important;
-        height: 45px !important;
-        margin-top: 30px;
+        margin: 0;
+        margin-top: 1px;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .detail{
+        overflow: hidden;
+    }
+
+    .button-detail{
+        height: 100%;
     }
     
     .info .condition p{
@@ -1629,8 +1732,7 @@ th{
         align-items: center;
     }
 
-    #page_registration h2{
-        margin-bottom: 0;
+    #page_registration h2, #content-user h2{
         font-size: 35px
     }
 
@@ -1648,6 +1750,27 @@ th{
     .sliderImg{
         width: 450px;
         height: 100%;
+    }
+
+    .form-container{
+        max-width: 100%;
+        border-radius: 0;
+    }
+
+    .voit-gallery{
+        width: 100%;
+        height: 100%;
+    }
+
+    .grid-container {
+        display: grid;
+        justify-content: center;
+        grid-template-columns: repeat(auto-fill, 599px);
+        gap: 20px;
+    }
+
+    tr, td, thead{
+        font-size: 13px;
     }
 }
 
@@ -1673,14 +1796,12 @@ th{
     }
 
     .booking-btn{
+        margin: 0;
         margin-top: 1px;
         max-width: 100%;
         height: auto;
     }
 
-    .field{
-        margin: 10px 25px 0 25px;
-    }
 
     label{
         margin-top: 10px;
@@ -1690,6 +1811,48 @@ th{
         margin-top: 25px;
     }
 
+    .field{
+        width: 100%;
+        height: 30px;
+    }
+
+    #page_registration h2, #content-user h2 {
+        margin-top: 15px;
+        font-size: 25px;
+    }
+
+    #forms{
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .form-container{
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .voit-gallery{
+        max-width: 100%;
+    }
+
+    .grid-container {
+        display: grid;
+        justify-content: center;
+        grid-template-columns: repeat(auto-fill, 400px);
+        gap: 20px;
+    }
+
+    .detail{
+        overflow: hidden;
+    }
+
+    .button-detail{
+        height: 100%;
+    }
+
+    tr, td, thead{
+        font-size: 11px;
+    }
 }
 
 
@@ -1697,6 +1860,11 @@ th{
 {
     .car{
         width: 100%;
+        border-radius: 0;
+    }
+
+    .detail{
+        overflow: hidden;
     }
 
     .booking-btn{
@@ -1729,10 +1897,44 @@ th{
         padding: 15px;
     }
 
-    #forms, input{
+    .field{
+        width: 100%;
+        height: 30px;
+    }
+
+    #page_registration h2, #content-user h2 {
+        margin-top: 15px;
+        font-size: 25px;
+    }
+
+    #forms{
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .form-container{
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .voit-gallery{
         width: 100%;
     }
 
+    .grid-container {
+        display: grid;
+        justify-content: center;
+        grid-template-columns: repeat(auto-fill, 375px);
+        gap: 20px;
+    }
+
+    .button-detail{
+        height: 100%;
+    }
+
+    tr, td, thead{
+        font-size: 9px;
+    }
 }
 
 @media screen and (min-width : 280px) and (max-width : 320px)
@@ -1759,6 +1961,12 @@ th{
 
     #step h2{
         font-size: 18px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+
+    figure{
+        margin-bottom: 10px;
     }
 
     #part-2{
@@ -1780,7 +1988,55 @@ th{
 
     h2{
         font-size: 15px;
-}
+    }
+
+    .field{
+        width: 100%;
+        height: 30px;
+    }
+
+    #forms{
+        width: 100%;
+        border-radius: 0;
+    }
+
+    #copyright p{
+        font-size: 10px;
+        padding: 15px;
+    }
+
+    #page_registration h2, #content-user h2 {
+        margin-top: 15px;
+        font-size: 18px;
+    }
+
+    .form-container{
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .voit-gallery{
+        width: 100%;
+    }
+
+    .grid-container {
+        display: grid;
+        justify-content: center;
+        grid-template-columns: repeat(auto-fill, 320px);
+        gap: 20px;
+    }
+
+    .mark{
+        font-size: 19px;
+    }
+
+    .button-detail{
+        height: 100%;
+    }
+
+    tr, td, thead{
+        font-size: 8px;
+    }
 }
 
 
