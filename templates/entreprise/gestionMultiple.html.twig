@@ -15,8 +15,9 @@
     {% endfor %}
     {# {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMPTABLE') %} #}
     <section class="flex-center" id="page_registration">
+    <h2>Gestionnaire</h2>
             <div class="form-container">
-                <h2 class="gestion">Ajouter une Categorie</h2>
+                <h3 class="gestion">Ajouter une Categorie</h3>
                 {{ form_start(categorieForm, {'attr': {'class': 'forms'}}) }}
                 {{ form_row(categorieForm.nom) }}
                 {{ form_end(categorieForm) }}
@@ -44,7 +45,7 @@
                 </div>
             </div>
             <div class="form-container">
-                <h2 class="gestion">Ajouter une marque</h2>
+                <h3 class="gestion">Ajouter une marque</h3>
                 {{ form_start(marqueForm, {'attr': {'class': 'forms'}}) }}
                 {{ form_row(marqueForm.nom) }}
                 {{ form_end(marqueForm) }}
@@ -72,7 +73,7 @@
                 </div>
             </div>
             <div class="form-container">
-                <h2 class="gestion">Ajouter un modèle</h2>
+                <h3 class="gestion">Ajouter un modèle</h3>
                 {{ form_start(modeleForm, {'attr': {'class': 'forms'}}) }}
                 {{ form_row(modeleForm.nom) }}
                 {{ form_end(modeleForm) }}
@@ -100,7 +101,7 @@
                 </div>
             </div>
             <div class="form-container">
-                <h2 class="gestion">Ajouter un véhicule</h2>
+                <h3 class="gestion">Ajouter un véhicule</h3>
                 {{ form_start(detailVehiculeForm, {'attr': {'class': 'forms'}}) }}
                 {{ form_row(detailVehiculeForm.autonomie) }}
                 {{ form_row(detailVehiculeForm.nbPorte) }}
@@ -119,18 +120,11 @@
                 <table class="table table-striped forms">
                     <thead class="thead-dark">
                         <tr>
-                            {# <th scope="col">Cat.</th> #}
                             <th scope="col">Marque</th>
                             <th scope="col">Modèle</th>
                             <th class="colonne" scope="col">Autonomie</th>
-                            {# <th scope="col">Nombre porte</th>
-                            <th scope="col">Nombre place</th>
-                            <th scope="col">Nombre bagage</th> #}
                             <th scope="col">Prix/J</th>
                             <th scope="col">Img</th>
-                            {# <th scope="col">Bluetooth</th>
-                            <th scope="col">Climatisation</th>
-                            <th scope="col">GPS</th> #}
                             <th scope="col">Editer</th>
                             <th scope="col">Supp.</th>
                         </tr>
@@ -138,30 +132,11 @@
                     <tbody>
                         {% for vehicule in vehicules %}
                             <tr>
-                                {# <td>{{ vehicule.categorie.nom }}</td> #}
                                 <td>{{ vehicule.modele.marque.nom }}</td>
                                 <td>{{ vehicule.modele.nom }}</td>
                                 <td>{{ vehicule.autonomie }}</td>
-                                {# <td>{{ vehicule.nbPorte }}</td>
-                                <td>{{ vehicule.nbPlace }}</td>
-                                <td>{{ vehicule.nbBagage }}</td> #}
                                 <td>{{ vehicule.prix ~ ' €'}}</td>
                                 <td><a href="{{ path('image_entreprise', {'id': vehicule.id}) }}"><i class="fa-solid fa-image"></i></a></td>
-                                {# <td>
-                                   {% if vehicule.bluetooth %}
-                                        <i class="fa-solid fa-check"></i>
-                                   {% endif %} 
-                                </td>
-                                <td>
-                                    {% if vehicule.climatisation %}
-                                        <i class="fa-solid fa-check"></i>
-                                    {% endif %} 
-                                </td>
-                                <td>
-                                    {% if vehicule.gps %}
-                                    <i class="fa-solid fa-check"></i>
-                                    {% endif %} 
-                                </td> #}
                                 <td><a href="{{ path('edit_entity', {'type': 'detailVehicule', 'id': vehicule.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a></td>
                                 <td><a href="{{ path('delete_entity', {'type': 'detailVehicule', 'id': vehicule.id}) }}" class="delete-link" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette ligne ?')"><i class="fa-solid fa-trash"></i></a></td>
                             </tr>

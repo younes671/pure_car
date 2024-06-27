@@ -199,7 +199,7 @@ class EntrepriseController extends AbstractController
                 case 'categorie':
                     $entity = $categorieRepository->find($id);
                     break;
-                case 'detailVehicule':
+                case 'vehicule':
                     $entity = $vehiculeRepository->find($id);
                     break;
                 default:

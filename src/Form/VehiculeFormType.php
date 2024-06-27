@@ -21,8 +21,8 @@ class VehiculeFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $categories = $options['categories']; // Récupérer les marques triées
-        $modeles = $options['modeles']; // Récupérer les marques triées
+        $categories = $options['categories']; // Récupérer les catégories triées
+        $modeles = $options['modeles']; // Récupérer les modèles triées
 
         $builder
             ->add('autonomie', NumberType::class, [
@@ -36,8 +36,6 @@ class VehiculeFormType extends AbstractType
             ])
            
             ->add('nbBagage', NumberType::class, [
-                'label_attr' => ['class' => 'field-nbBagage'],
-                'required' => false,
                 'attr' => ['class' => 'field']
             ])
             ->add('prix', NumberType::class, [
@@ -45,14 +43,14 @@ class VehiculeFormType extends AbstractType
             ])
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
-                'choices' => $categories, // Utiliser les marques triées comme options
+                'choices' => $categories, // Utiliser les catégories triées comme options
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir une catégorie',
                 'attr' => ['class' => 'field']
             ])
             ->add('modele', EntityType::class, [
                 'class' => Modele::class,
-                'choices' => $modeles, 
+                'choices' => $modeles, // Utiliser les modèles triées comme options
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisir un modèle',
                 'attr' => ['class' => 'field']
@@ -87,8 +85,8 @@ class VehiculeFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Vehicule::class,
-            'categories' => [], // Définir une option pour les marques triées
-            'modeles' => [], // Définir une option pour les marques triées
+            'categories' => [], // Définir une option pour les catégories triées
+            'modeles' => [], // Définir une option pour les modèles triées
         ]);
     }
 }

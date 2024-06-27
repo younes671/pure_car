@@ -1325,6 +1325,15 @@ th{
         width: 100%;
     }
 
+    #content-logo{
+        width: 100%;
+    }
+
+    #main-menu ul li {
+        width: 100%;
+        min-width: 140px;
+    }
+
     #slider{
         width: 1080px;
     }
@@ -1412,10 +1421,14 @@ th{
         width: 100%;
         height: 100%;
     }
+
+    .table-responsive{
+        width: 100%;
+    }
 }
 
 
-@media screen and (max-width : 829px){
+@media screen and (max-width : 905px){
     #content{
         width: 100%;
     }
@@ -1423,6 +1436,11 @@ th{
 
     #menu{
         height: 50px;
+    }
+
+    #main-menu ul li {
+        width: 100%;
+        min-width: 120px;
     }
 
     #logo-mobile{
@@ -1596,6 +1614,10 @@ th{
         width: 100%;
         height: 100%;
     }
+
+    .table-responsive{
+        width: 100%;
+    }
 }
 
 @media screen and (min-width : 425px) and (max-width : 599px){
@@ -1748,7 +1770,6 @@ th{
     }
 
     .sliderImg{
-        width: 450px;
         height: 100%;
     }
 
@@ -1772,6 +1793,10 @@ th{
     tr, td, thead{
         font-size: 13px;
     }
+
+    .table-responsive{
+        width: 100%;
+    }
 }
 
 @media screen and (min-width : 375px) and (max-width : 425px){
@@ -1782,7 +1807,7 @@ th{
     }
 
     .sliderImg{
-        width: 400px;
+        width: 425px;
         height: 100%;
     }
 
@@ -1816,6 +1841,11 @@ th{
         height: 30px;
     }
 
+    #page_registration form{
+        width: 100%;
+        margin: 0;
+    }
+
     #page_registration h2, #content-user h2 {
         margin-top: 15px;
         font-size: 25px;
@@ -1824,6 +1854,7 @@ th{
     #forms{
         width: 100%;
         border-radius: 0;
+        margin: 0;
     }
 
     .form-container{
@@ -1852,6 +1883,10 @@ th{
 
     tr, td, thead{
         font-size: 11px;
+    }
+
+    .table-responsive{
+        width: 100%;
     }
 }
 
@@ -1934,6 +1969,10 @@ th{
 
     tr, td, thead{
         font-size: 9px;
+    }
+
+    .table-responsive{
+        width: 100%;
     }
 }
 
@@ -2036,6 +2075,19 @@ th{
 
     tr, td, thead{
         font-size: 8px;
+    }
+
+    .table-responsive{
+        width: 100%;
+    }
+
+    #page_registration form{
+        width: 100%;
+        margin: 0;
+    }
+
+    #vehicule_form_img {
+        width: 100%;
     }
 }
 

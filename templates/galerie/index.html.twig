@@ -9,11 +9,8 @@
     <div class="grid-container">
                 {% for categorie, image in imagesParCategorie %}
         <div class="form-container">
-                {# <div class="img-galerie"> #}
                     <h3 class="titre-galerie">{{ categorie }}</h3>
-                {# </div> #}
                 {% if image %}
-                {# <div> #}
                     <a href=" {{ path('vehiculeByCategorie_galerie', {'categorie': image.categoryId} ) }} "><img class="voit-gallery" src="{{ image.img }}" alt="Image de {{ categorie }}"></a>
                 {% else %}
                     <p>Aucune image disponible pour cette catégorie.</p>
@@ -21,6 +18,5 @@
         </div>
                 {% endfor %}
     </div>
-        {# </div> #}
 </section>
 {% endblock %}
