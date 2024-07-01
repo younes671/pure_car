@@ -5,9 +5,12 @@
 {% block body %}
 <section class="flex-center" id="page_registration">
     <h2>Récapitulatif de la réservation</h2>
-    <p>Date de début : {{ reservation.dateDebut|date('d_m_Y') }}</p>
-    <p>Date de fin : {{ reservation.dateFin|date('d-m-Y') }}</p>
-    <p>Prix : {{ reservation.prix ~ ' €' }} </p>
+    <p><h4>Véhicule :</h4> {{ reservation.vehicule.modele.marque.nom }} - {{ reservation.vehicule.modele.nom }}</p>
+    <p><h4>Date de début :</h4> {{ reservation.dateDebut|date('d-m-Y') }}</p>
+    <p><h4>Heure de prise en charge :</h4> {{ reservation.dateDebut|date('H:i')|replace({':': 'h'}) }}</p>
+    <p><h4>Date de fin :</h4> {{ reservation.dateFin|date('d-m-Y') }}</p>
+    <p><h4>Heure de retour :</h4> {{ reservation.dateFin|date('H:i')|replace({':': 'h'}) }}</p>
+    <p><h4>Prix :</h4> {{ reservation.prix ~ ' €' }} </p>
     <div class="flex-wrap flex-around">
     <p class='flex-annulation'><a class='lien-annuler' href="{{ path('annuler_reservation', { 'reservationId': reservation.id }) }}">Annuler</a> 
     <a href="{{ path('reservation_confirmer', { 'reservationId': reservation.id }) }}">

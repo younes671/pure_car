@@ -25,6 +25,7 @@ use Symfony\Component\Mailer\MailerInterface;
 
 class ReservationController extends AbstractController
 {
+    // récupère les vehicules par marque
     #[Route('/reservation', name: 'app_reservation')]
     public function index(VehiculeRepository $vehiculeRepository): Response
     {
@@ -39,8 +40,9 @@ class ReservationController extends AbstractController
     #[Route('reservation/vehicules', name: 'app_vehicules')]
     public function vehicules(VehiculeRepository $vehiculeRepository): Response
     {
+        // récupère tous les vehicules triés par marque
         $vehicules = $vehiculeRepository->getAllVehiculesOrderedByMarque();
-            
+        // initialisation tableau
         $serializedVehicules = [];
         foreach ($vehicules as $vehicule) {
             $serializedVehicules[] = [
@@ -57,6 +59,7 @@ class ReservationController extends AbstractController
         
     }
 
+    // récupère détail d'un véhicule par son id
     #[Route('/reservation/detailCar/{vehiculeId}', name: 'detailCar_reservation')]
     public function detailCar(VehiculeRepository $vehiculeRepository, Vehicule $vehiculeId): Response
     {
@@ -79,7 +82,7 @@ class ReservationController extends AbstractController
 
         // Si l'utilisateur n'est pas connecté
         if (!$user) {
-            // Rediriger vers la page de choix
+            // Redirection
             return $this->redirectToRoute('reservation_choice', ['vehiculeId' => $vehiculeId->getId()]);
         }
 
@@ -94,7 +97,7 @@ class ReservationController extends AbstractController
         $reservation->setCp($userId->getCp());
         $reservation->setVille($userId->getVille());
 
-        // Créer le formulaire de réservation
+        // Création du formulaire de réservation
         $reservationForm = $this->createForm(ReservationType::class, $reservation);
         
         $reservationForm->handleRequest($request);

@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
+    // affiche une image par catégorie pour le slider
     #[Route('/home', name: 'app_home')]
     public function index(VehiculeRepository $vehiculeRepository): Response
     {

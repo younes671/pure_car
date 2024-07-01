@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class ReservationType extends AbstractType
 {
@@ -29,11 +30,11 @@ class ReservationType extends AbstractType
             ->add('prenom', TextType::class, [
                 'attr' => ['class' => 'field']
             ])
-            ->add('dateDebut', DateType::class, [
+            ->add('dateDebut', DateTimeType::class, [
                 'widget' => 'single_text',
                 'attr' => ['class' => 'field date']
             ])
-            ->add('dateFin', DateType::class, [
+            ->add('dateFin', DateTimeType::class, [
                 'widget' => 'single_text',
                 'attr' => ['class' => 'field date']
             ])

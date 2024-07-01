@@ -199,11 +199,15 @@ section{
     color: green;
 }
 
-#page_registration h6{
-    line-height: 40px;
+#page_registration h6,h4{
+    line-height: 10px;
     color : #2baae2;
     display: flex;
     justify-content: center;
+}
+
+#page_registration h4{
+    margin-bottom: 20px;
 }
 
 #page_registration span{

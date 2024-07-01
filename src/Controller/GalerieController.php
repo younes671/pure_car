@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class GalerieController extends AbstractController
 {
+    // récupère une seule image par véhicule pour l'affichage des véhicules par catégorie
     #[Route('/galerie', name: 'app_galerie')]
     public function index(VehiculeRepository $vehiculeRepository): Response
     {
@@ -37,6 +38,7 @@ class GalerieController extends AbstractController
     }
 
 
+    // affiche tous les véhicules d'une catégorie
     #[Route('/galerie/vehicules/{categorie}', name: 'vehiculeByCategorie_galerie')]
     public function vehiculeByCategorie(VehiculeRepository $vehiculeRepository, Categorie $categorie): Response
     {

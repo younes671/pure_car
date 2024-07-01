@@ -1,5 +1,3 @@
-{% extends 'base.html.twig' %}
-
 {% block title %}Email de confirmation{% endblock %}
 
 {% block body %}
@@ -7,10 +5,12 @@
         <p>Bonjour {{ reservation.nom }},</p>
         <p>Votre réservation a été confirmée avec succès. Voici les détails de votre réservation :</p>
         <ul>
-            <li>Date de début : {{ reservation.dateDebut|date('Y-m-d') }}</li>
-            <li>Date de fin : {{ reservation.dateFin|date('Y-m-d') }}</li>
-            <li>Prix total : {{ reservation.prix }} €</li>
-            <li>Véhicule : {{ reservation.vehicule.modele.marque.nom }} - {{ reservation.vehicule.modele.nom }}</li>
+            <li><p><h6>Date de début :</h6> {{ reservation.dateDebut|date('d-m-Y') }}</p></li>
+            <li><p><h6>Heure de prise en charge :</h6> {{ reservation.dateDebut|date('H:i')|replace({':': 'h'}) }}</p></li>
+            <li><p><h6>Date de fin :</h6> {{ reservation.dateFin|date('d-m-Y') }}</p></li>
+            <li><p><h6>Heure de retour :</h6> {{ reservation.dateFin|date('H:i')|replace({':': 'h'}) }}</p></li>
+            <li><p><h6>Prix :</h6> {{ reservation.prix ~ ' €' }}</p></li>
+            <li><p><h6>Véhicule :</h6> {{ reservation.vehicule.modele.marque.nom }} - {{ reservation.vehicule.modele.nom }}</p></li>
         </ul>
         <p>Merci pour votre réservation.</p>
 {% endblock %}

@@ -107,7 +107,7 @@ class EntrepriseController extends AbstractController
          ]);
      }
  
-
+     // Récupère l'image du vehicule
     #[Route('/entreprise/image/{id}', name: 'image_entreprise')]
     public function image(Vehicule $id, VehiculeRepository $vehiculeRepository): Response
     {
@@ -118,6 +118,7 @@ class EntrepriseController extends AbstractController
         ]);
     }
 
+    // permet d'editer les informations de chaque entité
     #[Route('/edit/{type}/{id}', name: 'edit_entity')]
     public function edit_entity($type, $id, Request $request, EntityManagerInterface $entityManager, Security $security, VehiculeRepository $vehiculeRepository, MarqueRepository $marqueRepository, ModeleRepository $modeleRepository, CategorieRepository $categorieRepository): Response
     {
@@ -148,12 +149,15 @@ class EntrepriseController extends AbstractController
                     // téléchargement nouvelle image
                     $uploadedFile = $form['img']->getData();
                     if ($uploadedFile) {
+                        // crée un id unique (basé sur timestamp actuel) et récupère extension du fichier
                         $newFileName = uniqid().'.'.$uploadedFile->guessExtension();
                         try {
+                            // déplace fichier vers répertoire de destination
                             $uploadedFile->move(
                                 $this->getParameter('kernel.project_dir') . '/public/img/car',
                                 $newFileName
                             );
+                            // mise à jour de la bdd
                             $entity->setImg('/img/car/'.$newFileName);
                         } catch (FileException $e) {
                             // Gérer l'erreur de téléchargement du fichier
@@ -185,6 +189,7 @@ class EntrepriseController extends AbstractController
         ]); 
    }
 
+   // supprime une entité
    #[Route('/delete/{type}/{id}', name: 'delete_entity')]
     public function delete_entity($type, $id, EntityManagerInterface $entityManager, Security $security, VehiculeRepository $vehiculeRepository, MarqueRepository $marqueRepository, ModeleRepository $modeleRepository, CategorieRepository $categorieRepository): Response
     {
@@ -206,12 +211,12 @@ class EntrepriseController extends AbstractController
                     throw new \Exception('Type d\'entité non valide');
                 }
     
-                    // Vérifier si l'entité existe
+                    // Vérifie si l'entité existe
                     if (!$entity) {
                         throw $this->createNotFoundException('Entité non trouvée.');
                     }
     
-                    // Supprimer l'entité
+                    // Supprime l'entité
                     $entityManager->remove($entity);
                     $entityManager->flush();
     
@@ -220,7 +225,7 @@ class EntrepriseController extends AbstractController
                     return $this->redirectToRoute('app_gestionMultiple');
     }
 
-    // retourne mentions légales
+    // affiche les mentions légales
     #[Route('/entreprise/mention', name: 'mention_entreprise')]
     public function mention(): Response
     {
@@ -230,6 +235,7 @@ class EntrepriseController extends AbstractController
     }
 
 
+    // gère l'envoi d'email pour contacter l'entreprise
     #[Route('/entreprise/emailContact', name: 'emailContact_entreprise')]
     public function emailContact( MailerInterface $mailer, Request $request): RedirectResponse
     {
