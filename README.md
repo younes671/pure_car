@@ -2,16 +2,16 @@
 Bienvenue dans le projet Pure car, location de voiture électrique ! Ce projet est une application web développée avec Symfony, permettant la gestion des réservations pour des véhicules électrique, ainsi que l'administration des entités associées telles que les marques, les modèles, les catégories, et les véhicules.
 
 ## Table des Matières
-## Introduction
-## Prérequis
-## Installation
-## Configuration
-## Utilisation
-## Structure du Projet
-## Tests
-## Contribuer
-## Licence
-## Introduction
+### Introduction
+### Prérequis
+### Installation
+### Configuration
+### Utilisation
+### Structure du Projet
+### Tests
+### Contribuer
+### Licence
+### Introduction
 Ce projet est une application Symfony qui permet aux utilisateurs de réserver et louer des véhicules électriques. Les fonctionnalités principales incluent :
 
 Gestion des entités pour l'administrateur du site : Ajout, modification et suppression de marques, modèles, catégories et véhicules.
