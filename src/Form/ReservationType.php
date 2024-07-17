@@ -9,6 +9,7 @@ use App\Entity\Reservation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -32,17 +33,22 @@ class ReservationType extends AbstractType
             ])
             ->add('dateDebut', DateTimeType::class, [
                 'widget' => 'single_text',
-                'attr' => ['class' => 'field date']
+                'html5' => true,
+                'attr' => ['class' => 'field date js-date-debut']
             ])
             ->add('dateFin', DateTimeType::class, [
                 'widget' => 'single_text',
-                'attr' => ['class' => 'field date']
+                'html5' => true,
+                'attr' => ['class' => 'field date js-date-fin']
             ])
             ->add('adresse', TextType::class, [
                 'attr' => ['class' => 'field']
             ])
             ->add('cp', TextType::class, [
-                'attr' => ['class' => 'field']
+                'attr' => ['class' => 'field'],
+                'constraints' => [
+                    new Regex("/^\d+$/")
+                ]
             ])
             ->add('ville', TextType::class, [
                 'attr' => ['class' => 'field']

@@ -193,6 +193,7 @@ section{
 
 .requirement{
     color: red;
+    font-size: 18px !important;
 }
 
 .success{
@@ -211,7 +212,8 @@ section{
 }
 
 #page_registration span{
-    font-size: 17px;
+    font-size: 25px;
+    margin-bottom: 35px;
 }
 
 #password-requirements{
@@ -318,6 +320,18 @@ main{
 #map { 
     height: 580px; 
     margin: 10px;
+}
+
+.forms ul{
+    margin: 0;
+    padding: 0;
+    color: red;
+    font-size: 0.875em;
+}
+
+#forms li,ul{
+    margin: 0;
+    font-size: 0.875em;
 }
 
 /* ------------------------------------MAP */
@@ -758,6 +772,8 @@ form p{
 #rgpd{
     margin: 10px;
     cursor: pointer;
+    height: 30px;
+    width: 30px;
 }
 
 .submit-content{
@@ -1058,6 +1074,7 @@ a.booking-btn.flex-center.button{
     margin: 20px 0 20px 0;
     display: flex;
     justify-content: center;
+    font-size: 25px;
 }
 
 /* -------------------------------------------------------PAGE INSCRIPTION */
@@ -1140,16 +1157,33 @@ h3{
 }
 
 .card {
-    background-color: #f8f8f8; /* Couleur de fond des cartes */
-    border: 1px solid #ddd; /* Bordure des cartes */
-    border-radius: 8px; /* Coins arrondis */
-    padding: 20px;
-    width: 300px; /* Largeur fixe des cartes */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre portée */
+    background-color: #f8f8f8; /*Couleur de fond des cartes */
+    border: 1px solid #ddd; /*Bordure des cartes */
+    border-radius: 8px; /*Coins arrondis */
+    padding: 20px; 
+    width: 300px; /*Largeur fixe des cartes */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /*Ombre portée */
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centre les éléments à l'intérieur des cartes */
-    text-align: center; /* Centre le texte */
+    align-items: center; /*Centre les éléments à l'intérieur des cartes */
+    text-align: center; /*Centre le texte */
+}
+
+.row{
+    display: flex;
+    /* justify-content: center; */
+}
+
+.card-pay{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f8f8; /*Couleur de fond des cartes*/
+    border: 1px solid #ddd; /*Bordure des cartes */
+    border-radius: 8px; /* Coins arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre portée */
+    text-align: center;
+    width: 100% !important;
 }
 
 .card-profil {

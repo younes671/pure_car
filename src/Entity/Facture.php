@@ -22,15 +22,22 @@ class Facture
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateEmission = null;
 
+
+    #[ORM\Column(length: 60)]
+    private ?string $numeroFacture = null;
+
+    #[ORM\Column]
+    private ?int $montant = null;
+
     /**
      * @var Collection<int, Reservation>
      */
     #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'facture')]
-    private Collection $FacturesReservation;
+    private Collection $facturesReservations;
 
     public function __construct()
     {
-        $this->FacturesReservation = new ArrayCollection();
+        $this->facturesReservations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -62,18 +69,42 @@ class Facture
         return $this;
     }
 
+    public function getNumeroFacture(): ?string
+    {
+        return $this->numeroFacture;
+    }
+
+    public function setNumeroFacture(string $numeroFacture): static
+    {
+        $this->numeroFacture = $numeroFacture;
+
+        return $this;
+    }
+
+    public function getMontant(): ?int
+    {
+        return $this->montant;
+    }
+
+    public function setMontant(int $montant): static
+    {
+        $this->montant = $montant;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Reservation>
      */
-    public function getFacturesReservation(): Collection
+    public function getFacturesReservations(): Collection
     {
-        return $this->FacturesReservation;
+        return $this->facturesReservations;
     }
 
     public function addFacturesReservation(Reservation $facturesReservation): static
     {
-        if (!$this->FacturesReservation->contains($facturesReservation)) {
-            $this->FacturesReservation->add($facturesReservation);
+        if (!$this->facturesReservations->contains($facturesReservation)) {
+            $this->facturesReservations->add($facturesReservation);
             $facturesReservation->setFacture($this);
         }
 
@@ -82,7 +113,7 @@ class Facture
 
     public function removeFacturesReservation(Reservation $facturesReservation): static
     {
-        if ($this->FacturesReservation->removeElement($facturesReservation)) {
+        if ($this->facturesReservations->removeElement($facturesReservation)) {
             // set the owning side to null (unless already changed)
             if ($facturesReservation->getFacture() === $this) {
                 $facturesReservation->setFacture(null);

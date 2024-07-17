@@ -13,8 +13,8 @@
     <p><h4>Prix :</h4> {{ reservation.prix ~ ' €' }} </p>
     <div class="flex-wrap flex-around">
     <p class='flex-annulation'><a class='lien-annuler' href="{{ path('annuler_reservation', { 'reservationId': reservation.id }) }}">Annuler</a> 
-    <a href="{{ path('reservation_confirmer', { 'reservationId': reservation.id }) }}">
-        <button class="button" type="submit">Confirmer</button>
+    <a href="{{ path('app_stripe', { 'reservationId': reservation.id }) }}">
+        <button class="button" type="submit">Paiement</button>
     </a></p>
     </div>
 </section>

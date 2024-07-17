@@ -248,6 +248,12 @@ class EntrepriseController extends AbstractController
         $subject = filter_var($request->request->get('subject'), FILTER_SANITIZE_SPECIAL_CHARS);
         $message = filter_var($request->request->get('message'), FILTER_SANITIZE_SPECIAL_CHARS);
 
+        // Valider le champ téléphone avec une regex
+        if (!preg_match('/^\d+$/', $phone)) {
+            $this->addFlash('danger', 'Le numéro de téléphone doit contenir uniquement des chiffres.');
+            return $this->redirectToRoute('app_entreprise');
+        }
+
         // Composer le contenu de l'email
         $emailContent = "Nom: $name\n";
         $emailContent .= "Prénom: $firstname\n";
@@ -263,7 +269,6 @@ class EntrepriseController extends AbstractController
             ->text($emailContent);
 
         $mailer->send($email);
-
         
             $this->addFlash('success', 'Email envoyé avec succès.');
             return $this->redirectToRoute('app_entreprise');

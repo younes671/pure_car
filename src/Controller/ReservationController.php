@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Facture;
 use App\Entity\Vehicule;
 use App\Entity\Categorie;
 use App\Entity\Reservation;
@@ -11,17 +12,18 @@ use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
 use App\Repository\MarqueRepository;
 use App\Repository\ModeleRepository;
+use App\Repository\FactureRepository;
 use App\Repository\VehiculeRepository;
 use App\Repository\CategorieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ReservationRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Mailer\MailerInterface;
 
 class ReservationController extends AbstractController
 {
@@ -72,7 +74,7 @@ class ReservationController extends AbstractController
 
     // réservation avec compte utilisateur
     #[Route('/reservation/reservationClient/{vehiculeId}', name: 'reservationClient_reservation')]
-    public function reservationClient(UserRepository $userRepository, Request $request, EntityManagerInterface $entityManager, VehiculeRepository $vehiculeRepository, Vehicule $vehiculeId): Response
+    public function reservationClient(UserRepository $userRepository, Request $request, FactureRepository $factureRepository, EntityManagerInterface $entityManager, VehiculeRepository $vehiculeRepository, Vehicule $vehiculeId): Response
     {
         // Vérifier si l'utilisateur est connecté
         $user = $this->getUser();
@@ -115,9 +117,27 @@ class ReservationController extends AbstractController
             if($nbJours === 0){
                 $nbJours = 1;
             }
-            $prixTotal = $nbJours * $vehicule->getPrix();
+             // Génération du numéro de facture unique
+             $lastInvoice = $factureRepository->findOneBy([], ['id' => 'desc']);
+             $lastInvoiceNumber = $lastInvoice ? $lastInvoice->getNumeroFacture() : 0;
+             $newInvoiceNumber = sprintf('%06d', $lastInvoiceNumber + 1);
+             $prixTotal = $nbJours * $vehicule->getPrix();
+ 
+             // Création de l'entité facture
+             $facture = new Facture();
+             $facture->setNumeroFacture($newInvoiceNumber);
+             $facture->setMontant($prixTotal); // Ajustez le montant selon vos besoins
+             $facture->setDateCreation(new \DateTime());
+             $facture->setDateEmission(new \DateTime());
+             // $reservation->setUser($reservation->getUser());
+             
+             // Associe la facture à la réservation
+             
+             $entityManager->persist($facture);
+             $entityManager->flush();
+            
             $reservation->setPrix($prixTotal);
-
+            $reservation->setFacture($facture);
             $entityManager->persist($reservation);// prépare requete
             $entityManager->flush();// enregistrement dans bdd
 
@@ -136,7 +156,7 @@ class ReservationController extends AbstractController
 
     // réservation sans compte utilisateur
     #[Route('/reservation/reservationInvite/{vehiculeId}', name: 'reservationInvite_reservation')]
-    public function reservationInvite(Request $request, EntityManagerInterface $entityManager, VehiculeRepository $vehiculeRepository, Vehicule $vehiculeId): Response
+    public function reservationInvite(Request $request, EntityManagerInterface $entityManager, FactureRepository $factureRepository, VehiculeRepository $vehiculeRepository, Vehicule $vehiculeId): Response
     {
          
         $vehicule = $vehiculeRepository->findOneBy(['id' => $vehiculeId]);
@@ -153,13 +173,39 @@ class ReservationController extends AbstractController
             // Calcul du prix en fonction de la durée de location
             $dateDebut = $reservation->getDateDebut();
             $dateFin = $reservation->getDateFin();
+            if ($dateFin < $dateDebut) {
+                $this->addFlash('error', 'La date de fin doit être postérieure à la date de début.');
+                return $this->render('reservation/reservation.html.twig', [
+                    'vehicule' => $vehicule,
+                    'reservationForm' => $reservationForm->createView()
+                ]);
+            }
             $nbJours = $dateDebut->diff($dateFin)->days;
             if($nbJours === 0){
                 $nbJours = 1;
             }
-            $prixTotal = $nbJours * $vehicule->getPrix();
-            $reservation->setPrix($prixTotal);
 
+            // Génération du numéro de facture unique
+            $lastInvoice = $factureRepository->findOneBy([], ['id' => 'desc']);
+            $lastInvoiceNumber = $lastInvoice ? $lastInvoice->getNumeroFacture() : 0;
+            $newInvoiceNumber = sprintf('%06d', $lastInvoiceNumber + 1);
+            $prixTotal = $nbJours * $vehicule->getPrix();
+
+            // Création de l'entité facture
+            $facture = new Facture();
+            $facture->setNumeroFacture($newInvoiceNumber);
+            $facture->setMontant($prixTotal); // Ajustez le montant selon vos besoins
+            $facture->setDateCreation(new \DateTime());
+            $facture->setDateEmission(new \DateTime());
+            // $reservation->setUser($reservation->getUser());
+            
+            // Associe la facture à la réservation
+            
+            $entityManager->persist($facture);
+            $entityManager->flush();
+
+            $reservation->setPrix($prixTotal);
+            $reservation->setFacture($facture);
             $entityManager->persist($reservation);
             $entityManager->flush();
 

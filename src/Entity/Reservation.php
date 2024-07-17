@@ -2,9 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ReservationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ReservationRepository;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
@@ -29,9 +32,6 @@ class Reservation
     #[ORM\ManyToOne(inversedBy: 'VehiculeReservations')]
     private ?Vehicule $vehicule = null;
 
-    #[ORM\ManyToOne(inversedBy: 'FacturesReservation')]
-    private ?Facture $facture = null;
-
     #[ORM\ManyToOne(inversedBy: 'UserReservation')]
     private ?User $user = null;
 
@@ -52,6 +52,20 @@ class Reservation
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
+
+    /**
+     * @var Collection<int, Facture>
+     */
+    #[ORM\OneToMany(targetEntity: Facture::class, mappedBy: 'reservation')]
+    private Collection $factures;
+
+    #[ORM\ManyToOne(inversedBy: 'facturesReservations')]
+    private ?Facture $facture = null;
+
+    public function __construct()
+    {
+        $this->factures = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -114,18 +128,6 @@ class Reservation
     public function setVehicule(?Vehicule $vehicule): static
     {
         $this->vehicule = $vehicule;
-
-        return $this;
-    }
-
-    public function getFacture(): ?Facture
-    {
-        return $this->facture;
-    }
-
-    public function setFacture(?Facture $facture): static
-    {
-        $this->facture = $facture;
 
         return $this;
     }
@@ -213,4 +215,37 @@ class Reservation
 
         return $this;
     }
+
+/**
+ *  @Assert\Callback
+ */
+public function validate(ExecutionContextInterface $context, $payload)
+{
+    if ($this->dateDebut && $this->dateFin && $this->dateFin < $this->dateDebut) {
+        $context->buildViolation('La date de fin doit être postérieure à la date de début.')
+            ->atPath('dateFin')
+            ->addViolation();
+    }
+}
+
+/**
+ * @return Collection<int, Facture>
+ */
+public function getFactures(): Collection
+{
+    return $this->factures;
+}
+
+public function getFacture(): ?Facture
+{
+    return $this->facture;
+}
+
+public function setFacture(?Facture $facture): static
+{
+    $this->facture = $facture;
+
+    return $this;
+}
+
 }

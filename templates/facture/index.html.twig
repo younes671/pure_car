@@ -1,0 +1,11 @@
+
+
+
+
+{% block body %}
+<h1>Facture #{{ reservation.facture.numeroFacture }}</h1>
+<p>Date de création: {{ reservation.facture.dateCreation|date('d-m-Y') }}</p>
+<p>Date d'émission: {{ reservation.facture.dateEmission|date('d-m-Y') }}</p>
+<p>Montant: {{ reservation.facture.montant ~ ' €' }}</p>
+<p>Client: {{ reservation.email }}</p>
+{% endblock %}
