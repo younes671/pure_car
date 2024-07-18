@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block description %}Liste client archivé{% endblock %}
+{% block title %}Liste client archivé{% endblock %}
+
+{% block body %}
+    <section id="content-user" class="flex-center-user">
+    
+        <h2>Liste des clients</h2>
+        {% for flash_message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ flash_message }}
+        </div>
+        {% endfor %}
+        {% if usersArchived %}
+            <div class="table-responsive">
+                <table class="table table-striped forms">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Pseudo</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Desarchiver</th>
+                            <th scope="col">Détails</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in usersArchived %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.pseudo}}</td>
+                            <td> {{ user.email }} </td>
+                            <td><a href="{{ path('desArchiver_user', {'id': user.id}) }}"  onclick="return confirm('Êtes-vous sûr de vouloir desarchiver ce client ?')"><i class="fa-solid fa-box-archive"></i></a></td>
+                            <td><a href="{{ path('show_user_archived', {'id': user.id}) }}" class="btn btn-primary">Voir détails</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <h2>Aucun utilisateur archivé</h2>
+            {% endif %}
+    </section>
+{% endblock %}

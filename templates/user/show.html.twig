@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block description %}Liste reservations utilisateur{% endblock %}
+{% block description %}Liste reservations utilisateur archivé{% endblock %}
 {% block title %}Liste des réservations de {{ user.nom }} {{ user.prenom }}{% endblock %}
 
 {% block body %}
 <section id="page_registration" >
-        <h2>Mon profil</h2>
+        <h2>Profil Client archivé</h2>
         {% for flash_message in app.flashes('success') %}
             <div class="alert alert-success">
                 {{ flash_message }}
@@ -19,21 +19,18 @@
             <div class="card-profil">
                 <div class="top">
                     <div>
-                        <h3 class="txt-light blue"><i class="ri-user-line"></i>&nbsp;{{ app.user.pseudo }}</h3>
-                        <h3>{{ app.user.nom }} {{ app.user.prenom }}</h3>
-                        <p class="blue"><i class="ri-mail-line blue"></i>&nbsp;{{ app.user.email }}</p>
-                        <p class="txt-light"><i class="ri-map-pin-2-line blue"></i>&nbsp;{{ app.user.adresse }}</p>
-                        <p class="blue">{{ app.user.cp }} {{ app.user.ville }}</p>
-                        <p><a href="{{ path('app_forgot_password_request') }}" class="registration-link">Editer mot de passe</a></p>    
-                          <p><a href="{{ path('archiver_user', {'id': app.user.id}) }}" class="delete-link" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre profil ?')"><i class="fa-solid fa-trash"></i></a>
-                          <a href="{{ path('edit_user', {'id': app.user.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a></p>
+                        <h3 class="txt-light blue"><i class="ri-user-line"></i>&nbsp;{{ user.pseudo }}</h3>
+                        <h3>{{ user.nom }} {{ user.prenom }}</h3>
+                        <p class="blue"><i class="ri-mail-line blue"></i>&nbsp;{{ user.email }}</p>
+                        <p class="txt-light"><i class="ri-map-pin-2-line blue"></i>&nbsp;{{ user.adresse }}</p>
+                        <p class="blue">{{ user.cp }} {{ user.ville }}</p>  
                     </div>
                     <div>
                     </div>
                 </div>
             </div>
 
-        <h2>Liste de mes réservations</h2>
+        <h2>Liste des réservations</h2>
                 <div class="table-responsive">
             {% if reservations %}
         <table class="table table-striped">
@@ -66,7 +63,3 @@
         </div>
 </section>
 {% endblock %}
-                    
-            
-
-        

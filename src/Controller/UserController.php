@@ -21,10 +21,21 @@ class UserController extends AbstractController
     public function index(UserRepository $userRepository): Response
     {
         // récupère liste de tous les utilisateurs
-        $user = $userRepository->findAll();
+        $user = $userRepository->findBy(['archived' => false], ["id" => "ASC"]);
         return $this->render('user/index.html.twig', [
             'users' => $user,
         ]);
+    }
+
+    #[Route('/user/Archived', name: 'app_userArchived')]
+    public function clientArchive(UserRepository $userRepository, Security $security): Response
+    {
+        
+            $userArchive = $userRepository->findBy(['archived' => true], ["id" => "ASC"]);
+            return $this->render('user/userArchived.html.twig', [
+                'usersArchived' => $userArchive
+            ]);
+       
     }
 
 
@@ -93,5 +104,47 @@ class UserController extends AbstractController
         ]);
     }
 
+
+    #[Route('/user/archiver/{id}', name: 'archiver_user')]
+    public function archiver(User $user, EntityManagerInterface $entityManager, Security $security): Response
+    {
+       
+            $user->setArchived(true);
+            $entityManager->flush();
+            $this->addFlash('success', 'L\'utilisateur a été archivé avec succès.');
+
+            return $this->redirectToRoute('app_home');
+        
+    }
+
+    #[Route('/desArchiver/{id}', name: 'desArchiver_user')]
+    public function desArchiver(User $user, EntityManagerInterface $entityManager, Security $security): Response
+    {
+        
+            $user->setArchived(false);
+            $entityManager->flush();
+            $this->addFlash('success', 'L\'utilisateur a été desarchivé avec succès.');
+
+            return $this->redirectToRoute('app_userArchived');
+        
+    }
+
+    #[Route('/user/archived/{id}', name: 'show_user_archived')]
+        public function show_clientArchived(User $user, ReservationRepository $reservationRepository, Security $security): Response
+        {
+            
+                // Vérifier si l'utilisateur est archivé
+                if ($user->isArchived()) {
+                    $reservations = $reservationRepository->findBy(['user' => $user]);
+                    return $this->render('user/show.html.twig', [
+                        'user' => $user,
+                        'reservations' => $reservations
+                    ]);
+                } else {
+                    // Gérer le cas où l'utilisateur n'est pas archivé, par exemple, rediriger vers une page d'erreur
+                    throw $this->createNotFoundException('Cette utilisateur n\'est pas archivé.');
+                }
+            
+        }
 
 }
