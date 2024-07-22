@@ -61,6 +61,13 @@ public function createCharge(Request $request, ReservationRepository $reservatio
         $this->addFlash('error', 'An error occurred during the payment process:' . $e->getMessage());
     }
 
+    if ($user) {
+        return $this->redirectToRoute('profil_user', ['idClient' => $reservation->getUser()->getId()], Response::HTTP_SEE_OTHER);
+    } else {
+        return $this->redirectToRoute('app_home');
+    }
+    
+
     return $this->redirectToRoute('profil_user', ['idClient' => $reservation->getUser()->getId()], Response::HTTP_SEE_OTHER);
 }
 

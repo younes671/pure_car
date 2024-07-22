@@ -6,7 +6,7 @@
 {% block body %}
     <section id="content-user" class="flex-center-user">
     
-        <h2>Liste des clients</h2>
+        <h2>Liste des clients archivés</h2>
         {% for flash_message in app.flashes('success') %}
         <div class="alert alert-success">
             {{ flash_message }}
@@ -38,7 +38,7 @@
                 </table>
             </div>
             {% else %}
-                <h2>Aucun utilisateur archivé</h2>
+                <h2>"Aucun utilisateur archivé"</h2>
             {% endif %}
     </section>
 {% endblock %}
