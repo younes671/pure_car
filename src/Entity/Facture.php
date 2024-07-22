@@ -35,6 +35,9 @@ class Facture
     #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'facture')]
     private Collection $facturesReservations;
 
+    #[ORM\ManyToOne(inversedBy: 'factures')]
+    private ?PDF $facturePDF = null;
+
     public function __construct()
     {
         $this->facturesReservations = new ArrayCollection();
@@ -119,6 +122,18 @@ class Facture
                 $facturesReservation->setFacture(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFacturePDF(): ?PDF
+    {
+        return $this->facturePDF;
+    }
+
+    public function setFacturePDF(?PDF $facturePDF): static
+    {
+        $this->facturePDF = $facturePDF;
 
         return $this;
     }

@@ -225,6 +225,13 @@ section{
     margin-bottom: 20px;
 }
 
+#forms ul{
+    font-size: 18px;
+    white-space: wrap;
+    text-align: center;
+    width: 340px;
+}
+
 /* ------------------------------------API BORNE */
 
 main{
