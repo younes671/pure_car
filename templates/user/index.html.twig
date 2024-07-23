@@ -20,7 +20,7 @@
                     {% for user in users %}
                     <tr>
                         <td>{{ user.id }}</td>
-                        <td>{{ user.pseudo}}</td>
+                        <td><a href="{{ path('profil_user', {'idClient': app.user.id}) }}" class="user-login">{{ user.pseudo}}</a></td>
                         <td> {{ user.email }} </td>
                     </tr>
                     {% endfor %}

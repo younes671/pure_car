@@ -5,15 +5,16 @@ namespace App\Controller;
 use Dompdf\Dompdf;
 use Stripe\Charge;
 use Stripe\Stripe;
+use App\Entity\PDF;
 use Dompdf\Options;
 use App\Entity\User;
 use App\Entity\Facture;
 use App\Entity\Reservation;
-use App\Repository\FactureRepository;
-use App\Repository\ReservationRepository;
 use Symfony\Component\Mime\Email;
 use App\Repository\UserRepository;
+use App\Repository\FactureRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ReservationRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -26,7 +27,7 @@ class StripeController extends AbstractController
     
     
 #[Route('/stripe/create-charge', name: 'app_stripe_charge', methods: ['POST'])]
-public function createCharge(Request $request, ReservationRepository $reservationRepository, MailerInterface $mailer, Security $security): Response
+public function createCharge(Request $request, ReservationRepository $reservationRepository, FactureRepository $factureRepository, EntityManagerInterface $entityManager, MailerInterface $mailer, Security $security): Response
 {
     
     Stripe::setApiKey($_ENV["STRIPE_SECRET"]);
@@ -48,10 +49,23 @@ public function createCharge(Request $request, ReservationRepository $reservatio
         if ($charge->status == 'succeeded') {
             
            // Génération du PDF de la facture
-           $pdfFilePath = $this->generateInvoicePdf($reservation->getFacture(), $reservation);
+           $pdfContent = $this->generateInvoicePdf($reservation->getFacture(), $reservation);
+
+           // Sauvegarde du PDF dans la base de données
+           $pdf = new PDF();
+           $pdf->setLibelle($pdfContent);
+
+           // Associer le PDF à la facture
+           $facture = $reservation->getFacture();
+           $facture->setFacturePDF($pdf);
+
+           // Persist le PDF et la Facture
+           $entityManager->persist($pdf);
+           $entityManager->persist($facture);
+           $entityManager->flush();
 
            // Envoi de l'email avec la facture
-           $this->sendInvoiceEmail($reservation->getEmail(), $pdfFilePath, $mailer);
+           $this->sendInvoiceEmail($reservation->getEmail(), $pdfContent, $mailer);
 
             $this->addFlash('success', 'Paiement réussie avec succès!');
         } else {
@@ -80,7 +94,7 @@ public function createCharge(Request $request, ReservationRepository $reservatio
         // var_dump($reservation); exit;
 
         if (!$reservation) {
-            throw $this->createNotFoundException('Reservation not found.');
+            throw $this->createNotFoundException('Réservation non trouvée.');
         }
 
         return $this->render('stripe/index.html.twig', [
@@ -101,31 +115,33 @@ public function createCharge(Request $request, ReservationRepository $reservatio
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $output = $dompdf->output();
-
-        // Chemin pour sauvegarder le fichier PDF dans le dossier var
-        $pdfDirectory = $this->getParameter('kernel.project_dir') . '/var/factures/';
-        if (!is_dir($pdfDirectory)) {
-            mkdir($pdfDirectory, 0755, true);
-        }
-        $pdfFileName = 'invoice_' . $facture->getNumeroFacture() . '.pdf';
-        $pdfFilePath = $pdfDirectory . $pdfFileName;
-
-        // Sauvegarde du fichier PDF
-        file_put_contents($pdfFilePath, $output);
-
-        return $pdfFilePath;
+        
+        // Retourne le contenu PDF sous forme de chaîne de caractères
+        return $dompdf->output();
     }
 
-    private function sendInvoiceEmail(string $recipientEmail, string $pdfFilePath, MailerInterface $mailer): void
+    private function sendInvoiceEmail(string $recipientEmail, string $pdfContent, MailerInterface $mailer): void
     {
+        // Chemin pour stocker temporairement le PDF
+        $tempPdfPath = $this->getParameter('pdf_directory') . 'invoice_temp.pdf';
+        
+        // Écrire le contenu du PDF dans un fichier temporaire
+        file_put_contents($tempPdfPath, $pdfContent);
+
         $email = (new Email())
             ->from('your@example.com')
             ->to($recipientEmail)
             ->subject('Votre facture')
             ->text('Veuillez trouver votre facture en pièce jointe.')
-            ->attachFromPath($pdfFilePath);
-        $mailer->send($email);
-    }
+            ->attachFromPath($tempPdfPath);
 
+            try {
+                $mailer->send($email);
+                // Supprimez le fichier temporaire après l'envoi
+                unlink($tempPdfPath);
+            } catch (\Exception $e) {
+                // Gérer l'erreur
+                $this->addFlash('error', 'L\'envoi de l\'email a échoué : ' . $e->getMessage());
+            }
+    }
 }

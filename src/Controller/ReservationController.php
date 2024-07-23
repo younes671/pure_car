@@ -235,37 +235,7 @@ class ReservationController extends AbstractController
         ]);
     }
 
-    // demande de confirmation de réservation
-    #[Route('/reservation/confirmation/{reservationId}', name: 'reservation_confirmation')]
-    public function confirmationReservation($reservationId, ReservationRepository $reservationRepository): Response
-    {
-       // Récupérer la réservation par son ID
-        $reservation = $reservationRepository->find($reservationId);
-
-         // Vérifier si la réservation existe
-        if (!$reservation) {
-            throw $this->createNotFoundException('La réservation n\'existe pas.');
-        }
-         // Vérifier si l'utilisateur est connecté
-        $user = $this->getUser();
-        if (!$user) {
-            // Rediriger vers la page de choix si l'utilisateur n'est pas connecté
-            return $this->redirectToRoute('reservation_choice', ['vehiculeId' => $reservation->getVehicule()->getId()]);
-        }
-
-        // Vérifier si l'e-mail est présent
-        if (!$reservation->getEmail()) {
-            // Rediriger vers la page de choix si la réservation ou l'e-mail est absent
-            return $this->redirectToRoute('reservation_choice', ['vehiculeId' => $reservation->getVehicule()->getId()]);
-        }
-            // Récupérère les détails de la réservation à partir de l'ID
-            $reservation = $reservationRepository->find($reservationId);
-            // Affiche la page de confirmation avec les détails de la réservation
-            return $this->render('reservation/confirmation.html.twig', [
-                'reservation' => $reservation,
-            ]);
-        
-    }
+   
 
     //annuler réservation
     #[Route('/reservation/annuler/{reservationId}', name: 'annuler_reservation')]
@@ -305,48 +275,7 @@ class ReservationController extends AbstractController
         }
     }
 
-    // message confirmation et envoi de notification par mail
-    #[Route('/reservation/confirmer/{reservationId}', name: 'reservation_confirmer')]
-    public function confirmerReservation($reservationId, EntityManagerInterface $entityManager, ReservationRepository $reservationRepository, UserRepository $userRepository, MailerInterface $mailer): RedirectResponse
-    {
-        $reservation = $reservationRepository->find($reservationId);
-        $user = $this->getUser();
-        $userId = $userRepository->findOneBy(['id' => $user]);
-
-          // Vérifier si la réservation existe
-        if (!$reservation) {
-            throw $this->createNotFoundException('La réservation n\'existe pas.');
-        }
-         
-        if (!$reservation->getEmail()) {
-            // Rediriger vers la page de choix si la réservation ou l'e-mail est absent
-            return $this->redirectToRoute('reservation_choice', ['vehiculeId' => $reservation->getVehicule()->getId()]);
-        }
-
-        $reservation = $reservationRepository->find($reservationId);
-        $reservation->setConfirmation(true);
-        $entityManager->flush();
-
-        // Envoyer un email de confirmation avec le récapitulatif de la réservation
-        $email = (new Email())
-            ->from('noreply@votreapp.com')
-            ->to($reservation->getEmail())
-            ->subject('Confirmation de votre réservation')
-            ->html($this->renderView('email/confirmation.html.twig', [
-                'reservation' => $reservation,
-                'user' => $user,
-            ]));
-
-        $mailer->send($email);
-        
-        if ($user) {
-            $this->addFlash('success', 'La réservation a été effectuée avec succès et un e-mail a été envoyé à l\'adresse ' . $reservation->getEmail() .'.');
-            return $this->redirectToRoute('profil_user', ['idClient' => $userId->getId()]);
-        } else {
-            $this->addFlash('success', 'La réservation a été effectuée avec succès et un e-mail a été envoyé à l\'adresse ' . $reservation->getEmail() . '.');
-            return $this->redirectToRoute('app_home');
-        }
-    }
+   
 
 
     // recherche véhicule selon critère choisit

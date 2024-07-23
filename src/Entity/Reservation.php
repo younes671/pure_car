@@ -47,8 +47,6 @@ class Reservation
     #[ORM\Column]
     private ?int $prix = null;
 
-    #[ORM\Column]
-    private ?bool $confirmation = false;
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
@@ -188,18 +186,6 @@ class Reservation
     public function setPrix(int $prix): static
     {
         $this->prix = $prix;
-
-        return $this;
-    }
-
-    public function isConfirmation(): ?bool
-    {
-        return $this->confirmation;
-    }
-
-    public function setConfirmation(bool $confirmation): static
-    {
-        $this->confirmation = $confirmation;
 
         return $this;
     }

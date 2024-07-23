@@ -44,19 +44,23 @@
                     <th>Date de début</th>
                     <th>Date de fin</th>
                     <th>Montant</th>
+                    <th>Facture</th>
                 </tr>
             </thead>
             <tbody>
                 {% for reservation in reservations %}
-                {% if reservation.confirmation %}
                 <tr>
                     <td>{{ loop.index }}</td>
                     <td>{{ reservation.vehicule.modele.marque.nom ~ ' ' ~ reservation.vehicule.modele.nom }}</td>
                     <td>{{ reservation.dateDebut|date('Y-m-d') }}</td>
                     <td>{{ reservation.dateFin|date('Y-m-d') }}</td>
                     <td>{{ reservation.prix ~ ' €' }}</td>
+                    {% if reservation.facture %}
+                    <td> <a href="{{ path('show_pdf', {'factureId': reservation.facture.id}) }}" target="_blank"><i class="fa-solid fa-file-pdf"></i></a> </td>
+                    {% else %}
+                    <td>N/A</td>
+                    {% endif %}  
                 </tr>
-                {% endif %}
                 {% endfor %}    
                 {% else %}
                 <h3>Il n'y a aucune réservation pour le moment</h3>

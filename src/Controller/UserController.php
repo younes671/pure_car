@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserFormType;
 use App\Entity\Reservation;
+use App\Repository\FactureRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ReservationRepository;
@@ -68,19 +69,24 @@ class UserController extends AbstractController
 
     // affiche profil utilisateur
     #[Route('/user/profil/{idClient}', name: 'profil_user')]
-    public function profilUser(User $idClient, Security $security, ReservationRepository $reservationRepository): Response
+    public function profilUser(User $idClient, Security $security,  ReservationRepository $reservationRepository): Response
     {
-        if ($security->isGranted('ROLE_ADMIN') || $security->isGranted('ROLE_USER'))
-        {
-        $reservation = $reservationRepository->findBy(['user' => $idClient]);
-        return $this->render('user/profil.html.twig', [
-            'reservations' => $reservation,
-        ]);
-        }else{
-
-            $this->addFlash('danger', 'Vous n\'avez pas accès à cette page, veuillez vous connectez.');
-            return $this->redirectToRoute('app_login');
+        
+        $reservations = $reservationRepository->findBy(['user' => $idClient]);
+        // Collecte des factures associées aux réservations
+        $factures = [];
+        foreach ($reservations as $reservation) {
+            $facture = $reservation->getFacture();
+            if ($facture) {
+                $factures[] = $facture;
+            }
         }
+
+        return $this->render('user/profil.html.twig', [
+            'reservations' => $reservations,
+            'factures' => $factures
+        ]);
+        
     }
 
     // edit le profil utilisateur
