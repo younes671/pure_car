@@ -51,6 +51,10 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
         if ($selectedVehicleId) {
             // Rediriger vers la page de réservation du véhicule sélectionné
             return new RedirectResponse($this->urlGenerator->generate('reservationClient_reservation', ['vehiculeId' => $selectedVehicleId]));
+        }else{
+
+            return $this->redirectToRoute('app_home');
+
         }
 
         // For example:

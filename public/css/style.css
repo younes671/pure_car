@@ -59,6 +59,11 @@ section{
     align-items: center;
 }
 
+.help-text{
+    font-size: 13px;
+    color: red;
+}
+
 .flex-center{
     display: flex;
     justify-content: center;

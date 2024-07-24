@@ -7,6 +7,7 @@ use App\Entity\Vehicule;
 use App\Entity\Categorie;
 use Doctrine\DBAL\Types\BlobType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -58,6 +59,14 @@ class VehiculeFormType extends AbstractType
             ->add('img', FileType::class, [
                 'data_class' => null,
                 'attr' => ['class' => 'field'],
+                'help' => 'Format autorisés : JPEG, PNG, WEBP | Taille maximale : 5Mo',
+                'constraints' => [
+                    new File([
+                        'maxSize' => '5M', // limite la taille à 5 Mo
+                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/webp'],
+                        'mimeTypesMessage' => 'Veuillez télécharger une image valide (JPEG, PNG, WEBP)',
+                    ])
+                ]
             ])
             ->add('bluetooth', CheckboxType::class, [
                 'label_attr' => ['class' => 'field-checkbox'],

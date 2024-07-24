@@ -150,7 +150,7 @@ class EntrepriseController extends AbstractController
                     $uploadedFile = $form['img']->getData();
                     if ($uploadedFile) {
                         // crée un id unique (basé sur timestamp actuel) et récupère extension du fichier
-                        $newFileName = uniqid().'.'.$uploadedFile->guessExtension();
+                        $newFileName = md5(uniqid()).'.'.$uploadedFile->guessExtension();
                         try {
                             // déplace fichier vers répertoire de destination
                             $uploadedFile->move(
@@ -204,7 +204,7 @@ class EntrepriseController extends AbstractController
                 case 'categorie':
                     $entity = $categorieRepository->find($id);
                     break;
-                case 'vehicule':
+                case 'detailVehicule':
                     $entity = $vehiculeRepository->find($id);
                     break;
                 default:
