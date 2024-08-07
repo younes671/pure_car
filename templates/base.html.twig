@@ -27,19 +27,23 @@
 
                     {% if app.user %}
                     <a href="{{ path('profil_user', {'idClient': app.user.id}) }}" class="user-login"><i class="fa-regular fa-user"></i>&nbsp; {{ app.user.pseudo }} </a>
-                        <a href="{{ path('app_logout') }}" class="button flex-center" id="connect">déconnexion</i></i></a>
+                        <a href="{{ path('app_logout') }}" class="button flex-center hidden">déconnexion</i></i></a>
                     {% else %}
                         <a href="{{ path('app_login') }}" class="button flex-center" id="connect">Connexion</a>
                     {% endif %}
                 </div>
                 </div>
                 <div id="menu">
-                        <input type="checkbox" class="burger">
-                            <nav id="main-menu" class="flex-center">
+                    {% if app.user %}
+                    {% else %}
+                    <a href="{{ path('app_login') }}" class="icon-mobile-connect"><i class="fa-solid fa-right-to-bracket"></i></a>
+                    {% endif %}
+                    <input type="checkbox" class="burger">
+                        <nav id="main-menu" class="flex-center">
                             <ul class="flex-center">
                                     <li><a href="{{ path('app_home') }}">Accueil</a></li>
                                 {% if app.user %}
-                                        
+    
                                 {% else %}
                                     <li><a href="{{ path('app_register') }}">Inscription</a></li>
                                 {% endif %}
@@ -49,14 +53,20 @@
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <li><a href="{{ path('app_gestionMultiple') }}">Gestion parc</a></li>
                                     <li><a href="{{ path('app_user') }}">Liste client</a></li>
-                                    <li><a href="{{ path('app_userArchived') }}">Archive</a></li>
-                                {% endif %}
-                                {% if app.user %}
                                 {% endif %}
                             </ul>
                         </nav>
                     </div> 
-                    <div id="content-connect"><a href="{{ path('app_login') }}"><span id="icon-connect"></span></a></div>
+                    {% if app.user %}
+                        <div id="content-connect">
+                            {% if app.user %}
+                                <a href="{{ path('app_logout') }}" class="icon-mobile"><i class="fa-solid fa-right-from-bracket"></i></a>
+                                <a href="{{ path('profil_user', {'idClient': app.user.id}) }}"><span id="icon-connect"></span></a>
+                            {% else %}
+                                <a href="{{ path('app_login') }}" class="icon-mobile"><i class="fa-solid fa-right-to-bracket"></i></a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
             </header>
             {% block body %}{% endblock %}
             <footer>

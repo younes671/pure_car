@@ -60,6 +60,9 @@ class Reservation
     #[ORM\ManyToOne(inversedBy: 'facturesReservations')]
     private ?Facture $facture = null;
 
+    #[ORM\Column(length: 25)]
+    private ?string $numeroReservation = null;
+
     public function __construct()
     {
         $this->factures = new ArrayCollection();
@@ -230,6 +233,18 @@ public function getFacture(): ?Facture
 public function setFacture(?Facture $facture): static
 {
     $this->facture = $facture;
+
+    return $this;
+}
+
+public function getNumeroReservation(): ?string
+{
+    return $this->numeroReservation;
+}
+
+public function setNumeroReservation(string $numeroReservation): static
+{
+    $this->numeroReservation = $numeroReservation;
 
     return $this;
 }

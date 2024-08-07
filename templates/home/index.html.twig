@@ -15,21 +15,22 @@
         {% endif %}
     {% endfor %}
 </section>
+    {% for flash_message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ flash_message }}
+    </div>
+    {% endfor %}
 <section id="description" class="flex-center">
     <div class="flex-center">
         <h1><span id="part-1">Pure Car</span> <span id="part-2">Location de voiture électrique</span></h1>
         
         <div>
-            <p>Notre agence est spécialisée dans la location de voiture électrique. Convaincue que le réchauffement climatique est le souci de tous, nous avons décidés de nous tourner vers des véhicules propres et respectueux de l'environnement afin de contribuer, à notre échelle, à la réduction de la pollution automobile.
+            <p>Notre agence située à <strong>Strasbourg</strong> est spécialisée dans la location de voiture électrique. Convaincue que le réchauffement climatique est le souci de tous, nous avons décidés de nous tourner vers des véhicules propres et respectueux de l'environnement afin de contribuer, à notre échelle, à la réduction de la pollution automobile.
             </p>
         </div>
     </div>
 </section>
-        {% for flash_message in app.flashes('success') %}
-        <div class="alert alert-success">
-            {{ flash_message }}
-        </div>
-        {% endfor %}
+       
 <section class="flex-wrap flex-center" id="step">
     <h2>Gagnez du temps, louez en ligne</h2>
     <div class="flex-wrap flex-center">

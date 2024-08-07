@@ -48,23 +48,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100)]
     private ?string $pseudo = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column]
+    private ?bool $archived = false;
+
+    #[ORM\Column(length: 100, nullable: true)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 70)]
+    #[ORM\Column(length: 100, nullable: true)]
     private ?string $prenom = null;
 
-    #[ORM\Column(length: 70)]
+    #[ORM\Column(length: 100, nullable: true)]
     private ?string $adresse = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $cp = null;
 
-    #[ORM\Column(length: 70)]
+    #[ORM\Column(length: 75, nullable: true)]
     private ?string $ville = null;
-
-    #[ORM\Column]
-    private ?bool $archived = null;
 
     public function __construct()
     {
@@ -202,12 +202,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function isArchived(): ?bool
+    {
+        return $this->archived;
+    }
+
+    public function setArchived(bool $archived): static
+    {
+        $this->archived = $archived;
+
+        return $this;
+    }
+
     public function getNom(): ?string
     {
         return $this->nom;
     }
 
-    public function setNom(string $nom): static
+    public function setNom(?string $nom): static
     {
         $this->nom = $nom;
 
@@ -219,7 +231,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->prenom;
     }
 
-    public function setPrenom(string $prenom): static
+    public function setPrenom(?string $prenom): static
     {
         $this->prenom = $prenom;
 
@@ -231,7 +243,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->adresse;
     }
 
-    public function setAdresse(string $adresse): static
+    public function setAdresse(?string $adresse): static
     {
         $this->adresse = $adresse;
 
@@ -243,7 +255,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->cp;
     }
 
-    public function setCp(string $cp): static
+    public function setCp(?string $cp): static
     {
         $this->cp = $cp;
 
@@ -255,21 +267,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->ville;
     }
 
-    public function setVille(string $ville): static
+    public function setVille(?string $ville): static
     {
         $this->ville = $ville;
-
-        return $this;
-    }
-
-    public function isArchived(): ?bool
-    {
-        return $this->archived;
-    }
-
-    public function setArchived(bool $archived): static
-    {
-        $this->archived = $archived;
 
         return $this;
     }

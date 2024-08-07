@@ -116,6 +116,22 @@ section{
     border-radius: 50px;
 }
 
+.button-archive{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    height: 45px;
+    width: 200px;
+    color: #fff;
+    background: #2baae2;
+    border-radius: 50px;
+}
+
+.button-archive:hover{
+    background: #2288b4;
+}
+
 .button-detail{
     width: 200px;
     color: #fff;
@@ -418,8 +434,9 @@ main{
 }
 
 #menu .burger:checked + nav{
-    height: 225px;
+    height: 295px;
     width: 230px;
+    /* margin-top: 100px; */
 }
 
 #icon-connect:before{
@@ -508,6 +525,25 @@ footer a:hover, .mail:hover{
     margin: 5px;
 }
 
+.fa-right-from-bracket, .fa-right-to-bracket {
+    font-size: 30px;
+    margin: 5px;
+    color: white;
+}
+
+.fa-right-to-bracket {
+    display: none;
+    height: 50px;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    width: 50px;
+    position: absolute;
+    margin-top: 10px;
+}
+
+
+
 /* --------------------------------------------------------------PROFIL */
 
 .fa-trash{
@@ -522,7 +558,9 @@ footer a:hover, .mail:hover{
     font-size: 22px;
 }
 
-
+.fa-right-from-bracket:hover, .fa-right-to-bracket:hover {
+    font-size: 33px;
+}
 
 /* ---------------------------------------------------------------ACCUEIL */
 
@@ -639,6 +677,15 @@ footer a:hover, .mail:hover{
 #content-user h2{
     font-size: 40px;
     line-height: 40px;
+    color : #2baae2;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#content-user h3{
+    text-decoration: underline;
     color : #2baae2;
     margin-bottom: 50px;
     display: flex;
@@ -1112,7 +1159,7 @@ a.booking-btn.flex-center.button{
     margin: 20px 0 20px 0;
     display: flex;
     justify-content: center;
-    font-size: 25px;
+    font-size: 18px;
 }
 
 /* -------------------------------------------------------PAGE INSCRIPTION */
@@ -1389,6 +1436,31 @@ th{
     padding: 20px;
 }
 
+.icon-mobile{
+    display: none;
+    height: 50px;
+    line-height: 50px;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    width: 50px;
+    position: absolute;
+    left: 300px;
+}
+
+.icon-mobile-connect {
+    display: none;
+    height: 50px;
+    line-height: 50px;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    width: 50px;
+    position: absolute;
+    left: 350px;
+    z-index: 1000;
+}
+
 /* ------------------------------------------------------------RESPONSIVE */
 @media screen and (max-width : 1080px){
     #content{
@@ -1495,6 +1567,11 @@ th{
     .table-responsive{
         width: 100%;
     }
+
+    #connect{
+        margin-right: 20px;
+    }
+    
 }
 
 
@@ -1511,7 +1588,10 @@ th{
     #main-menu ul li {
         width: 100%;
         min-width: 120px;
+        display: block;
     }
+
+   
 
     #logo-mobile{
         display: flex;
@@ -1546,6 +1626,9 @@ th{
     }
 
     #menu{
+        /* display: flex;
+        align-items: center;
+        flex-direction: row-reverse; */
         background: #2baae2;
         position: absolute;
         z-index: 1;
@@ -1690,6 +1773,38 @@ th{
     }
 }
 
+
+
+@media screen and (max-width : 599px){
+    .hidden{
+        display: none;
+    }
+
+    .fa-right-to-bracket{
+        display: block;
+    }
+
+    .user-login{
+        display: none;
+    }
+
+    .icon-mobile{
+        display: block;
+    }
+
+    .icon-mobile-connect{
+        display: block;
+    }
+
+    #part-2{
+        font-size: 25px;
+    }
+
+    #step h2{
+        font-size: 23px;
+    }
+}
+
 @media screen and (min-width : 425px) and (max-width : 599px){
 
     /* description */
@@ -1701,6 +1816,10 @@ th{
     #description h1{
         margin-bottom: 20px;
     }
+
+  
+
+
 /* gagnez du temps */
 
     #step h2{
@@ -1869,16 +1988,29 @@ th{
     }
 }
 
-@media screen and (min-width : 375px) and (max-width : 425px){
+@media screen and (min-width : 376px) and (max-width : 425px){
 
     #slider{
         max-width: 100%;
         height: auto;
     }
 
+    .fa-right-to-bracket {
+        display: block;
+        position: absolute;
+        z-index: 100;
+    }
+
     .sliderImg{
         width: 425px;
         height: 100%;
+    }
+
+
+    .icon-mobile{
+        display: block;
+        position: absolute;
+        z-index: 100;
     }
 
     #password-requirements{

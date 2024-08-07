@@ -74,7 +74,7 @@ class ReservationController extends AbstractController
 
     // réservation avec compte utilisateur
     #[Route('/reservation/reservationClient/{vehiculeId}', name: 'reservationClient_reservation')]
-    public function reservationClient(UserRepository $userRepository, Request $request, FactureRepository $factureRepository, EntityManagerInterface $entityManager, VehiculeRepository $vehiculeRepository, Vehicule $vehiculeId): Response
+    public function reservationClient(UserRepository $userRepository, Request $request, ReservationRepository $reservationRepository, FactureRepository $factureRepository, EntityManagerInterface $entityManager, VehiculeRepository $vehiculeRepository, Vehicule $vehiculeId): Response
     {
         // Vérifier si l'utilisateur est connecté
         $user = $this->getUser();
@@ -91,13 +91,17 @@ class ReservationController extends AbstractController
         // Créer une nouvelle instance de réservation
         $reservation = new Reservation();
 
-        // Remplir automatiquement les autres champs avec les informations de l'utilisateur
-        $reservation->setEmail($userId->getEmail());
-        $reservation->setNom($userId->getNom());
-        $reservation->setPrenom($userId->getPrenom());
-        $reservation->setAdresse($userId->getAdresse());
-        $reservation->setCp($userId->getCp());
-        $reservation->setVille($userId->getVille());
+        if ($user->getUserReservation()->count() > 0) {
+        $latestReservation = $user->getUserReservation()->last();
+        $reservation->setEmail($latestReservation->getEmail());
+        $reservation->setNom($latestReservation->getNom());
+        $reservation->setPrenom($latestReservation->getPrenom());
+        $reservation->setAdresse($latestReservation->getAdresse());
+        $reservation->setCp($latestReservation->getCp());
+        $reservation->setVille($latestReservation->getVille());
+    } else {
+        $reservation->setEmail($user->getEmail());
+    }
 
         // Création du formulaire de réservation
         $reservationForm = $this->createForm(ReservationType::class, $reservation);
@@ -113,10 +117,48 @@ class ReservationController extends AbstractController
             // Calcul du prix en fonction de la durée de location
             $dateDebut = $reservation->getDateDebut();
             $dateFin = $reservation->getDateFin();
+
+            // Vérification des dates de réservation
+            $currentDate = new \DateTime(); // Date actuelle
+
+            // Vérifier si la date de début est antérieure à la date actuelle
+            if ($dateDebut < $currentDate) {
+                $this->addFlash('error', 'La date de début ne peut pas être antérieure à la date actuelle.');
+                return $this->render('reservation/reservation.html.twig', [
+                    'vehicule' => $vehicule,
+                    'reservationForm' => $reservationForm->createView()
+                ]);
+            }
+            // Vérifier si la date de fin est antérieure à la date de début
+            if ($dateFin < $dateDebut) {
+                $this->addFlash('error', 'La date de fin doit être postérieure à la date de début.');
+                return $this->render('reservation/reservation.html.twig', [
+                    'vehicule' => $vehicule,
+                    'reservationForm' => $reservationForm->createView()
+                ]);
+            }
             $nbJours = $dateDebut->diff($dateFin)->days;
             if($nbJours === 0){
                 $nbJours = 1;
             }
+
+            // Vérifier si le véhicule est déjà réservé
+            if ($reservationRepository->isVehiculeReserved($vehicule, $dateDebut, $dateFin)) {
+                $this->addFlash('error', 'Ce véhicule est déjà réservé pour la période sélectionnée.');
+                return $this->render('reservation/reservation.html.twig', [
+                    'vehicule' => $vehicule,
+                    'reservationForm' => $reservationForm->createView()
+                ]);
+            }
+
+            // Générer un numéro de réservation unique
+            $lastReservation = $reservationRepository->findOneBy([], ['id' => 'desc']);
+             $lastReservationNumber = $lastReservation ? $lastReservation->getNumeroReservation() : 0;
+             $newReservationNumber = sprintf('%06d', (int) $lastReservationNumber + 1);
+             $prixTotal = $nbJours * $vehicule->getPrix();
+
+            $reservation->setNumeroReservation($newReservationNumber);
+
              // Génération du numéro de facture unique
              $lastInvoice = $factureRepository->findOneBy([], ['id' => 'desc']);
              $lastInvoiceNumber = $lastInvoice ? $lastInvoice->getNumeroFacture() : 0;
@@ -141,6 +183,19 @@ class ReservationController extends AbstractController
             $entityManager->persist($reservation);// prépare requete
             $entityManager->flush();// enregistrement dans bdd
 
+              // Mettre à jour les informations utilisateur s'il s'agit de la première réservation
+              if ($user->getNom() === null || $user->getNom() === '') {
+                $user->setNom($reservation->getNom());
+                $user->setPrenom($reservation->getPrenom());
+                $user->setAdresse($reservation->getAdresse());
+                $user->setCp($reservation->getCp());
+                $user->setVille($reservation->getVille());
+
+                // Sauvegarder les modifications de l'utilisateur
+                $entityManager->persist($user);
+                $entityManager->flush();
+            }
+
             // Afficher les détails de la réservation et les options de confirmation ou d'annulation
             return $this->render('reservation/confirmation.html.twig', [
                 'reservation' => $reservation,
@@ -156,7 +211,7 @@ class ReservationController extends AbstractController
 
     // réservation sans compte utilisateur
     #[Route('/reservation/reservationInvite/{vehiculeId}', name: 'reservationInvite_reservation')]
-    public function reservationInvite(Request $request, EntityManagerInterface $entityManager, FactureRepository $factureRepository, VehiculeRepository $vehiculeRepository, Vehicule $vehiculeId): Response
+    public function reservationInvite(Request $request, EntityManagerInterface $entityManager, ReservationRepository $reservationRepository, FactureRepository $factureRepository, VehiculeRepository $vehiculeRepository, Vehicule $vehiculeId): Response
     {
          
         $vehicule = $vehiculeRepository->findOneBy(['id' => $vehiculeId]);
@@ -173,6 +228,19 @@ class ReservationController extends AbstractController
             // Calcul du prix en fonction de la durée de location
             $dateDebut = $reservation->getDateDebut();
             $dateFin = $reservation->getDateFin();
+
+            // Vérification des dates de réservation
+            $currentDate = new \DateTime(); // Date actuelle
+
+            // Vérifier si la date de début est antérieure à la date actuelle
+            if ($dateDebut < $currentDate) {
+                $this->addFlash('error', 'La date de début ne peut pas être antérieure à la date actuelle.');
+                return $this->render('reservation/reservation.html.twig', [
+                    'vehicule' => $vehicule,
+                    'reservationForm' => $reservationForm->createView()
+                ]);
+            }
+            // Vérifier si la date de fin est antérieure à la date de début
             if ($dateFin < $dateDebut) {
                 $this->addFlash('error', 'La date de fin doit être postérieure à la date de début.');
                 return $this->render('reservation/reservation.html.twig', [
@@ -184,6 +252,23 @@ class ReservationController extends AbstractController
             if($nbJours === 0){
                 $nbJours = 1;
             }
+
+            // Vérifier si le véhicule est déjà réservé
+            if ($reservationRepository->isVehiculeReserved($vehicule, $dateDebut, $dateFin)) {
+                $this->addFlash('error', 'Ce véhicule est déjà réservé pour la période sélectionnée.');
+                return $this->render('reservation/reservation.html.twig', [
+                    'vehicule' => $vehicule,
+                    'reservationForm' => $reservationForm->createView()
+                ]);
+            }
+
+            // Générer un numéro de réservation unique
+            $lastReservation = $reservationRepository->findOneBy([], ['id' => 'desc']);
+             $lastReservationNumber = $lastReservation ? $lastReservation->getNumeroReservation() : 0;
+             $newReservationNumber = sprintf('%06d', (int) $lastReservationNumber + 1);
+             $prixTotal = $nbJours * $vehicule->getPrix();
+
+            $reservation->setNumeroReservation($newReservationNumber);
 
             // Génération du numéro de facture unique
             $lastInvoice = $factureRepository->findOneBy([], ['id' => 'desc']);

@@ -69,10 +69,11 @@ class UserController extends AbstractController
 
     // affiche profil utilisateur
     #[Route('/user/profil/{idClient}', name: 'profil_user')]
-    public function profilUser(User $idClient, Security $security,  ReservationRepository $reservationRepository): Response
+    public function profilUser(User $idClient, Security $security, UserRepository $userRepository,  ReservationRepository $reservationRepository): Response
     {
         
         $reservations = $reservationRepository->findBy(['user' => $idClient]);
+        $user = $userRepository->find($idClient);
         // Collecte des factures associées aux réservations
         $factures = [];
         foreach ($reservations as $reservation) {
@@ -84,7 +85,8 @@ class UserController extends AbstractController
 
         return $this->render('user/profil.html.twig', [
             'reservations' => $reservations,
-            'factures' => $factures
+            'factures' => $factures,
+            'user' => $user
         ]);
         
     }

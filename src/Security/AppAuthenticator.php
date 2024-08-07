@@ -53,7 +53,8 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($this->urlGenerator->generate('reservationClient_reservation', ['vehiculeId' => $selectedVehicleId]));
         }else{
 
-            return $this->redirectToRoute('app_home');
+            $homeUrl = $this->urlGenerator->generate('app_home');
+            return new RedirectResponse($homeUrl);
 
         }
 

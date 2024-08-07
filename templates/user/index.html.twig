@@ -20,12 +20,13 @@
                     {% for user in users %}
                     <tr>
                         <td>{{ user.id }}</td>
-                        <td><a href="{{ path('profil_user', {'idClient': app.user.id}) }}" class="user-login">{{ user.pseudo}}</a></td>
+                        <td><a href="{{ path('profil_user', {'idClient': user.id}) }}" class="user-login">{{ user.pseudo}}</a></td>
                         <td> {{ user.email }} </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
+        <a class="button-archive" href="{{ path('app_userArchived') }}" class="content-connect">Client archivé</a>
 </section>
 {% endblock %}

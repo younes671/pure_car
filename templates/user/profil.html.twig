@@ -19,15 +19,25 @@
             <div class="card-profil">
                 <div class="top">
                     <div>
-                        <h3 class="txt-light blue"><i class="ri-user-line"></i>&nbsp;{{ app.user.pseudo }}</h3>
-                        <h3>{{ app.user.nom }} {{ app.user.prenom }}</h3>
-                        <p class="blue"><i class="ri-mail-line blue"></i>&nbsp;{{ app.user.email }}</p>
-                        <p class="txt-light"><i class="ri-map-pin-2-line blue"></i>&nbsp;{{ app.user.adresse }}</p>
-                        <p class="blue">{{ app.user.cp }} {{ app.user.ville }}</p>
+                        {% if user.nom %}
+                        <h3 class="txt-light blue"><i class="ri-user-line"></i>&nbsp;{{ user.pseudo }}</h3>
+                        <h3>{{ user.nom }} {{ user.prenom }}</h3>
+                        <p class="blue"><i class="ri-mail-line blue"></i>&nbsp;{{ user.email }}</p>
+                        <p class="txt-light"><i class="ri-map-pin-2-line blue"></i>&nbsp;{{ user.adresse }}</p>
+                        <p class="blue">{{ user.cp }} {{ user.ville }}</p>
                         <p><a href="{{ path('app_forgot_password_request') }}" class="registration-link">Editer mot de passe</a></p>    
-                          <p><a href="{{ path('archiver_user', {'id': app.user.id}) }}" class="delete-link" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre profil ?')"><i class="fa-solid fa-trash"></i></a>
-                          <a href="{{ path('edit_user', {'id': app.user.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a></p>
+                          <p><a href="{{ path('archiver_user', {'id': user.id}) }}" class="delete-link" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre profil ?')"><i class="fa-solid fa-trash"></i></a>
+                          <a href="{{ path('edit_user', {'id': user.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a></p> 
+                        {% else %}
+                        <h3 class="txt-light blue"><i class="ri-user-line"></i>&nbsp;{{ user.pseudo }}</h3>
+                        <p class="blue"><i class="ri-mail-line blue"></i>&nbsp;{{ user.email }}</p>
+                        <p><a href="{{ path('app_forgot_password_request') }}" class="registration-link">Editer mot de passe</a></p>    
+                          <p><a href="{{ path('archiver_user', {'id': user.id}) }}" class="delete-link" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre profil ?')"><i class="fa-solid fa-trash"></i></a>
+                          <a href="{{ path('edit_user', {'id': user.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a></p> 
+                        {% endif %}
+                         
                     </div>
+
                     <div>
                     </div>
                 </div>
@@ -52,8 +62,8 @@
                 <tr>
                     <td>{{ loop.index }}</td>
                     <td>{{ reservation.vehicule.modele.marque.nom ~ ' ' ~ reservation.vehicule.modele.nom }}</td>
-                    <td>{{ reservation.dateDebut|date('Y-m-d') }}</td>
-                    <td>{{ reservation.dateFin|date('Y-m-d') }}</td>
+                    <td>{{ reservation.dateDebut|date('d-m-Y') }}</td>
+                    <td>{{ reservation.dateFin|date('d-m-Y') }}</td>
                     <td>{{ reservation.prix ~ ' €' }}</td>
                     {% if reservation.facture %}
                     <td> <a href="{{ path('show_pdf', {'factureId': reservation.facture.id}) }}" target="_blank"><i class="fa-solid fa-file-pdf"></i></a> </td>
