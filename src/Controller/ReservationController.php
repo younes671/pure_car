@@ -211,7 +211,10 @@ class ReservationController extends AbstractController
 
     // réservation sans compte utilisateur
     #[Route('/reservation/reservationInvite/{vehiculeId}', name: 'reservationInvite_reservation')]
-    public function reservationInvite(Request $request, EntityManagerInterface $entityManager, ReservationRepository $reservationRepository, FactureRepository $factureRepository, VehiculeRepository $vehiculeRepository, Vehicule $vehiculeId): Response
+    public function reservationInvite(Request $request, EntityManagerInterface $entityManager, ReservationRepository $reservationRepository, 
+    FactureRepository $factureRepository, 
+    VehiculeRepository $vehiculeRepository, 
+    Vehicule $vehiculeId): Response
     {
          
         $vehicule = $vehiculeRepository->findOneBy(['id' => $vehiculeId]);

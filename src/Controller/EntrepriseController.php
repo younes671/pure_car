@@ -242,6 +242,14 @@ class EntrepriseController extends AbstractController
         ]);
     }
 
+    #[Route('/entreprise/cgu', name: 'cgu_entreprise')]
+    public function cgu(): Response
+    {
+        return $this->render('entreprise/cgu.html.twig', [
+            
+        ]);
+    }
+
 
     // gère l'envoi d'email pour contacter l'entreprise
     #[Route('/entreprise/emailContact', name: 'emailContact_entreprise')]

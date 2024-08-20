@@ -31,7 +31,7 @@
                     <span class="requirement chiffre">-Au moins un chiffre</span><br>
                     <span class="requirement longueur">-Minimum 12 caractères</span>
             </div>
-            <p><input type="checkbox" name="rgpd" id="rgpd" required><label for="rgpd">J'ai lu et j'accèpte <a href="" class="rgpd-link">la Politique de Protection des Données Personnelles</a></label></p>
+            <p><input type="checkbox" name="rgpd" id="rgpd" required><label for="rgpd">J'ai lu et j'accèpte <a href="{{ path('cgu_entreprise') }}" class="rgpd-link">la Politique de Protection des Données Personnelles</a></label></p>
             <p class="submit-content"><input type="submit" value="Valider" class="button"></p>
         {{ form_end(registrationForm) }}
     </section>
