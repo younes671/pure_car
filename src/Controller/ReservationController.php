@@ -228,7 +228,7 @@ class ReservationController extends AbstractController
             $vehicule = $vehiculeRepository->find($vehiculeId);
             $reservation->setVehicule($vehicule);
 
-            // Calcul du prix en fonction de la durée de location
+            
             $dateDebut = $reservation->getDateDebut();
             $dateFin = $reservation->getDateFin();
 
