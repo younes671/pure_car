@@ -118,8 +118,15 @@ class UserController extends AbstractController
     {
        
             $user->setArchived(true);
+            $user->setPseudo("anonyme");
+            $user->setEmail(md5("anonyme"));
+            $user->setAdresse("anonyme");
+            $user->setCp("anonyme");
+            $user->setVille("anonyme");
+            $user->setNom("anonyme");
+            $user->setPrenom("anonyme");
             $entityManager->flush();
-            $this->addFlash('success', 'L\'utilisateur a été archivé avec succès.');
+            $this->addFlash('success', 'Vos données ont été supprimées');
 
             return $this->redirectToRoute('app_home');
         
